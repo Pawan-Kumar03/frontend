@@ -249,7 +249,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
             <span key={index} className="flex items-center space-x-1">
                 <span>{location}</span>
                 <button 
-                    onClick={() => removeLocation(index)} // Function to remove location
+                    onClick={() => handleRemoveLocation(index)} // Function to remove location
                     className="text-red-500 cursor-pointer">
                     ×
                 </button>

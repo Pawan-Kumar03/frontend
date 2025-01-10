@@ -238,16 +238,17 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
             onKeyPress={handleAddLocation}
             className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
         />
-        {locations.map((loc, index) => (
-            <div key={index} className="flex items-center space-x-1 mb-1 mr-1 bg-primary dark:bg-primary px-2 py-1 rounded-full">
-                <span className="text-sm text-primary">{loc}</span>
-                <button type="button" onClick={() => handleRemoveLocation(index)} className="ml-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        ))}
+        {Array.isArray(locations) && locations.map((loc, index) => (
+    <div key={index} className="flex items-center space-x-1 mb-1 mr-1 bg-primary dark:bg-primary px-2 py-1 rounded-full">
+        <span className="text-sm text-primary">{loc}</span>
+        <button type="button" onClick={() => handleRemoveLocation(index)} className="ml-1">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+))}
+
     </div>
 
     <div className="flex flex-col w-full sm:w-[48%] md:w-[14%] mb-4 sm:mb-0">
@@ -343,23 +344,30 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
 
             </div>
             {city && locationCounts.length > 0 && (
-    <div className=" bg-primary font-primary pl-14">
-        <h2 className="text-xl font-semibold  text-primary font-primary">
-            Properties by Location in {city}. {totalProperties} Ads
-        </h2>
-        <ul className="mt-2 flex flex-wrap gap-2 text-black">
-            {locationCounts.map((loc, index) => (
+    <div className="bg-primary font-primary pl-14">
+    <h2 className="text-xl font-semibold text-primary font-primary">
+        Properties by Location in {city}. {totalProperties} Ads
+    </h2>
+    <ul className="mt-2 flex flex-wrap gap-2 text-black">
+        {Array.isArray(locationCounts) && locationCounts.length > 0 ? (
+            locationCounts.map((loc, index) => (
                 <li 
                     key={index}
-                    className="flex  font-playfair items-center px-4 rounded shadow-md cursor-pointer text-primary"
+                    className="flex font-playfair items-center px-4 rounded shadow-md cursor-pointer text-primary"
                     onClick={() => handleLocationClick(loc.location)}
                 >
-                    <span className="mr-2 font-playfair truncate max-w-[120px]">{loc.location.split(' ').slice(0, 2).join(' ')}</span>
+                    <span className="mr-2 font-playfair truncate max-w-[120px]">
+                        {loc.location.split(' ').slice(0, 2).join(' ')}
+                    </span>
                     <span className="text-primary font-playfair">( {loc.count} )</span>
                 </li>
-            ))}
-        </ul>
-    </div>
+            ))
+        ) : (
+            <li>No locations available</li>
+        )}
+    </ul>
+</div>
+
 )}
         </section>
     );

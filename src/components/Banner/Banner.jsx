@@ -90,8 +90,12 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     
     const handleAddLocation = (e) => {
         if (e.key === "Enter" && e.target.value.trim() !== "") {
-            setLocations((prevLocations) => [...prevLocations, e.target.value.trim()]);
-            e.target.value = "";  // Clear the input field after adding the location
+            // Add the location to the list
+            setLocations((prevLocations) => {
+                const newLocations = [...prevLocations, e.target.value.trim()];
+                e.target.value = "";  // Clear the input field after adding the location
+                return newLocations;
+            });
         }
     };
 
@@ -125,7 +129,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     };
     const removeLocation = (index) => {
         const updatedLocations = locations.filter((_, i) => i !== index);
-        setLocations(updatedLocations); // Assuming you're using `setLocations` to update the state
+        setLocations(updatedLocations); // Update the state after removal
     };
     
     
@@ -244,12 +248,12 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     />
     {locations.length > 0 && (
     <div className="mt-2">
-        <span className="text-sm font-medium text-primary"></span>
+        <span className="text-sm font-medium text-primary">Locations:</span>
         {locations.map((location, index) => (
             <span key={index} className="flex items-center space-x-1">
                 <span>{location}</span>
                 <button 
-                    onClick={() => handleRemoveLocation(index)} // Function to remove location
+                    onClick={() => removeLocation(index)} 
                     className="text-red-500 cursor-pointer">
                     ×
                 </button>

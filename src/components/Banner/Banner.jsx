@@ -69,6 +69,22 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     }, 0);
     // Check if any filters are applied
   const isFilterApplied = city || locations.length > 0 || propertyType || priceMin || priceMax || beds || baths;
+  const handleAddLocation = (e) => {
+    if (e.key === "Enter" && locationInput.trim() !== "") {
+        // Add the location to the list
+        setLocations((prevLocations) => {
+            const newLocations = [...prevLocations, locationInput.trim()];
+            return newLocations;
+        });
+        setLocationInput(""); // Clear the input field after adding the location
+    }
+};
+
+const handleRemoveLocation = (index) => {
+    const updatedLocations = [...locations];
+    updatedLocations.splice(index, 1);
+    setLocations(updatedLocations);
+};
 
     const handleSearch = (event) => {
         event.preventDefault();
@@ -88,21 +104,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     };
     
     
-    const handleAddLocation = (e) => {
-        if (e.key === "Enter" && e.target.value.trim() !== "") {
-            setLocations((prevLocations) => {
-                const newLocations = [...prevLocations, e.target.value.trim()];
-                e.target.value = "";  // Clear the input field after adding the location
-                return newLocations;
-            });
-        }
-    };
-
-    const handleRemoveLocation = (index) => {
-        const updatedLocations = [...locations];
-        updatedLocations.splice(index, 1);
-        setLocations(updatedLocations);
-    };
+   
     const handleClearFilters = () => {
         setCity("");
         setLocations([]);
@@ -238,14 +240,26 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
 
     <div className="flex flex-col w-full sm:w-[48%] md:w-[18%] mb-4 sm:mb-0">
                             <label className="mb-1 text-sm font-medium text-primary">Location</label>
-                            <input type="text" placeholder="Add location and press Enter" onKeyDown={handleAddLocation} className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full" />
+                            <input
+                                type="text"
+                                placeholder="Add location and press Enter"
+                                value={locationInput} // Controlled input
+                                onChange={(e) => setLocationInput(e.target.value)} // Update input field state
+                                onKeyDown={handleAddLocation} // Handle Enter key
+                                className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+                            />
                             {locations.length > 0 && (
                                 <div className="mt-2">
                                     <span className="text-sm font-medium text-primary">Locations:</span>
                                     {locations.map((location, index) => (
                                         <span key={index} className="flex items-center space-x-1">
                                             <span>{location}</span>
-                                            <button onClick={() => handleRemoveLocation(index)} className="text-red-500 cursor-pointer">×</button>
+                                            <button
+                                                onClick={() => handleRemoveLocation(index)}
+                                                className="text-red-500 cursor-pointer"
+                                            >
+                                                ×
+                                            </button>
                                         </span>
                                     ))}
                                 </div>

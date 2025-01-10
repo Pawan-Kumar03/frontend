@@ -234,7 +234,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
         <input 
     type="text"
     placeholder="Add location and press Enter"
-    onChange={(e) => setLocations([e.target.value])} // Ensure locations stays an array
+    // onChange={(e) => setLocations([e.target.value])} // Ensure locations stays an array
     onKeyPress={handleAddLocation}
     className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
 />

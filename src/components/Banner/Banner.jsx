@@ -90,10 +90,11 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     
     const handleAddLocation = (e) => {
         if (e.key === "Enter" && e.target.value.trim() !== "") {
-            setLocations([...locations, e.target.value.trim()]);
-            e.target.value = "";
+            setLocations(prevLocations => [...prevLocations, e.target.value.trim()]);  // Add new location to the array
+            e.target.value = "";  // Clear input field after adding location
         }
     };
+    
 
     const handleRemoveLocation = (index) => {
         const updatedLocations = [...locations];

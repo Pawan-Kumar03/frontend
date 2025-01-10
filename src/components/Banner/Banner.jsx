@@ -90,7 +90,6 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     
     const handleAddLocation = (e) => {
         if (e.key === "Enter" && e.target.value.trim() !== "") {
-            // Add the location to the list
             setLocations((prevLocations) => {
                 const newLocations = [...prevLocations, e.target.value.trim()];
                 e.target.value = "";  // Clear the input field after adding the location
@@ -104,7 +103,6 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
         updatedLocations.splice(index, 1);
         setLocations(updatedLocations);
     };
-
     const handleClearFilters = () => {
         setCity("");
         setLocations([]);
@@ -239,31 +237,20 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     </div>
 
     <div className="flex flex-col w-full sm:w-[48%] md:w-[18%] mb-4 sm:mb-0">
-    <label className="mb-1 text-sm font-medium text-primary">Location</label>
-    <input 
-        type="text"
-        placeholder="Add location and press Enter"
-        onKeyDown={handleAddLocation} // Use onKeyDown instead of onKeyPress for better handling of Enter key
-        className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-    />
-    {locations.length > 0 && (
-    <div className="mt-2">
-        <span className="text-sm font-medium text-primary">Locations:</span>
-        {locations.map((location, index) => (
-            <span key={index} className="flex items-center space-x-1">
-                <span>{location}</span>
-                <button 
-                    onClick={() => removeLocation(index)} 
-                    className="text-red-500 cursor-pointer">
-                    ×
-                </button>
-            </span>
-        ))}
-    </div>
-)}
-
-
-</div>
+                            <label className="mb-1 text-sm font-medium text-primary">Location</label>
+                            <input type="text" placeholder="Add location and press Enter" onKeyDown={handleAddLocation} className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full" />
+                            {locations.length > 0 && (
+                                <div className="mt-2">
+                                    <span className="text-sm font-medium text-primary">Locations:</span>
+                                    {locations.map((location, index) => (
+                                        <span key={index} className="flex items-center space-x-1">
+                                            <span>{location}</span>
+                                            <button onClick={() => handleRemoveLocation(index)} className="text-red-500 cursor-pointer">×</button>
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
 
     <div className="flex flex-col w-full sm:w-[48%] md:w-[14%] mb-4 sm:mb-0">
         <label className="mb-1 text-sm font-medium text-primary">Property Type</label>

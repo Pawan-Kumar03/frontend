@@ -16,7 +16,6 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     const [purpose, setPurpose] = useState("");
     const [locationCounts, setLocationCounts] = useState([]);
     const [isMobile, setIsMobile] = useState(false);
-    const [locationInput, setLocationInput] = useState("");  // New state for the input field value
 
     useEffect(() => {
         const handleResize = () => {
@@ -70,22 +69,6 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     }, 0);
     // Check if any filters are applied
   const isFilterApplied = city || locations.length > 0 || propertyType || priceMin || priceMax || beds || baths;
-  const handleAddLocation = (e) => {
-    if (e.key === "Enter" && locationInput.trim() !== "") {
-        // Add the location to the list
-        setLocations((prevLocations) => {
-            const newLocations = [...prevLocations, locationInput.trim()];
-            return newLocations;
-        });
-        setLocationInput(""); // Clear the input field after adding the location
-    }
-};
-
-const handleRemoveLocation = (index) => {
-    const updatedLocations = [...locations];
-    updatedLocations.splice(index, 1);
-    setLocations(updatedLocations);
-};
 
     const handleSearch = (event) => {
         event.preventDefault();
@@ -105,7 +88,19 @@ const handleRemoveLocation = (index) => {
     };
     
     
-   
+    const handleAddLocation = (e) => {
+        if (e.key === "Enter" && e.target.value.trim() !== "") {
+            setLocations([...locations, e.target.value.trim()]);
+            e.target.value = "";
+        }
+    };
+
+    const handleRemoveLocation = (index) => {
+        const updatedLocations = [...locations];
+        updatedLocations.splice(index, 1);
+        setLocations(updatedLocations);
+    };
+
     const handleClearFilters = () => {
         setCity("");
         setLocations([]);
@@ -128,11 +123,6 @@ const handleRemoveLocation = (index) => {
         setPurpose("buy"); // For rent, set the purpose to 'buy'
         onSearch({ purpose: "buy" }); // Trigger search with purpose 'buy'
     };
-    const removeLocation = (index) => {
-        const updatedLocations = locations.filter((_, i) => i !== index);
-        setLocations(updatedLocations); // Update the state after removal
-    };
-    
     
     const handleOffPlanClick = () => {
         const searchParams = {
@@ -240,32 +230,25 @@ const handleRemoveLocation = (index) => {
     </div>
 
     <div className="flex flex-col w-full sm:w-[48%] md:w-[18%] mb-4 sm:mb-0">
-                            <label className="mb-1 text-sm font-medium text-primary">Location</label>
-                            <input
-                                type="text"
-                                placeholder="Add location and press Enter"
-                                value={locationInput} // Controlled input
-                                onChange={(e) => setLocationInput(e.target.value)} // Update input field state
-                                onKeyDown={handleAddLocation} // Handle Enter key
-                                className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-                            />
-                            {locations.length > 0 && (
-                                <div className="mt-2">
-                                    <span className="text-sm font-medium text-primary">Locations:</span>
-                                    {locations.map((location, index) => (
-                                        <span key={index} className="flex items-center space-x-1">
-                                            <span>{location}</span>
-                                            <button
-                                                onClick={() => handleRemoveLocation(index)}
-                                                className="text-red-500 cursor-pointer"
-                                            >
-                                                ×
-                                            </button>
-                                        </span>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
+        <label className="mb-1 text-sm font-medium text-primary">Location</label>
+        <input 
+            type="text"
+            placeholder="Add location and press Enter"
+            onChange={(e) => setLocations(e.target.value)}
+            onKeyPress={handleAddLocation}
+            className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+        />
+        {locations.map((loc, index) => (
+            <div key={index} className="flex items-center space-x-1 mb-1 mr-1 bg-primary dark:bg-primary px-2 py-1 rounded-full">
+                <span className="text-sm text-primary">{loc}</span>
+                <button type="button" onClick={() => handleRemoveLocation(index)} className="ml-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        ))}
+    </div>
 
     <div className="flex flex-col w-full sm:w-[48%] md:w-[14%] mb-4 sm:mb-0">
         <label className="mb-1 text-sm font-medium text-primary">Property Type</label>
@@ -360,29 +343,23 @@ const handleRemoveLocation = (index) => {
 
             </div>
             {city && locationCounts.length > 0 && (
-    <div className="bg-primary font-primary pl-14">
-    <h2 className="text-xl font-semibold text-primary font-primary">
-        Properties by Location in {city}. {totalProperties} Ads
-    </h2>
-    <ul className="mt-2 flex flex-wrap gap-2 text-black">
-        {Array.isArray(locationCounts) && locationCounts.length > 0 ? (
-            locationCounts.map((loc, index) => (
+    <div className=" bg-primary font-primary pl-14">
+        <h2 className="text-xl font-semibold  text-primary font-primary">
+            Properties by Location in {city}. {totalProperties} Ads
+        </h2>
+        <ul className="mt-2 flex flex-wrap gap-2 text-black">
+            {locationCounts.map((loc, index) => (
                 <li 
                     key={index}
-                    className="flex font-playfair items-center px-4 rounded shadow-md cursor-pointer text-primary"
+                    className="flex  font-playfair items-center px-4 rounded shadow-md cursor-pointer text-primary"
                     onClick={() => handleLocationClick(loc.location)}
                 >
-                    <span className="mr-2 font-playfair whitespace-nowrap truncate max-w-[120px]">{loc.location}</span>
-
+                    <span className="mr-2 font-playfair truncate max-w-[120px]">{loc.location.split(' ').slice(0, 2).join(' ')}</span>
                     <span className="text-primary font-playfair">( {loc.count} )</span>
                 </li>
-            ))
-        ) : (
-            <li>No locations available</li>
-        )}
-    </ul>
-</div>
-
+            ))}
+        </ul>
+    </div>
 )}
         </section>
     );

@@ -16,6 +16,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     const [purpose, setPurpose] = useState("");
     const [locationCounts, setLocationCounts] = useState([]);
     const [isMobile, setIsMobile] = useState(false);
+    const [locationInput, setLocationInput] = useState("");  // New state for the input field value
 
     useEffect(() => {
         const handleResize = () => {

@@ -238,11 +238,22 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
         className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
     />
     {locations.length > 0 && (
-        <div className="mt-2">
-            <span className="text-sm font-medium text-primary">Locations: </span>
-            {locations.join(", ")} {/* Display locations as a single string, separated by commas */}
-        </div>
-    )}
+    <div className="mt-2">
+        <span className="text-sm font-medium text-primary"></span>
+        {locations.map((location, index) => (
+            <span key={index} className="flex items-center space-x-1">
+                <span>{location}</span>
+                <button 
+                    onClick={() => removeLocation(index)} // Function to remove location
+                    className="text-red-500 cursor-pointer">
+                    ×
+                </button>
+            </span>
+        ))}
+    </div>
+)}
+
+
 </div>
 
     <div className="flex flex-col w-full sm:w-[48%] md:w-[14%] mb-4 sm:mb-0">

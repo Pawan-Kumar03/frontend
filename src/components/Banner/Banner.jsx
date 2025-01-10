@@ -123,6 +123,11 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
         setPurpose("buy"); // For rent, set the purpose to 'buy'
         onSearch({ purpose: "buy" }); // Trigger search with purpose 'buy'
     };
+    const removeLocation = (index) => {
+        const updatedLocations = locations.filter((_, i) => i !== index);
+        setLocations(updatedLocations); // Assuming you're using `setLocations` to update the state
+    };
+    
     
     const handleOffPlanClick = () => {
         const searchParams = {

@@ -232,12 +232,13 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     <div className="flex flex-col w-full sm:w-[48%] md:w-[18%] mb-4 sm:mb-0">
         <label className="mb-1 text-sm font-medium text-primary">Location</label>
         <input 
-            type="text"
-            placeholder="Add location and press Enter"
-            onChange={(e) => setLocations(e.target.value)}
-            onKeyPress={handleAddLocation}
-            className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-        />
+    type="text"
+    placeholder="Add location and press Enter"
+    onChange={(e) => setLocations([e.target.value])} // Ensure locations stays an array
+    onKeyPress={handleAddLocation}
+    className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+/>
+
         {locations.map((loc, index) => (
             <div key={index} className="flex items-center space-x-1 mb-1 mr-1 bg-primary dark:bg-primary px-2 py-1 rounded-full">
                 <span className="text-sm text-primary">{loc}</span>

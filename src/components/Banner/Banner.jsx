@@ -517,24 +517,28 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
 
             </div>
             {city && locationCounts.length > 0 && (
-    <div className=" bg-primary font-primary pl-14">
-        <h2 className="text-xl font-semibold  text-primary font-primary">
+    <div className="bg-primary font-primary pl-14">
+        <h2 className="text-xl font-semibold text-primary font-primary">
             Properties by Location in {city}. {totalProperties} Ads
         </h2>
-        <ul className="mt-2 flex flex-wrap gap-2 text-black">
+        <div className="mt-2 flex overflow-x-auto space-x-2">
             {locationCounts.map((loc, index) => (
-                <li 
+                <div
                     key={index}
-                    className="flex  font-playfair items-center px-4 rounded shadow-md cursor-pointer text-primary"
+                    className="flex-shrink-0 font-playfair items-center px-4 py-2 rounded shadow-md cursor-pointer text-primary bg-white"
                     onClick={() => handleLocationClick(loc.location)}
+                    style={{ minWidth: '150px' }}
                 >
-                    <span className="mr-2 font-playfair truncate max-w-[120px]">{loc.location.split(' ').slice(0, 2).join(' ')}</span>
-                    <span className="text-primary font-playfair">( {loc.count} )</span>
-                </li>
+                    <span className="mr-2 font-playfair truncate max-w-[120px]">
+                        {loc.location.split(' ').slice(0, 2).join(' ')}
+                    </span>
+                    <span className="text-primary font-playfair">({loc.count})</span>
+                </div>
             ))}
-        </ul>
+        </div>
     </div>
 )}
+
         </section>
     );
 }

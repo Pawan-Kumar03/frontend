@@ -123,7 +123,7 @@ function PropertiesPage() {
       <select
         value={purpose}
         onChange={(e) => setPurpose(e.target.value)}
-        className="text-primary p-2 text-sm sm:text-base border border-primary-400 rounded"
+        className="text-primary p-2 text-sm sm:text-base border-primary-400 rounded"
       >
         <option value="All">All</option>
         <option value="sell">For Sale</option>

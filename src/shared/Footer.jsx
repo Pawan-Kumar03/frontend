@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import logoDark from "../assets/logo.jpeg";
+import logoDark from "../assets/logo.png";
 import Card from "../components/Card/Card";
 import { Swiper, SwiperSlide } from "swiper/react";
 // import "swiper/swiper-bundle.min.css"; // Import Swiper styles

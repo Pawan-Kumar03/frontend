@@ -56,7 +56,7 @@ export default function Navbar() {
                         About Us
                     </Link>
                     <Link to="/ConsultancyPage" className="px-4 py-2 text-primary rounded-full bg-primary-dark hover:bg-banner">
-                        Consultant
+                    Consultation
                     </Link>
 
                     {user ? (
@@ -155,7 +155,7 @@ export default function Navbar() {
                                 className="block px-4 py-2 text-primary rounded-full hover:bg-primary-dark"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
-                                Consultant
+                                Consultation
                             </Link>
                             {user ? (
                                 <>

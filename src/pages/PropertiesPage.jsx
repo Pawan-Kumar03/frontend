@@ -118,7 +118,6 @@ function PropertiesPage() {
       showFilters ? "block" : "hidden"
     } sm:flex items-center space-x-4 overflow-x-auto sm:overflow-visible scrollbar-hide mt-4 sm:mt-0`}
   >
-    <div>
     <div className="flex flex-col min-w-[160px]">
       <label className="text-sm sm:text-base">Purpose</label>
       <select
@@ -206,7 +205,6 @@ function PropertiesPage() {
       >
         Filter
       </button>
-    </div>
     </div>
   </div>
 </div>

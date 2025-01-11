@@ -116,27 +116,29 @@ function PropertiesPage() {
   <div
     className={`${
       showFilters ? "block" : "hidden"
-    } sm:flex items-center space-x-4 overflow-x-auto sm:overflow-visible scrollbar-hide mt-4 sm:mt-0`}
+    } sm:flex items-center space-y-4 sm:space-y-0 sm:space-x-4 overflow-x-auto sm:overflow-visible scrollbar-hide mt-4 sm:mt-0`}
   >
-    <div className="flex flex-col min-w-[160px]">
-      <label className="text-sm sm:text-base">Purpose</label>
+    {/* Purpose */}
+    <div className="flex flex-col sm:w-[160px] w-full">
+      <label className="text-sm sm:text-base mb-1">Purpose</label>
       <select
         value={purpose}
         onChange={(e) => setPurpose(e.target.value)}
-        className="text-primary p-2 text-sm sm:text-base border-primary-400 rounded"
+        className="text-primary p-2 text-sm sm:text-base border border-primary-400 rounded w-full"
       >
         <option value="All">All</option>
         <option value="sell">For Sale</option>
-        <option value="buy">For Rent</option>
+        <option value="rent">For Rent</option>
       </select>
     </div>
 
-    <div className="flex flex-col min-w-[160px]">
-      <label className="text-sm sm:text-base">Property Type</label>
+    {/* Property Type */}
+    <div className="flex flex-col sm:w-[160px] w-full">
+      <label className="text-sm sm:text-base mb-1">Property Type</label>
       <select
         value={propertyType}
         onChange={(e) => setPropertyType(e.target.value)}
-        className="text-primary p-2 text-sm sm:text-base border-primary-400 rounded"
+        className="text-primary p-2 text-sm sm:text-base border border-primary-400 rounded w-full"
       >
         <option value="All">All</option>
         <option value="Apartment">Apartment</option>
@@ -146,68 +148,73 @@ function PropertiesPage() {
       </select>
     </div>
 
-    <div className="flex flex-col min-w-[160px]">
-      <label className="text-sm sm:text-base">Price Range</label>
+    {/* Price Range */}
+    <div className="flex flex-col sm:w-[160px] w-full">
+      <label className="text-sm sm:text-base mb-1">Price Range</label>
       <div className="flex space-x-2">
         <input
           type="number"
           placeholder="Min"
           value={minPrice}
           onChange={(e) => setMinPrice(e.target.value)}
-          className="text-primary p-2 text-sm sm:text-base border-primary-400 rounded w-full"
+          className="text-primary p-2 text-sm sm:text-base border border-primary-400 rounded w-full"
         />
         <input
           type="number"
           placeholder="Max"
           value={maxPrice}
           onChange={(e) => setMaxPrice(e.target.value)}
-          className="text-primary p-2 text-sm sm:text-base border-primary-400 rounded w-full"
+          className="text-primary p-2 text-sm sm:text-base border border-primary-400 rounded w-full"
         />
       </div>
     </div>
 
-    <div className="flex flex-col min-w-[160px]">
-      <label className="text-sm sm:text-base">Beds</label>
+    {/* Beds */}
+    <div className="flex flex-col sm:w-[160px] w-full">
+      <label className="text-sm sm:text-base mb-1">Beds</label>
       <select
         value={beds}
         onChange={(e) => setBeds(e.target.value)}
-        className="text-primary p-2 text-sm sm:text-base border-primary-400 rounded"
+        className="text-primary p-2 text-sm sm:text-base border border-primary-400 rounded w-full"
       >
         <option value="Any">Any</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
+        {[...Array(5).keys()].map((i) => (
+          <option key={i + 1} value={i + 1}>
+            {i + 1}
+          </option>
+        ))}
       </select>
     </div>
 
-    <div className="flex flex-col min-w-[160px]">
-      <label className="text-sm sm:text-base">Baths</label>
+    {/* Baths */}
+    <div className="flex flex-col sm:w-[160px] w-full">
+      <label className="text-sm sm:text-base mb-1">Baths</label>
       <select
         value={baths}
         onChange={(e) => setBaths(e.target.value)}
-        className="text-primary p-2 text-sm sm:text-base border-primary-400 rounded"
+        className="text-primary p-2 text-sm sm:text-base border border-primary-400 rounded w-full"
       >
         <option value="Any">Any</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
+        {[...Array(5).keys()].map((i) => (
+          <option key={i + 1} value={i + 1}>
+            {i + 1}
+          </option>
+        ))}
       </select>
     </div>
 
-    <div className="flex flex-col min-w-[160px]">
+    {/* Filter Button */}
+    <div className="flex flex-col sm:w-[160px] w-full">
       <button
         onClick={handleSearch}
-        className="p-2 text-sm sm:text-base bg-button text-button rounded"
+        className="p-2 text-sm sm:text-base bg-button text-button rounded w-full"
       >
         Filter
       </button>
     </div>
   </div>
 </div>
+
 
 
 

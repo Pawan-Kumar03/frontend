@@ -86,7 +86,13 @@ function PropertiesPage() {
     return (
         <div className="container mx-auto p-4 font-primary">
             {/* Conditionally render Banner */}
-            {pathname !== "/properties" && <Banner city={city} location={selectedLocation} />}
+            {pathname !== "/properties" && <Banner 
+    onSearch={(filters) => {
+        // Update filters in the state or navigate
+        const query = new URLSearchParams(filters).toString();
+        navigate(`/properties?${query}`);
+    }} 
+/>}
 
             <div className="text-center mb-8 font-primary">
                 <h1 className="text-2xl sm:text-3xl font-bold text-primary">Properties in {location || "All Locations"} ({city})</h1>

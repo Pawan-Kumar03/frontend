@@ -38,33 +38,29 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     }, []);
 
     useEffect(() => {
-        if (city) {
-            fetch(`https://backend-git-main-pawan-togas-projects.vercel.app/api/listings/${city}`)
-                .then(response => response.json())
-                .then(data => {
-                    // console.log(data); // Inspect the API response
-    
-                    // Grouping properties by location
-                    const locationMap = data.reduce((acc, property) => {
-                        const location = property.location;
-                        if (location) {
-                            if (!acc[location]) {
-                                acc[location] = { location: location, count: 0 };
-                            }
-                            acc[location].count += 1;
-                        }
-                        return acc;
-                    }, {});
-    
-                    // Convert the grouped data back to an array
-                    const groupedLocations = Object.values(locationMap);
-                    setLocationCounts(groupedLocations);
-                })
-                .catch(error => console.error('Error fetching location counts:', error));
-        } else {
-            setLocationCounts([]);
-        }
-    }, [city]);
+      if (city) {
+          fetch(`https://backend-git-main-pawan-togas-projects.vercel.app/api/listings/${city}`)
+              .then(response => response.json())
+              .then(data => {
+                  const locationMap = data.reduce((acc, property) => {
+                      const location = property.location;
+                      if (location) {
+                          if (!acc[location]) {
+                              acc[location] = { location: location, count: 0 };
+                          }
+                          acc[location].count += 1;
+                      }
+                      return acc;
+                  }, {});
+
+                  const groupedLocations = Object.values(locationMap);
+                  setLocationCounts(groupedLocations);
+              })
+              .catch(error => console.error('Error fetching location counts:', error));
+      } else {
+          setLocationCounts([]);
+      }
+  }, [city]);
     
     
     const totalProperties = locationCounts.reduce((total, loc) => {
@@ -73,32 +69,39 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     // Check if any filters are applied
   const isFilterApplied = city || locations.length > 0 || propertyType || priceMin || priceMax || beds || baths;
 
-    const handleSearch = (event) => {
-        event.preventDefault();
-        const searchParams = {
-            city: city || "",
-            location: locations.join(",") || "",
-            propertyType: propertyType || "",
-            priceMin: priceMin || "",
-            priceMax: priceMax || "",
-            beds: beds || "",
-            baths: baths || "",
-            agentType: agentType || "",
-            status: status !== "" ? status : "", // Include status if present
-            purpose: purpose || ""
-        };
+  const handleSearch = (event) => {
+    event.preventDefault();
+    const searchParams = {
+        city: city || "",
+        location: locations.join(",") || "",
+        propertyType: propertyType || "",
+        priceMin: priceMin || "",
+        priceMax: priceMax || "",
+        beds: beds || "",
+        baths: baths || "",
+        agentType: agentType || "",
+        status: status !== "" ? status : "", // Include status if present
+        purpose: purpose || ""
+    };
 
-        const queryString = new URLSearchParams(searchParams).toString();
-        navigate(`/properties?${queryString}`);
-    };
+    const queryString = new URLSearchParams(searchParams).toString();
+    navigate(`/properties?${queryString}`);
+};
     
     
-    const handleAddLocation = (e) => {
-        if (e.key === "Enter" && e.target.value.trim() !== "") {
-            setLocations([...locations, e.target.value.trim()]);
-            e.target.value = "";
-        }
-    };
+const handleAddLocation = (e) => {
+  const value = e.target.value.trim();
+  // If a key press happens and it's not "Enter", or if the user clicks away, add the location
+  if (value && (e.key === "Enter" || e.key === "Tab")) {
+      setLocations((prevLocations) => {
+          if (!prevLocations.includes(value)) {
+              return [...prevLocations, value];
+          }
+          return prevLocations; // Don't add duplicates
+      });
+      e.target.value = ""; // Reset input after adding the location
+  }
+};
 
     const handleRemoveLocation = (index) => {
         const updatedLocations = [...locations];
@@ -253,45 +256,33 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
           </select>
         </div>
 
-        {/* Location Filter */}
+        {/* Locations */}
         <div className="flex flex-col w-full">
-          <label className="mb-1 text-sm font-medium text-primary">Location</label>
-          <input
-            type="text"
-            placeholder="Add location and press enter"
-            onKeyPress={handleAddLocation}
-            className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-          />
-          {locations.map((loc, index) => (
-            <div
-              key={index}
-              className="flex items-center space-x-1 mb-1 bg-primary px-2 py-1 rounded-full"
-            >
-              <span className="text-sm text-primary">{loc}</span>
-              <button
-                type="button"
-                onClick={() => handleRemoveLocation(index)}
-                className="ml-1"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 text-red-600"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-          ))}
-        </div>
-
+                                <label className="mb-1 text-sm font-medium text-primary">Location</label>
+                                <input
+                                    type="text"
+                                    placeholder="Add Location"
+                                    onKeyUp={handleAddLocation}
+                                    className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+                                />
+                                <div className="mt-2">
+                                    {locations.map((location, index) => (
+                                        <span
+                                            key={index}
+                                            className="bg-primary text-white text-xs px-2 py-1 rounded-full m-1"
+                                        >
+                                            {location}{" "}
+                                            <button
+                                                className="text-xs ml-1"
+                                                type="button"
+                                                onClick={() => handleRemoveLocation(index)}
+                                            >
+                                                X
+                                            </button>
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
         {/* Property Type Filter */}
         <div className="flex flex-col w-full">
           <label className="mb-1 text-sm font-medium text-primary">Property Type</label>

@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import saleProperty from "../../assets/icons/sale-property.svg";
 import inputSearch from "../../assets/icons/input-search.svg";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Banner({ onSearch, onPlaceAnAd }) {
     const [city, setCity] = useState("");
@@ -17,7 +18,8 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     const [locationCounts, setLocationCounts] = useState([]);
     const [isMobile, setIsMobile] = useState(false);
     const [showFilters, setShowFilters] = useState(false);
-   
+    const navigate = useNavigate();
+
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth < 640 ) {
@@ -82,10 +84,12 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
             beds: beds || "",
             baths: baths || "",
             agentType: agentType || "",
-            status: status !== "" ? status : "", // Ensure status is included in the search
+            status: status !== "" ? status : "", // Include status if present
             purpose: purpose || ""
         };
-        onSearch(searchParams); // Pass searchParams to onSearch function
+
+        const queryString = new URLSearchParams(searchParams).toString();
+        navigate(`/properties?${queryString}`);
     };
     
     

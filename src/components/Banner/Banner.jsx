@@ -38,29 +38,33 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     }, []);
 
     useEffect(() => {
-      if (city) {
-          fetch(`https://backend-git-main-pawan-togas-projects.vercel.app/api/listings/${city}`)
-              .then(response => response.json())
-              .then(data => {
-                  const locationMap = data.reduce((acc, property) => {
-                      const location = property.location;
-                      if (location) {
-                          if (!acc[location]) {
-                              acc[location] = { location: location, count: 0 };
-                          }
-                          acc[location].count += 1;
-                      }
-                      return acc;
-                  }, {});
-
-                  const groupedLocations = Object.values(locationMap);
-                  setLocationCounts(groupedLocations);
-              })
-              .catch(error => console.error('Error fetching location counts:', error));
-      } else {
-          setLocationCounts([]);
-      }
-  }, [city]);
+        if (city) {
+            fetch(`https://backend-git-main-pawan-togas-projects.vercel.app/api/listings/${city}`)
+                .then(response => response.json())
+                .then(data => {
+                    // console.log(data); // Inspect the API response
+    
+                    // Grouping properties by location
+                    const locationMap = data.reduce((acc, property) => {
+                        const location = property.location;
+                        if (location) {
+                            if (!acc[location]) {
+                                acc[location] = { location: location, count: 0 };
+                            }
+                            acc[location].count += 1;
+                        }
+                        return acc;
+                    }, {});
+    
+                    // Convert the grouped data back to an array
+                    const groupedLocations = Object.values(locationMap);
+                    setLocationCounts(groupedLocations);
+                })
+                .catch(error => console.error('Error fetching location counts:', error));
+        } else {
+            setLocationCounts([]);
+        }
+    }, [city]);
     
     
     const totalProperties = locationCounts.reduce((total, loc) => {
@@ -89,19 +93,12 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
 };
     
     
-const handleAddLocation = (e) => {
-  const value = e.target.value.trim();
-  // If a key press happens and it's not "Enter", or if the user clicks away, add the location
-  if (value && (e.key === "Enter" || e.key === "Tab")) {
-      setLocations((prevLocations) => {
-          if (!prevLocations.includes(value)) {
-              return [...prevLocations, value];
-          }
-          return prevLocations; // Don't add duplicates
-      });
-      e.target.value = ""; // Reset input after adding the location
-  }
-};
+    const handleAddLocation = (e) => {
+        if (e.key === "Enter" && e.target.value.trim() !== "") {
+            setLocations([...locations, e.target.value.trim()]);
+            e.target.value = "";
+        }
+    };
 
     const handleRemoveLocation = (index) => {
         const updatedLocations = [...locations];

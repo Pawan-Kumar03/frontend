@@ -47,9 +47,15 @@ export default function ResidentialForSale({ searchParams = {}, listings = [] })
     return (
         <section className="py-8 px-4 lg:px-0 bg-primary font-primary text-primary">
             <div className="container mx-auto font-primary">
-                <h1 className="text-3xl font-bold mb-6 text-primary font-primary">
-                    {searchParams.city ? `Properties in ${searchParams.city}` : "Popular Developments"}
-                </h1>
+            <h1 className="text-3xl font-bold mb-6 text-primary font-primary flex justify-between items-center relative">
+    <span>
+        {searchParams.city ? `Properties in ${searchParams.city}` : "Popular Developments"}
+    </span>
+    <span className="absolute right-0 text-primary text-2xl animate-bounce">
+        ➡️
+    </span>
+</h1>
+
                 {filteredResults.length > 0 ? (
                     <Swiper
                         spaceBetween={30} // Increased space between cards

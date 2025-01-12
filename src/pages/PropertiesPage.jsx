@@ -20,76 +20,74 @@ function PropertiesPage() {
     const [showFilters, setShowFilters] = useState(false);
    
     useEffect(() => {
-        let url = `https://backend-git-main-pawan-togas-projects.vercel.app/api/listings?city=${encodeURIComponent(city)}`;
-
-        if (location !== "All Locations") {
-            url += `&location=${encodeURIComponent(location)}`;
-        }
-
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (Array.isArray(data)) {
-                    setProperties(data);
-                    setFilteredProperties(data);
-                } else {
-                    console.error('Data format is not as expected:', data);
-                    setProperties([]);
-                    setFilteredProperties([]);
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching properties:', error);
-                setProperties([]);
-                setFilteredProperties([]);
-            });
-    }, [city, location]);
+      let url = `https://backend-git-main-pawan-togas-projects.vercel.app/api/listings?city=${encodeURIComponent(city)}`;
+  
+      if (location !== "All Locations") {
+          url += `&location=${encodeURIComponent(location)}`;
+      }
+  
+      fetch(url)
+          .then(response => response.json())
+          .then(data => {
+              if (Array.isArray(data)) {
+                  setProperties(data);
+                  // Filter properties initially based on URL query params
+                  handleSearch(); // Apply filtering based on all filters
+              } else {
+                  console.error('Data format is not as expected:', data);
+                  setProperties([]);
+                  setFilteredProperties([]);
+              }
+          })
+          .catch(error => {
+              console.error('Error fetching properties:', error);
+              setProperties([]);
+              setFilteredProperties([]);
+          });
+  }, [city, location]); // Re-run the effect when city or location changes
+  
 
     const handleSearch = () => {
-        let filtered = properties;
-    
-        if (searchQuery) {
-            filtered = filtered.filter(property => 
-                property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                property.description.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-        }
-    
-        if (purpose !== "All") {
-            filtered = filtered.filter(property => property.purpose === purpose);
-        }
-    
-        if (propertyType !== "All") {
-            filtered = filtered.filter(property => property.propertyType === propertyType);
-        }
-    
-        if (minPrice) {
-            filtered = filtered.filter(property => 
-                parseInt(property.price.replace(/[^\d]/g, ''), 10) >= parseInt(minPrice, 10)
-            );
-        }
-    
-        if (maxPrice) {
-            filtered = filtered.filter(property => 
-                parseInt(property.price.replace(/[^\d]/g, ''), 10) <= parseInt(maxPrice, 10)
-            );
-        }
-    
-        if (beds !== "Any") {
-            filtered = filtered.filter(property => property.beds === parseInt(beds));
-        }
-    
-        if (baths !== "Any") {
-            filtered = filtered.filter(property => property.baths === parseInt(baths));
-        }
-    
-        setFilteredProperties(filtered);
-    };    
+      let filtered = properties;
+  
+      if (searchQuery) {
+          filtered = filtered.filter(property => 
+              property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              property.description.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+      }
+  
+      if (purpose !== "All") {
+          filtered = filtered.filter(property => property.purpose === purpose);
+      }
+  
+      if (propertyType !== "All") {
+          filtered = filtered.filter(property => property.propertyType === propertyType);
+      }
+  
+      if (minPrice) {
+          filtered = filtered.filter(property => 
+              parseInt(property.price.replace(/[^\d]/g, ''), 10) >= parseInt(minPrice, 10)
+          );
+      }
+  
+      if (maxPrice) {
+          filtered = filtered.filter(property => 
+              parseInt(property.price.replace(/[^\d]/g, ''), 10) <= parseInt(maxPrice, 10)
+          );
+      }
+  
+      if (beds !== "Any") {
+          filtered = filtered.filter(property => property.beds === parseInt(beds));
+      }
+  
+      if (baths !== "Any") {
+          filtered = filtered.filter(property => property.baths === parseInt(baths));
+      }
+  
+      setFilteredProperties(filtered);
+  };
+     
    
     return (
       <div className="container mx-auto p-4 font-primary">

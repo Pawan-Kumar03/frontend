@@ -73,24 +73,24 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     // Check if any filters are applied
   const isFilterApplied = city || locations.length > 0 || propertyType || priceMin || priceMax || beds || baths;
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const searchParams = {
-        city: city || "",
-        location: locations.join(",") || "",
-        propertyType: propertyType || "",
-        priceMin: priceMin || "",
-        priceMax: priceMax || "",
-        beds: beds || "",
-        baths: baths || "",
-        agentType: agentType || "",
-        status: status !== "" ? status : "", // Include status if present
-        purpose: purpose || ""
-    };
+    const handleSearch = (event) => {
+        event.preventDefault();
+        const searchParams = {
+            city: city || "",
+            location: locations.join(",") || "",
+            propertyType: propertyType || "",
+            priceMin: priceMin || "",
+            priceMax: priceMax || "",
+            beds: beds || "",
+            baths: baths || "",
+            agentType: agentType || "",
+            status: status !== "" ? status : "", // Include status if present
+            purpose: purpose || ""
+        };
 
-    const queryString = new URLSearchParams(searchParams).toString();
-    navigate(`/properties?${queryString}`);
-};
+        const queryString = new URLSearchParams(searchParams).toString();
+        navigate(`/properties?${queryString}`);
+    };
     
     
     const handleAddLocation = (e) => {
@@ -253,33 +253,45 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
           </select>
         </div>
 
-        {/* Locations */}
+        {/* Location Filter */}
         <div className="flex flex-col w-full">
-                                <label className="mb-1 text-sm font-medium text-primary">Location</label>
-                                <input
-                                    type="text"
-                                    placeholder="Add Location"
-                                    onKeyUp={handleAddLocation}
-                                    className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-                                />
-                                <div className="mt-2">
-                                    {locations.map((location, index) => (
-                                        <span
-                                            key={index}
-                                            className="bg-primary text-white text-xs px-2 py-1 rounded-full m-1"
-                                        >
-                                            {location}{" "}
-                                            <button
-                                                className="text-xs ml-1"
-                                                type="button"
-                                                onClick={() => handleRemoveLocation(index)}
-                                            >
-                                                X
-                                            </button>
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
+          <label className="mb-1 text-sm font-medium text-primary">Location</label>
+          <input
+            type="text"
+            placeholder="Add location and press enter"
+            onKeyPress={handleAddLocation}
+            className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+          />
+          {locations.map((loc, index) => (
+            <div
+              key={index}
+              className="flex items-center space-x-1 mb-1 bg-primary px-2 py-1 rounded-full"
+            >
+              <span className="text-sm text-primary">{loc}</span>
+              <button
+                type="button"
+                onClick={() => handleRemoveLocation(index)}
+                className="ml-1"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 text-red-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+          ))}
+        </div>
+
         {/* Property Type Filter */}
         <div className="flex flex-col w-full">
           <label className="mb-1 text-sm font-medium text-primary">Property Type</label>

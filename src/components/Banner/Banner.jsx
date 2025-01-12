@@ -361,9 +361,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
             <option value="5">5+</option>
           </select>
         </div>
-      </div>
-
-      {/* Search and Clear Filters Buttons */}
+        {/* Search and Clear Filters Buttons */}
       <div className="flex items-center gap-4 w-full col-span-2 mt-auto">
         <button
           type="submit"
@@ -381,6 +379,9 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
           </button>
         )}
       </div>
+      </div>
+
+      
     </form>
                 </div>
 

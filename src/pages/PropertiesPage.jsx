@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Card from '../components/Card/Card';
+import Banner from "../components/Banner/Banner"; // Assuming the banner is a separate component
 
 function PropertiesPage() {
     const [properties, setProperties] = useState([]);
@@ -14,15 +15,35 @@ function PropertiesPage() {
     const [baths, setBaths] = useState("Any");
     const { search } = useLocation();
     const queryParams = new URLSearchParams(search);
-    const city = queryParams.get("city");
-    const location = queryParams.get("location");
+    const city = queryParams.get("city") || "";
+    const location = queryParams.get("location") || "";
     const [showFilters, setShowFilters] = useState(false);
-   
+
     useEffect(() => {
         let url = `https://backend-git-main-pawan-togas-projects.vercel.app/api/listings?city=${encodeURIComponent(city)}`;
 
-        if (location) {
+        if (location && location !== "All Locations") {
             url += `&location=${encodeURIComponent(location)}`;
+        }
+
+        // Adding filters directly to the URL for API-side filtering
+        if (purpose !== "All") {
+            url += `&purpose=${encodeURIComponent(purpose)}`;
+        }
+        if (propertyType !== "All") {
+            url += `&propertyType=${encodeURIComponent(propertyType)}`;
+        }
+        if (minPrice) {
+            url += `&minPrice=${encodeURIComponent(minPrice)}`;
+        }
+        if (maxPrice) {
+            url += `&maxPrice=${encodeURIComponent(maxPrice)}`;
+        }
+        if (beds !== "Any") {
+            url += `&beds=${encodeURIComponent(beds)}`;
+        }
+        if (baths !== "Any") {
+            url += `&baths=${encodeURIComponent(baths)}`;
         }
 
         fetch(url)
@@ -35,7 +56,7 @@ function PropertiesPage() {
             .then(data => {
                 if (Array.isArray(data)) {
                     setProperties(data);
-                    setFilteredProperties(data);
+                    setFilteredProperties(data); // In case the filters are applied server-side
                 } else {
                     console.error('Data format is not as expected:', data);
                     setProperties([]);
@@ -47,72 +68,40 @@ function PropertiesPage() {
                 setProperties([]);
                 setFilteredProperties([]);
             });
-    }, [city, location]);
+    }, [city, location, purpose, propertyType, minPrice, maxPrice, beds, baths]);
 
     const handleSearch = () => {
         let filtered = properties;
-    
-        // Apply search query filter if present
+
         if (searchQuery) {
-            filtered = filtered.filter(property => 
+            filtered = filtered.filter(property =>
                 property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 property.description.toLowerCase().includes(searchQuery.toLowerCase())
             );
         }
-    
-        // Apply purpose filter if a specific purpose is selected
-        if (purpose !== "All") {
-            filtered = filtered.filter(property => property.purpose === purpose);
-        }
-    
-        // Apply property type filter if a specific property type is selected
-        if (propertyType !== "All") {
-            filtered = filtered.filter(property => property.propertyType === propertyType);
-        }
-    
-        // Apply minimum price filter if a minimum price is set
-        if (minPrice) {
-            filtered = filtered.filter(property => 
-                parseInt(property.price.replace(/[^\d]/g, ''), 10) >= parseInt(minPrice, 10)
-            );
-        }
-    
-        // Apply maximum price filter if a maximum price is set
-        if (maxPrice) {
-            filtered = filtered.filter(property => 
-                parseInt(property.price.replace(/[^\d]/g, ''), 10) <= parseInt(maxPrice, 10)
-            );
-        }
-    
-        // Apply beds filter if a specific number of beds is selected
-        if (beds !== "Any") {
-            filtered = filtered.filter(property => property.beds === parseInt(beds));
-        }
-    
-        // Apply baths filter if a specific number of baths is selected
-        if (baths !== "Any") {
-            filtered = filtered.filter(property => property.baths === parseInt(baths));
-        }
-    
+
         setFilteredProperties(filtered);
-    };    
+    };
 
     return (
         <div className="container mx-auto p-4 font-primary">
+            {/* Conditionally render Banner */}
+            {!city && !location && <Banner city={city} location={location} />}
+
             <div className="text-center mb-8 font-primary">
                 <h1 className="text-2xl sm:text-3xl font-bold text-primary">Properties in {location || "All Locations"} ({city})</h1>
             </div>
-            
-            <div className="mb-8">
-  {/* Filter Toggle Button for Mobile */}
-  <button
-    className="block sm:hidden bg-button text-button px-4 py-2 rounded w-full text-center"
-    onClick={() => setShowFilters((prev) => !prev)}
-  >
-    {showFilters ? "Hide Filters" : "Show Filters"}
-  </button>
 
-  {/* Filters Section */}
+            <div className="mb-8">
+                {/* Filter Toggle Button for Mobile */}
+                <button
+                    className="block sm:hidden bg-button text-button px-4 py-2 rounded w-full text-center"
+                    onClick={() => setShowFilters(prev => !prev)}
+                >
+                    {showFilters ? "Hide Filters" : "Show Filters"}
+                </button>
+
+                  {/* Filters Section */}
   <div
     className={`${
       showFilters ? "block" : "hidden"
@@ -215,9 +204,6 @@ function PropertiesPage() {
   </div>
 </div>
 
-
-
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 font-primary">
                 {filteredProperties.length > 0 ? (
                     filteredProperties.map(property => (
@@ -232,4 +218,3 @@ function PropertiesPage() {
 }
 
 export default PropertiesPage;
-

@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import saleProperty from "../../assets/icons/sale-property.svg";
 import inputSearch from "../../assets/icons/input-search.svg";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Banner({ onSearch, onPlaceAnAd }) {
     const [city, setCity] = useState("");
@@ -16,6 +17,8 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     const [purpose, setPurpose] = useState("");
     const [locationCounts, setLocationCounts] = useState([]);
     const [isMobile, setIsMobile] = useState(false);
+    const [showFilters, setShowFilters] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleResize = () => {
@@ -81,10 +84,12 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
             beds: beds || "",
             baths: baths || "",
             agentType: agentType || "",
-            status: status !== "" ? status : "", // Ensure status is included in the search
+            status: status !== "" ? status : "", // Include status if present
             purpose: purpose || ""
         };
-        onSearch(searchParams); // Pass searchParams to onSearch function
+
+        const queryString = new URLSearchParams(searchParams).toString();
+        navigate(`/properties?${queryString}`);
     };
     
     
@@ -208,311 +213,180 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
 <h1 className="text-5xl text-left font-primary text-primary mt-28 lg:text-primary lg:mb-8">
   Your <span className="animate-blink font-bold">InvestiBayt</span> <br /> Journey Starts Here
 </h1>
-<div>
-  {/* Mobile Screen Form */}
-  <div className="block lg:hidden">
-  <form 
-    className=" sm:flex-row justify-between w-full space-x-2 px-4 py-4 bg-primary rounded-lg overflow-x-auto" 
-    onSubmit={handleSearch}
->
-    <div className="flex flex-nowrap w-full sm:flex-row sm:flex-wrap space-x-4">
-        <div className="flex flex-col min-w-[200px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary">City</label>
-            <select 
-                name="city"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-            >
-                <option value="" className="font-playfair">Any</option>
-                <option value="Dubai" className="font-playfair">Dubai</option>
-                <option value="Abu Dhabi" className="font-playfair">Abu Dhabi</option>
-                <option value="Sharjah" className="font-playfair">Sharjah</option>
-                <option value="Ajman" className="font-playfair">Ajman</option>
-                <option value="Fujairah" className="font-playfair">Fujairah</option>
-                <option value="Ras Al Khaimah" className="font-playfair">Ras Al Khaimah</option>
-                <option value="Umm Al Quwain" className="font-playfair">Umm Al Quwain</option>
-            </select>
-        </div>
 
-        <div className="flex flex-col min-w-[250px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary">Location</label>
-            <input 
-                type="text"
-                placeholder="Add location and press enter"
-                onChange={(e) => setLocations(e.target.value)}
-                onKeyPress={handleAddLocation}
-                className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-            />
-            {locations.map((loc, index) => (
-                <div key={index} className="flex items-center space-x-1 mb-1 mr-1 bg-primary dark:bg-primary px-2 py-1 rounded-full">
-                    <span className="text-sm text-primary">{loc}</span>
-                    <button type="button" onClick={() => handleRemoveLocation(index)} className="ml-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-            ))}
-        </div>
-
-        <div className="flex flex-col min-w-[200px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary">Property Type</label>
-            <select 
-                name="propertyType"
-                value={propertyType}
-                onChange={(e) => setPropertyType(e.target.value)}
-                className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-            >
-                <option value="" className="font-playfair">Any</option>
-                <option value="Apartment" className="font-playfair">Apartment</option>
-                <option value="Villa" className="font-playfair">Villa</option>
-                <option value="Townhouse" className="font-playfair">Townhouse</option>
-                <option value="Penthouse" className="font-playfair">Penthouse</option>
-            </select>
-        </div>
-
-        <div className="flex flex-col min-w-[250px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary">Price Range</label>
-            <div className="flex flex-row gap-2 w-full">
-                <input
-                    type="text"
-                    placeholder="min"
-                    value={priceMin}
-                    onChange={(e) => setPriceMin(e.target.value)}
-                    className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-full"
-                />
-                <input
-                    type="text"
-                    placeholder="max"
-                    value={priceMax}
-                    onChange={(e) => setPriceMax(e.target.value)}
-                    className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-full"
-                />
-            </div>
-        </div>
-
-        <div className="flex flex-col min-w-[150px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary">Beds</label>
-            <select
-                name="beds"
-                value={beds}
-                onChange={(e) => setBeds(e.target.value)}
-                className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-            >
-                <option value="" className="text-primary font-playfair">Any</option>
-                <option value="1" className="text-primary font-playfair">1</option>
-                <option value="2" className="text-primary font-playfair">2</option>
-                <option value="3" className="text-primary font-playfair">3</option>
-                <option value="4" className="text-primary font-playfair">4</option>
-                <option value="5" className="text-primary font-playfair">5+</option>
-            </select>
-        </div>
-
-        <div className="flex flex-col min-w-[150px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary">Baths</label>
-            <select
-                name="baths"
-                value={baths}
-                onChange={(e) => setBaths(e.target.value)}
-                className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-            >
-                <option value="" className="text-primary font-playfair">Any</option>
-                <option value="1" className="text-primary font-playfair">1</option>
-                <option value="2" className="text-primary font-playfair">2</option>
-                <option value="3" className="text-primary font-playfair">3</option>
-                <option value="4" className="text-primary font-playfair">4</option>
-                <option value="5" className="text-primary font-playfair">5+</option>
-            </select>
-        </div>
-
-        {/* Search and Clear Filters Buttons */}
-  <div className="flex items-center gap-4 w-full col-span-2 mt-auto">
-    <button
-      type="submit"
-      className="bg-button text-button hover:bg-primary-dark transition duration-300 px-4 py-2 rounded-full font-semibold shadow-md w-full"
+<form
+      className="px-3 py-3 bg-primary rounded-lg lg:grid lg:grid-cols-8 lg:gap-4"
+      onSubmit={handleSearch}
     >
-      Search
-    </button>
-    {isFilterApplied && (
+      {/* Toggle Filters Button for Mobile */}
       <button
         type="button"
-        onClick={handleClearFilters}
-        className="bg-primary-dark text-primary hover:bg-primary transition duration-300 px-4 py-2 rounded-full font-semibold shadow-md"
+        className="lg:hidden bg-button text-button hover:bg-primary-dark transition duration-300 px-4 py-2 rounded-full font-semibold shadow-md w-full mb-3"
+        onClick={() => setShowFilters(!showFilters)}
       >
-        Clear
+        {showFilters ? "Hide Filters" : "Show Filters"}
       </button>
-    )}
-  </div>
-    </div>
-</form>
-  </div>
 
-  {/* Desktop Screen Form */}
-  <div className="hidden lg:block">
-  <form
-  className="grid grid-cols-1 lg:grid-cols-8 gap-4 px-3 py-3 bg-primary rounded-lg"
-  onSubmit={handleSearch}
->
-  {/* City Filter */}
-  <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary">City</label>
-    <select
-      name="city"
-      value={city}
-      onChange={(e) => setCity(e.target.value)}
-      className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-    >
-      <option value="">Any</option>
-      <option value="Dubai">Dubai</option>
-      <option value="Abu Dhabi">Abu Dhabi</option>
-      <option value="Sharjah">Sharjah</option>
-      <option value="Ajman">Ajman</option>
-      <option value="Fujairah">Fujairah</option>
-      <option value="Ras Al Khaimah">Ras Al Khaimah</option>
-      <option value="Umm Al Quwain">Umm Al Quwain</option>
-    </select>
-  </div>
-
-  {/* Location Filter */}
-  <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary">Location</label>
-    <input
-      type="text"
-      placeholder="Add location and press enter"
-      onKeyPress={handleAddLocation}
-      className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-    />
-    {locations.map((loc, index) => (
+      {/* Filter Fields Container */}
       <div
-        key={index}
-        className="flex items-center space-x-1 mb-1 bg-primary px-2 py-1 rounded-full"
+        className={`${
+          showFilters ? "block" : "hidden"
+        } lg:block lg:contents space-y-4 lg:space-y-0`}
       >
-        <span className="text-sm text-primary">{loc}</span>
-        <button
-          type="button"
-          onClick={() => handleRemoveLocation(index)}
-          className="ml-1"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4 text-red-600"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        {/* City Filter */}
+        <div className="flex flex-col w-full">
+          <label className="mb-1 text-sm font-medium text-primary">City</label>
+          <select
+            name="city"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
+            <option value="">Any</option>
+            <option value="Dubai">Dubai</option>
+            <option value="Abu Dhabi">Abu Dhabi</option>
+            <option value="Sharjah">Sharjah</option>
+            <option value="Ajman">Ajman</option>
+            <option value="Fujairah">Fujairah</option>
+            <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+            <option value="Umm Al Quwain">Umm Al Quwain</option>
+          </select>
+        </div>
+
+        {/* Location Filter */}
+        <div className="flex flex-col w-full">
+          <label className="mb-1 text-sm font-medium text-primary">Location</label>
+          <input
+            type="text"
+            placeholder="Add location and press enter"
+            onKeyPress={handleAddLocation}
+            className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+          />
+          {locations.map((loc, index) => (
+            <div
+              key={index}
+              className="flex items-center space-x-1 mb-1 bg-primary px-2 py-1 rounded-full"
+            >
+              <span className="text-sm text-primary">{loc}</span>
+              <button
+                type="button"
+                onClick={() => handleRemoveLocation(index)}
+                className="ml-1"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 text-red-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Property Type Filter */}
+        <div className="flex flex-col w-full">
+          <label className="mb-1 text-sm font-medium text-primary">Property Type</label>
+          <select
+            name="propertyType"
+            value={propertyType}
+            onChange={(e) => setPropertyType(e.target.value)}
+            className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+          >
+            <option value="">Any</option>
+            <option value="Apartment">Apartment</option>
+            <option value="Villa">Villa</option>
+            <option value="Townhouse">Townhouse</option>
+            <option value="Penthouse">Penthouse</option>
+          </select>
+        </div>
+
+        {/* Price Range Filter */}
+        <div className="flex flex-col w-full">
+          <label className="mb-1 text-sm font-medium text-primary">Price Range</label>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder="min"
+              value={priceMin}
+              onChange={(e) => setPriceMin(e.target.value)}
+              className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-1/2"
             />
-          </svg>
+            <input
+              type="text"
+              placeholder="max"
+              value={priceMax}
+              onChange={(e) => setPriceMax(e.target.value)}
+              className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-1/2"
+            />
+          </div>
+        </div>
+
+        {/* Beds Filter */}
+        <div className="flex flex-col w-full">
+          <label className="mb-1 text-sm font-medium text-primary">Beds</label>
+          <select
+            name="beds"
+            value={beds}
+            onChange={(e) => setBeds(e.target.value)}
+            className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+          >
+            <option value="">Any</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5+</option>
+          </select>
+        </div>
+
+        {/* Baths Filter */}
+        <div className="flex flex-col w-full">
+          <label className="mb-1 text-sm font-medium text-primary">Baths</label>
+          <select
+            name="baths"
+            value={baths}
+            onChange={(e) => setBaths(e.target.value)}
+            className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+          >
+            <option value="">Any</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5+</option>
+          </select>
+        </div>
+        {/* Search and Clear Filters Buttons */}
+      <div className="flex items-center gap-4 w-full col-span-2 mt-auto">
+        <button
+          type="submit"
+          className="bg-button text-button hover:bg-primary-dark transition duration-300 px-4 py-2 rounded-full font-semibold shadow-md w-full"
+        >
+          Search
         </button>
+        {isFilterApplied && (
+          <button
+            type="button"
+            onClick={handleClearFilters}
+            className="bg-primary-dark text-primary hover:bg-primary transition duration-300 px-4 py-2 rounded-full font-semibold shadow-md"
+          >
+            Clear
+          </button>
+        )}
       </div>
-    ))}
-  </div>
+      </div>
 
-  {/* Property Type Filter */}
-  <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary">
-      Property Type
-    </label>
-    <select
-      name="propertyType"
-      value={propertyType}
-      onChange={(e) => setPropertyType(e.target.value)}
-      className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-    >
-      <option value="">Any</option>
-      <option value="Apartment">Apartment</option>
-      <option value="Villa">Villa</option>
-      <option value="Townhouse">Townhouse</option>
-      <option value="Penthouse">Penthouse</option>
-    </select>
-  </div>
-
-  {/* Price Range Filter */}
-  <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary">
-      Price Range
-    </label>
-    <div className="flex gap-2">
-      <input
-        type="text"
-        placeholder="min"
-        value={priceMin}
-        onChange={(e) => setPriceMin(e.target.value)}
-        className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-1/2"
-      />
-      <input
-        type="text"
-        placeholder="max"
-        value={priceMax}
-        onChange={(e) => setPriceMax(e.target.value)}
-        className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-1/2"
-      />
-    </div>
-  </div>
-
-  {/* Beds Filter */}
-  <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary">Beds</label>
-    <select
-      name="beds"
-      value={beds}
-      onChange={(e) => setBeds(e.target.value)}
-      className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-    >
-      <option value="">Any</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5+</option>
-    </select>
-  </div>
-
-  {/* Baths Filter */}
-  <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary">Baths</label>
-    <select
-      name="baths"
-      value={baths}
-      onChange={(e) => setBaths(e.target.value)}
-      className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-    >
-      <option value="">Any</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5+</option>
-    </select>
-  </div>
-
-  {/* Search and Clear Filters Buttons */}
-  <div className="flex items-center gap-4 w-full col-span-2 mt-auto">
-    <button
-      type="submit"
-      className="bg-button text-button hover:bg-primary-dark transition duration-300 px-4 py-2 rounded-full font-semibold shadow-md w-full"
-    >
-      Search
-    </button>
-    {isFilterApplied && (
-      <button
-        type="button"
-        onClick={handleClearFilters}
-        className="bg-primary-dark text-primary hover:bg-primary transition duration-300 px-4 py-2 rounded-full font-semibold shadow-md"
-      >
-        Clear
-      </button>
-    )}
-  </div>
-</form>
-  </div>
-</div>
-
+      
+    </form>
                 </div>
 
             </div>
@@ -542,4 +416,3 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
         </section>
     );
 }
-

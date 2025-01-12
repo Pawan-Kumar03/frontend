@@ -53,46 +53,47 @@ const location = queryParams.get("location") || "";
   
   
 
-    const handleSearch = () => {
-      let filtered = properties;
-  
-      if (searchQuery) {
-          filtered = filtered.filter(property => 
-              property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              property.description.toLowerCase().includes(searchQuery.toLowerCase())
-          );
-      }
-  
-      if (purpose !== "All") {
-          filtered = filtered.filter(property => property.purpose === purpose);
-      }
-  
-      if (propertyType !== "All") {
-          filtered = filtered.filter(property => property.propertyType === propertyType);
-      }
-  
-      if (minPrice) {
-          filtered = filtered.filter(property => 
-              parseInt(property.price.replace(/[^\d]/g, ''), 10) >= parseInt(minPrice, 10)
-          );
-      }
-  
-      if (maxPrice) {
-          filtered = filtered.filter(property => 
-              parseInt(property.price.replace(/[^\d]/g, ''), 10) <= parseInt(maxPrice, 10)
-          );
-      }
-  
-      if (beds !== "Any") {
-          filtered = filtered.filter(property => property.beds === parseInt(beds));
-      }
-  
-      if (baths !== "Any") {
-          filtered = filtered.filter(property => property.baths === parseInt(baths));
-      }
-  
-      setFilteredProperties(filtered);
-  };
+  const handleSearch = () => {
+    let filtered = properties;
+
+    if (searchQuery) {
+        filtered = filtered.filter(property => 
+            property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            property.description.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }
+
+    if (purpose !== "All") {
+        filtered = filtered.filter(property => property.purpose === purpose);
+    }
+
+    if (propertyType !== "All") {
+        filtered = filtered.filter(property => property.propertyType === propertyType);
+    }
+
+    if (minPrice) {
+        filtered = filtered.filter(property => 
+            parseInt(property.price.replace(/[^\d]/g, ''), 10) >= parseInt(minPrice, 10)
+        );
+    }
+
+    if (maxPrice) {
+        filtered = filtered.filter(property => 
+            parseInt(property.price.replace(/[^\d]/g, ''), 10) <= parseInt(maxPrice, 10)
+        );
+    }
+
+    if (beds !== "Any") {
+        filtered = filtered.filter(property => property.beds === parseInt(beds));
+    }
+
+    if (baths !== "Any") {
+        filtered = filtered.filter(property => property.baths === parseInt(baths));
+    }
+
+    setFilteredProperties(filtered);
+};
+
      
    
     return (

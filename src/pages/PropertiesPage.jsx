@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Card from '../components/Card/Card';
-import Banner from "../components/Banner/Banner";
+import Banner from "../components/Banner/Banner"; // Assuming the banner is a separate component
 
 function PropertiesPage() {
     const [properties, setProperties] = useState([]);
@@ -13,20 +13,20 @@ function PropertiesPage() {
     const [maxPrice, setMaxPrice] = useState("");
     const [beds, setBeds] = useState("Any");
     const [baths, setBaths] = useState("Any");
-    const location = useLocation();
-    const { search, pathname } = location;
+    const { search } = useLocation();
     const queryParams = new URLSearchParams(search);
     const city = queryParams.get("city") || "";
-    const selectedLocation = queryParams.get("location") || "";
+    const location = queryParams.get("location") || "";
     const [showFilters, setShowFilters] = useState(false);
 
     useEffect(() => {
         let url = `https://backend-git-main-pawan-togas-projects.vercel.app/api/listings?city=${encodeURIComponent(city)}`;
 
-        if (selectedLocation && selectedLocation !== "All Locations") {
-            url += `&location=${encodeURIComponent(selectedLocation)}`;
+        if (location && location !== "All Locations") {
+            url += `&location=${encodeURIComponent(location)}`;
         }
 
+        // Adding filters directly to the URL for API-side filtering
         if (purpose !== "All") {
             url += `&purpose=${encodeURIComponent(purpose)}`;
         }
@@ -47,34 +47,34 @@ function PropertiesPage() {
         }
 
         fetch(url)
-            .then((response) => {
+            .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.json();
             })
-            .then((data) => {
+            .then(data => {
                 if (Array.isArray(data)) {
                     setProperties(data);
-                    setFilteredProperties(data);
+                    setFilteredProperties(data); // In case the filters are applied server-side
                 } else {
-                    console.error("Data format is not as expected:", data);
+                    console.error('Data format is not as expected:', data);
                     setProperties([]);
                     setFilteredProperties([]);
                 }
             })
-            .catch((error) => {
-                console.error("Error fetching properties:", error);
+            .catch(error => {
+                console.error('Error fetching properties:', error);
                 setProperties([]);
                 setFilteredProperties([]);
             });
-    }, [city, selectedLocation, purpose, propertyType, minPrice, maxPrice, beds, baths]);
+    }, [city, location, purpose, propertyType, minPrice, maxPrice, beds, baths]);
 
     const handleSearch = () => {
         let filtered = properties;
 
         if (searchQuery) {
-            filtered = filtered.filter((property) =>
+            filtered = filtered.filter(property =>
                 property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 property.description.toLowerCase().includes(searchQuery.toLowerCase())
             );
@@ -86,13 +86,7 @@ function PropertiesPage() {
     return (
         <div className="container mx-auto p-4 font-primary">
             {/* Conditionally render Banner */}
-            {pathname !== "/properties" && <Banner 
-    onSearch={(filters) => {
-        // Update filters in the state or navigate
-        const query = new URLSearchParams(filters).toString();
-        navigate(`/properties?${query}`);
-    }} 
-/>}
+            {!city && !location && <Banner city={city} location={location} />}
 
             <div className="text-center mb-8 font-primary">
                 <h1 className="text-2xl sm:text-3xl font-bold text-primary">Properties in {location || "All Locations"} ({city})</h1>

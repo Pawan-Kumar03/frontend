@@ -73,29 +73,24 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     // Check if any filters are applied
   const isFilterApplied = city || locations.length > 0 || propertyType || priceMin || priceMax || beds || baths;
 
-  const handleSearch = (event) => {
-    event.preventDefault();
+    const handleSearch = (event) => {
+        event.preventDefault();
+        const searchParams = {
+            city: city || "",
+            location: locations.join(",") || "",
+            propertyType: propertyType || "",
+            priceMin: priceMin || "",
+            priceMax: priceMax || "",
+            beds: beds || "",
+            baths: baths || "",
+            agentType: agentType || "",
+            status: status !== "" ? status : "", // Include status if present
+            purpose: purpose || ""
+        };
 
-    const searchParams = {
-        city: city || "",
-        location: locations.join(",") || "",
-        propertyType: propertyType || "",
-        priceMin: priceMin || "",
-        priceMax: priceMax || "",
-        beds: beds || "",
-        baths: baths || "",
-        agentType: agentType || "",
-        status: status || "", // Ensure status is an empty string if not set
-        purpose: purpose || ""
+        const queryString = new URLSearchParams(searchParams).toString();
+        navigate(`/properties?${queryString}`);
     };
-
-    // Convert to a sanitized query string
-    const queryString = new URLSearchParams(searchParams).toString();
-
-    // Ensure the URL is properly constructed
-    navigate(`/properties?${queryString}`);
-};
-
     
     
     const handleAddLocation = (e) => {

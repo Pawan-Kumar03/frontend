@@ -91,11 +91,10 @@ function PropertiesPage() {
         setFilteredProperties(filtered);
     };    
    
-
     return (
       <div className="container mx-auto p-4 font-primary">
-          {/* Banner Section */}
-          <Banner city={city} location={location} />
+          {/* Conditionally render Banner */}
+          {!city && !location && <Banner city={city} location={location} />}
   
           {/* Page Title */}
           <div className="text-center mb-8">
@@ -194,7 +193,6 @@ function PropertiesPage() {
           </div>
       </div>
   );
-  
 }
 
 export default PropertiesPage;

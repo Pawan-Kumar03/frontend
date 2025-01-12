@@ -14,25 +14,30 @@ function PropertiesPage() {
     const [beds, setBeds] = useState("Any");
     const [baths, setBaths] = useState("Any");
     const { search } = useLocation();
-    const queryParams = new URLSearchParams(search);
-    const city = queryParams.get("city") || "All Cities";
-    const location = queryParams.get("location") || "All Locations";
+const queryParams = new URLSearchParams(search);
+const city = queryParams.get("city") || "";
+const location = queryParams.get("location") || "";
+
     const [showFilters, setShowFilters] = useState(false);
    
     useEffect(() => {
       let url = `https://backend-git-main-pawan-togas-projects.vercel.app/api/listings?city=${encodeURIComponent(city)}`;
   
-      if (location !== "All Locations") {
+      if (location && location !== "All Locations") {
           url += `&location=${encodeURIComponent(location)}`;
       }
   
       fetch(url)
-          .then(response => response.json())
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              return response.json();
+          })
           .then(data => {
               if (Array.isArray(data)) {
                   setProperties(data);
-                  // Filter properties initially based on URL query params
-                  handleSearch(); // Apply filtering based on all filters
+                  setFilteredProperties(data);
               } else {
                   console.error('Data format is not as expected:', data);
                   setProperties([]);
@@ -44,7 +49,8 @@ function PropertiesPage() {
               setProperties([]);
               setFilteredProperties([]);
           });
-  }, [city, location]); // Re-run the effect when city or location changes
+  }, [city, location]);
+  
   
 
     const handleSearch = () => {

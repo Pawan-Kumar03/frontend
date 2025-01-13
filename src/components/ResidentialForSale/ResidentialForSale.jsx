@@ -1,117 +1,116 @@
 import React, { useState, useEffect } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
 import Card from "../Card/Card";
 
 export default function ResidentialForSale({ searchParams = {}, listings = [] }) {
     const [filteredResults, setFilteredResults] = useState([]);
     const [relatedResults, setRelatedResults] = useState([]);
-    const [isVerticalLayout, setIsVerticalLayout] = useState(false); // New state for layout
+    const [isVertical, setIsVertical] = useState(false); // State to toggle between layouts
 
     useEffect(() => {
         const isEmptySearch = Object.values(searchParams).every(param => param === "");
 
-        const filtered = Array.isArray(listings) ? listings.filter((listing) => {
-            const listingPrice = parseInt(listing.price.replace(/[^0-9]/g, ""));
-            const minPrice = searchParams.priceMin ? parseInt(searchParams.priceMin) : 0;
-            const maxPrice = searchParams.priceMax ? parseInt(searchParams.priceMax) : Infinity;
+        const filtered = Array.isArray(listings)
+            ? listings.filter((listing) => {
+                  const listingPrice = parseInt(listing.price.replace(/[^0-9]/g, ""));
+                  const minPrice = searchParams.priceMin ? parseInt(searchParams.priceMin) : 0;
+                  const maxPrice = searchParams.priceMax ? parseInt(searchParams.priceMax) : Infinity;
 
-            return (
-                (searchParams.city ? listing.city === searchParams.city : true) &&
-                (searchParams.location ? searchParams.location.split(",").some(loc => listing.location.toLowerCase().includes(loc.trim().toLowerCase())) : true) &&
-                (searchParams.propertyType ? listing.propertyType === searchParams.propertyType : true) &&
-                (listingPrice >= minPrice && listingPrice <= maxPrice) &&
-                (searchParams.beds ? (searchParams.beds === "5" ? listing.beds >= 5 : listing.beds === parseInt(searchParams.beds)) : true) &&
-                (searchParams.baths ? (searchParams.baths === "5" ? listing.baths >= 5 : listing.baths === parseInt(searchParams.baths)) : true) &&
-                (searchParams.status === "false" ? listing.status === "false" : "true") &&
-                (searchParams.purpose ? listing.purpose === searchParams.purpose : true) &&
-                (searchParams.agentType ? 
-                    (searchParams.agentType === "Owner" ? listing.landlordName : listing.agentName) 
-                    : true)
-            );
-        }) : [];
+                  return (
+                      (searchParams.city ? listing.city === searchParams.city : true) &&
+                      (searchParams.location
+                          ? searchParams.location.split(",").some(loc =>
+                                listing.location.toLowerCase().includes(loc.trim().toLowerCase())
+                            )
+                          : true) &&
+                      (searchParams.propertyType ? listing.propertyType === searchParams.propertyType : true) &&
+                      listingPrice >= minPrice &&
+                      listingPrice <= maxPrice &&
+                      (searchParams.beds
+                          ? searchParams.beds === "5"
+                              ? listing.beds >= 5
+                              : listing.beds === parseInt(searchParams.beds)
+                          : true) &&
+                      (searchParams.baths
+                          ? searchParams.baths === "5"
+                              ? listing.baths >= 5
+                              : listing.baths === parseInt(searchParams.baths)
+                          : true) &&
+                      (searchParams.status === "false" ? listing.status === "false" : "true") &&
+                      (searchParams.purpose ? listing.purpose === searchParams.purpose : true) &&
+                      (searchParams.agentType
+                          ? searchParams.agentType === "Owner"
+                              ? listing.landlordName
+                              : listing.agentName
+                          : true)
+                  );
+              })
+            : [];
 
         setFilteredResults(isEmptySearch ? listings : filtered);
 
         if (filtered.length === 0 && !isEmptySearch) {
-            const related = Array.isArray(listings) ? listings.filter((listing) => {
-                return (
-                    (searchParams.city ? listing.city === searchParams.city : false) ||
-                    (searchParams.propertyType ? listing.propertyType === searchParams.propertyType : false)
-                );
-            }) : [];
+            const related = Array.isArray(listings)
+                ? listings.filter((listing) => {
+                      return (
+                          (searchParams.city ? listing.city === searchParams.city : false) ||
+                          (searchParams.propertyType ? listing.propertyType === searchParams.propertyType : false)
+                      );
+                  })
+                : [];
             setRelatedResults(related);
         } else {
             setRelatedResults([]);
         }
-    }, [searchParams, listings]);
 
-    const handleSearch = () => {
-        setIsVerticalLayout(true); // Switch to vertical layout when the search button is clicked
-    };
+        // Toggle vertical layout when searchParams change
+        if (!isEmptySearch) {
+            setIsVertical(true);
+        }
+    }, [searchParams, listings]);
 
     return (
         <section className="py-8 px-4 lg:px-0 bg-primary font-primary text-primary">
             <div className="container mx-auto font-primary">
                 <h1 className="text-3xl font-bold mb-6 text-primary font-primary flex justify-between items-center relative">
                     <span>
-                        {searchParams.city ? `Properties in ${searchParams.city}` : "Popular Developments"}
+                        {searchParams.city
+                            ? `Properties in ${searchParams.city}`
+                            : "Popular Developments"}
                     </span>
-                    <span className="absolute right-0 text-primary text-2xl animate-bounce">
-                        ➡️
-                    </span>
+                    <span className="absolute right-0 text-primary text-2xl animate-bounce">➡️</span>
                 </h1>
 
                 {filteredResults.length > 0 ? (
-                    isVerticalLayout ? (
-                        // Vertical layout
-                        <div className="grid grid-cols-1 gap-6">
-                            {filteredResults.map((item, index) => (
-                                <Card key={index} item={item} />
-                            ))}
-                        </div>
-                    ) : (
-                        // Horizontal layout (Swiper)
-                        <Swiper
-                            spaceBetween={30}
-                            autoplay={{ delay: 4000 }}
-                            pagination={{ clickable: true }}
-                            breakpoints={{
-                                400: { slidesPerView: 2 },
-                                768: { slidesPerView: 3 },
-                                1024: { slidesPerView: 4 },
-                            }}
-                        >
-                            {filteredResults.map((item, index) => (
-                                <SwiperSlide key={index} className="mb-10">
-                                    <Card item={item} />
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                    )
+                    <div
+                        className={`${
+                            isVertical
+                                ? "flex flex-col gap-4" // Vertical layout
+                                : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" // Horizontal grid layout
+                        }`}
+                    >
+                        {filteredResults.map((item, index) => (
+                            <div key={index}>
+                                <Card item={item} />
+                            </div>
+                        ))}
+                    </div>
                 ) : (
                     <>
-                        <p className="text-center text-primary font-primary">No properties match your search criteria.</p>
+                        <p className="text-center text-primary font-primary">
+                            No properties match your search criteria.
+                        </p>
                         {relatedResults.length > 0 && (
                             <>
                                 <h2 className="text-2xl font-semibold mt-8 text-primary font-primary">
                                     Related Properties in {searchParams.city} - {searchParams.propertyType}
                                 </h2>
-                                <Swiper
-                                    spaceBetween={30}
-                                    autoplay={{ delay: 4000 }}
-                                    pagination={{ clickable: true }}
-                                    breakpoints={{
-                                        400: { slidesPerView: 2 },
-                                        768: { slidesPerView: 3 },
-                                        1024: { slidesPerView: 4 },
-                                    }}
-                                >
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                                     {relatedResults.map((item, index) => (
-                                        <SwiperSlide key={index} className="mb-10">
+                                        <div key={index}>
                                             <Card item={item} />
-                                        </SwiperSlide>
+                                        </div>
                                     ))}
-                                </Swiper>
+                                </div>
                             </>
                         )}
                     </>

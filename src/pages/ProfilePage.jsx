@@ -73,7 +73,7 @@ export default function ProfilePage() {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-primary font-primary">
+        <div className="flex justify-center items-center min-h-screen bg-primary font-aller font-light">
             <div className="w-full max-w-md bg-accent-color p-8 rounded-lg shadow-lg">
                 <h2 className="text-3xl font-bold mb-6 text-primary text-center">Edit Profile</h2>
                 {error && (

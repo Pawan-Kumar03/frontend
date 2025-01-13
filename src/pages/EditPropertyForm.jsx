@@ -78,20 +78,20 @@ export default function EditPropertyForm() {
     };
 
     if (loading) {
-        return <div className="text-center text-primary font-primary">Loading...</div>;
+        return <div className="text-center text-primary font-aller font-light">Loading...</div>;
     }
 
     if (!formData) {
-        return <div className="text-center text-primary font-primary">No property data found</div>;
+        return <div className="text-center text-primary font-aller font-light">No property data found</div>;
     }
 
     if (submitted) {
         return (
-            <div className="container mx-auto p-4 font-primary">
+            <div className="container mx-auto p-4 font-aller font-light">
                 <div className="text-center bg-primary-dark text-primary p-4 rounded">
                     Your ad has been modified successfully!
                 </div>
-                <div className="flex justify-center mt-4 font-primary">
+                <div className="flex justify-center mt-4 font-aller font-light">
                     <button onClick={() => navigate("/")} className="px-6 py-3 bg-button text-button rounded">
                         Go to Home
                     </button>
@@ -101,15 +101,15 @@ export default function EditPropertyForm() {
     }
 
     return (
-        <div className="container mx-auto p-4 bg-primary text-primary font-primaryr">
-            <h2 className="text-2xl font-semibold text-center text-primary font-primary">Edit Property</h2>
+        <div className="container mx-auto p-4 bg-primary text-primary font-aller font-lightr">
+            <h2 className="text-2xl font-bold text-center text-primary ">Edit Property</h2>
             
             {isUpdating ? (
-            <div className="text-center bg-primary text-primary p-2 rounded mb-4 font-primary">
+            <div className="text-center bg-primary text-primary p-2 rounded mb-4 font-aller font-light">
                 Your Ad is updating...
             </div>
         ) : (
-            <form onSubmit={handleSubmit} className="flex font-primary flex-col space-y-4 w-full max-w-md mx-auto bg-primary p-6 rounded ">
+            <form onSubmit={handleSubmit} className="flex font-aller font-light flex-col space-y-4 w-full max-w-md mx-auto bg-primary p-6 rounded ">
                 <input
                     name="title"
                     type="text"

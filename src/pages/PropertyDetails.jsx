@@ -225,30 +225,30 @@ export default function PropertyDetails() {
             {property.building}, {property.developments}, {property.location}, {property.city}, {property.country}
           </p>
           <p className="text-sm mb-2">
-            <strong>Property Type:</strong> {property.propertyType}
+            <strong className="font-aller font-bold">Property Type:</strong> {property.propertyType}
           </p>
           <p className="text-sm mb-2">
-            <strong>Beds:</strong> {property.beds}
+            <strong className="font-aller font-bold">Beds:</strong> {property.beds}
           </p>
           <p className="text-sm mb-2">
-            <strong>Baths:</strong> {property.baths}
+            <strong className="font-aller font-bold">Baths:</strong> {property.baths}
           </p>
           <p className="text-sm mb-2">
-            <strong>Landlord:</strong> {property.landlordName}
+            <strong className="font-aller font-bold">Landlord:</strong> {property.landlordName}
           </p>
           <p className="text-sm mb-2">
-            <strong>Purpose:</strong>{" "}
+            <strong className="font-aller font-bold">Purpose:</strong>{" "}
             {property.purpose === "sell" ? "Sale" : "Buy"}
           </p>
           <p className="text-sm mb-2">
-            <strong>Completion Status:</strong>{" "}
+            <strong className="font-aller font-bold">Completion Status:</strong>{" "}
             {property.status === "false" ? "Off-Plan" : "Ready"}
           </p>
 
           {/* Amenities */}
           {property.amenities && (
             <div className="mb-4">
-              <h4 className="font-semibold">Amenities:</h4>
+              <h4  className="font-aller font-bold">Amenities:</h4>
               <ul className="list-disc pl-5">
                 {property.amenities.map((amenity, index) => (
                   <li key={index} className="text-sm">{amenity}</li>

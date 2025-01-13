@@ -277,14 +277,14 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
             <div className="flex flex-row gap-2 w-full">
                 <input
                     type="text"
-                    placeholder="min"
+                    placeholder="Min"
                     value={priceMin}
                     onChange={(e) => setPriceMin(e.target.value)}
                     className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-full"
                 />
                 <input
                     type="text"
-                    placeholder="max"
+                    placeholder="Max"
                     value={priceMax}
                     onChange={(e) => setPriceMax(e.target.value)}
                     className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-full"
@@ -440,14 +440,14 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     <div className="flex gap-2">
       <input
         type="text"
-        placeholder="min"
+        placeholder="Min"
         value={priceMin}
         onChange={(e) => setPriceMin(e.target.value)}
         className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-1/2"
       />
       <input
         type="text"
-        placeholder="max"
+        placeholder="Max"
         value={priceMax}
         onChange={(e) => setPriceMax(e.target.value)}
         className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-1/2"

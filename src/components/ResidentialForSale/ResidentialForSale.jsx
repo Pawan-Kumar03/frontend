@@ -5,6 +5,7 @@ import Card from "../Card/Card";
 export default function ResidentialForSale({ searchParams = {}, listings = [] }) {
     const [filteredResults, setFilteredResults] = useState([]);
     const [relatedResults, setRelatedResults] = useState([]);
+    const [isVerticalLayout, setIsVerticalLayout] = useState(false); // New state for layout
 
     useEffect(() => {
         const isEmptySearch = Object.values(searchParams).every(param => param === "");
@@ -44,35 +45,49 @@ export default function ResidentialForSale({ searchParams = {}, listings = [] })
         }
     }, [searchParams, listings]);
 
+    const handleSearch = () => {
+        setIsVerticalLayout(true); // Switch to vertical layout when the search button is clicked
+    };
+
     return (
         <section className="py-8 px-4 lg:px-0 bg-primary font-primary text-primary">
             <div className="container mx-auto font-primary">
-            <h1 className="text-3xl font-bold mb-6 text-primary font-primary flex justify-between items-center relative">
-    <span>
-        {searchParams.city ? `Properties in ${searchParams.city}` : "Popular Developments"}
-    </span>
-    <span className="absolute right-0 text-primary text-2xl animate-bounce">
-        ➡️
-    </span>
-</h1>
+                <h1 className="text-3xl font-bold mb-6 text-primary font-primary flex justify-between items-center relative">
+                    <span>
+                        {searchParams.city ? `Properties in ${searchParams.city}` : "Popular Developments"}
+                    </span>
+                    <span className="absolute right-0 text-primary text-2xl animate-bounce">
+                        ➡️
+                    </span>
+                </h1>
 
                 {filteredResults.length > 0 ? (
-                    <Swiper
-                        spaceBetween={30} // Increased space between cards
-                        autoplay={{ delay: 4000 }}
-                        pagination={{ clickable: true }}
-                        breakpoints={{
-                            400: { slidesPerView: 2 },
-                            768: { slidesPerView: 3 },
-                            1024: { slidesPerView: 4 }, // Adjusted to 4 for larger screens
-                        }}
-                    >
-                        {filteredResults.map((item, index) => (
-                            <SwiperSlide key={index} className="mb-10">
-                                <Card item={item} />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
+                    isVerticalLayout ? (
+                        // Vertical layout
+                        <div className="grid grid-cols-1 gap-6">
+                            {filteredResults.map((item, index) => (
+                                <Card key={index} item={item} />
+                            ))}
+                        </div>
+                    ) : (
+                        // Horizontal layout (Swiper)
+                        <Swiper
+                            spaceBetween={30}
+                            autoplay={{ delay: 4000 }}
+                            pagination={{ clickable: true }}
+                            breakpoints={{
+                                400: { slidesPerView: 2 },
+                                768: { slidesPerView: 3 },
+                                1024: { slidesPerView: 4 },
+                            }}
+                        >
+                            {filteredResults.map((item, index) => (
+                                <SwiperSlide key={index} className="mb-10">
+                                    <Card item={item} />
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    )
                 ) : (
                     <>
                         <p className="text-center text-primary font-primary">No properties match your search criteria.</p>

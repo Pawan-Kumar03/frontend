@@ -4,7 +4,7 @@ import Card from "../Card/Card";
 export default function ResidentialForSale({ searchParams = {}, listings = [] }) {
     const [filteredResults, setFilteredResults] = useState([]);
     const [relatedResults, setRelatedResults] = useState([]);
-    const [isVertical, setIsVertical] = useState(false); // State to toggle between layouts
+    const [isVertical, setIsVertical] = useState(false); // State to toggle between horizontal and vertical layouts
 
     useEffect(() => {
         const isEmptySearch = Object.values(searchParams).every((param) => param === "");
@@ -62,9 +62,11 @@ export default function ResidentialForSale({ searchParams = {}, listings = [] })
             setRelatedResults([]);
         }
 
-        // Toggle vertical layout when searchParams change
+        // Set vertical layout only after a search
         if (!isEmptySearch) {
             setIsVertical(true);
+        } else {
+            setIsVertical(false);
         }
     }, [searchParams, listings]);
 
@@ -77,8 +79,10 @@ export default function ResidentialForSale({ searchParams = {}, listings = [] })
                             ? `Properties in ${searchParams.city}`
                             : "Popular Developments"}
                     </span>
-                    {isVertical && (
+                    {isVertical ? (
                         <span className="absolute right-0 text-primary text-2xl animate-bounce">↓</span>
+                    ) : (
+                        <span className="absolute right-0 text-primary text-2xl animate-bounce">→</span>
                     )}
                 </h1>
 
@@ -87,11 +91,14 @@ export default function ResidentialForSale({ searchParams = {}, listings = [] })
                         className={`${
                             isVertical
                                 ? "grid grid-cols-1 lg:grid-cols-2 gap-6" // Vertical layout: 2 cards per row on large screens
-                                : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" // Horizontal grid layout
+                                : "flex overflow-x-scroll space-x-4" // Horizontal layout with scrolling
                         }`}
                     >
                         {filteredResults.map((item, index) => (
-                            <div key={index}>
+                            <div
+                                key={index}
+                                className={`${!isVertical ? "min-w-[300px]" : ""}`} // For horizontal layout, set card width
+                            >
                                 <Card item={item} />
                             </div>
                         ))}

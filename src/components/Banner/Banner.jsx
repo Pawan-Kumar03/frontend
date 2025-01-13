@@ -212,31 +212,31 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
   {/* Mobile Screen Form */}
   <div className="block lg:hidden">
   <form 
-    className=" sm:flex-row justify-between w-full space-x-2 px-4 py-4 bg-primary rounded-lg overflow-x-auto" 
+    className=" sm:flex-row justify-between font-aller font-light w-full space-x-2 px-4 py-4 bg-primary rounded-lg overflow-x-auto" 
     onSubmit={handleSearch}
 >
     <div className="flex flex-nowrap w-full sm:flex-row sm:flex-wrap space-x-4">
         <div className="flex flex-col min-w-[200px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary">City</label>
+            <label className="mb-1 text-sm font-medium text-primary font-aller font-light">City</label>
             <select 
                 name="city"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
             >
-                <option value="" className="font-playfair">Any</option>
-                <option value="Dubai" className="font-playfair">Dubai</option>
-                <option value="Abu Dhabi" className="font-playfair">Abu Dhabi</option>
-                <option value="Sharjah" className="font-playfair">Sharjah</option>
-                <option value="Ajman" className="font-playfair">Ajman</option>
-                <option value="Fujairah" className="font-playfair">Fujairah</option>
-                <option value="Ras Al Khaimah" className="font-playfair">Ras Al Khaimah</option>
-                <option value="Umm Al Quwain" className="font-playfair">Umm Al Quwain</option>
+                <option value="" className="font-aller font-light">Any</option>
+                <option value="Dubai" className="font-aller font-light">Dubai</option>
+                <option value="Abu Dhabi" className="font-aller font-light">Abu Dhabi</option>
+                <option value="Sharjah" className="font-aller font-light">Sharjah</option>
+                <option value="Ajman" className="font-aller font-light">Ajman</option>
+                <option value="Fujairah" className="font-aller font-light">Fujairah</option>
+                <option value="Ras Al Khaimah" className="font-aller font-light">Ras Al Khaimah</option>
+                <option value="Umm Al Quwain" className="font-aller font-light">Umm Al Quwain</option>
             </select>
         </div>
 
         <div className="flex flex-col min-w-[250px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary">Location</label>
+            <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Location</label>
             <input 
                 type="text"
                 placeholder="Add location and press enter"
@@ -257,23 +257,23 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
         </div>
 
         <div className="flex flex-col min-w-[200px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary">Property Type</label>
+            <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Property Type</label>
             <select 
                 name="propertyType"
                 value={propertyType}
                 onChange={(e) => setPropertyType(e.target.value)}
                 className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
             >
-                <option value="" className="font-playfair">Any</option>
-                <option value="Apartment" className="font-playfair">Apartment</option>
-                <option value="Villa" className="font-playfair">Villa</option>
-                <option value="Townhouse" className="font-playfair">Townhouse</option>
-                <option value="Penthouse" className="font-playfair">Penthouse</option>
+                <option value="" className="font-aller font-light">Any</option>
+                <option value="Apartment" className="font-aller font-light">Apartment</option>
+                <option value="Villa" className="font-aller font-light">Villa</option>
+                <option value="Townhouse" className="font-aller font-light">Townhouse</option>
+                <option value="Penthouse" className="font-aller font-light">Penthouse</option>
             </select>
         </div>
 
         <div className="flex flex-col min-w-[250px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary">Price Range</label>
+            <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Price Range</label>
             <div className="flex flex-row gap-2 w-full">
                 <input
                     type="text"
@@ -293,41 +293,41 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
         </div>
 
         <div className="flex flex-col min-w-[150px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary">Beds</label>
+            <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Beds</label>
             <select
                 name="beds"
                 value={beds}
                 onChange={(e) => setBeds(e.target.value)}
                 className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
             >
-                <option value="" className="text-primary font-playfair">Any</option>
-                <option value="1" className="text-primary font-playfair">1</option>
-                <option value="2" className="text-primary font-playfair">2</option>
-                <option value="3" className="text-primary font-playfair">3</option>
-                <option value="4" className="text-primary font-playfair">4</option>
-                <option value="5" className="text-primary font-playfair">5+</option>
+                <option value="" className="text-primary font-aller font-light">Any</option>
+                <option value="1" className="text-primary font-aller font-light">1</option>
+                <option value="2" className="text-primary font-aller font-light">2</option>
+                <option value="3" className="text-primary font-aller font-light">3</option>
+                <option value="4" className="text-primary font-aller font-light">4</option>
+                <option value="5" className="text-primary font-aller font-light">5+</option>
             </select>
         </div>
 
         <div className="flex flex-col min-w-[150px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary">Baths</label>
+            <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Baths</label>
             <select
                 name="baths"
                 value={baths}
                 onChange={(e) => setBaths(e.target.value)}
                 className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
             >
-                <option value="" className="text-primary font-playfair">Any</option>
-                <option value="1" className="text-primary font-playfair">1</option>
-                <option value="2" className="text-primary font-playfair">2</option>
-                <option value="3" className="text-primary font-playfair">3</option>
-                <option value="4" className="text-primary font-playfair">4</option>
-                <option value="5" className="text-primary font-playfair">5+</option>
+                <option value="" className="text-primary font-aller font-light">Any</option>
+                <option value="1" className="text-primary font-aller font-light">1</option>
+                <option value="2" className="text-primary font-aller font-light">2</option>
+                <option value="3" className="text-primary font-aller font-light">3</option>
+                <option value="4" className="text-primary font-aller font-light">4</option>
+                <option value="5" className="text-primary font-aller font-light">5+</option>
             </select>
         </div>
 
         {/* Search and Clear Filters Buttons */}
-  <div className="flex items-center gap-4 w-full col-span-2 mt-auto">
+  <div className="flex items-centerfont-aller font-light gap-4 w-full col-span-2 mt-auto">
     <button
       type="submit"
       className="bg-button text-button hover:bg-primary-dark transition duration-300 px-4 py-2 rounded-full font-semibold shadow-md w-full"
@@ -356,7 +356,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
 >
   {/* City Filter */}
   <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary">City</label>
+    <label className="mb-1 text-sm font-medium text-primary font-aller font-light">City</label>
     <select
       name="city"
       value={city}
@@ -376,7 +376,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
 
   {/* Location Filter */}
   <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary">Location</label>
+    <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Location</label>
     <input
       type="text"
       placeholder="Add location and press enter"
@@ -415,7 +415,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
 
   {/* Property Type Filter */}
   <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary">
+    <label className="mb-1 text-sm font-medium text-primary font-aller font-light">
       Property Type
     </label>
     <select
@@ -434,7 +434,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
 
   {/* Price Range Filter */}
   <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary">
+    <label className="mb-1 text-sm font-medium text-primary font-aller font-light">
       Price Range
     </label>
     <div className="flex gap-2">
@@ -457,7 +457,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
 
   {/* Beds Filter */}
   <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary">Beds</label>
+    <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Beds</label>
     <select
       name="beds"
       value={beds}
@@ -475,7 +475,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
 
   {/* Baths Filter */}
   <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary">Baths</label>
+    <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Baths</label>
     <select
       name="baths"
       value={baths}
@@ -492,7 +492,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
   </div>
 
   {/* Search and Clear Filters Buttons */}
-  <div className="flex items-center gap-4 w-full col-span-2 mt-auto">
+  <div className="flex items-center font-aller font-light gap-4 w-full col-span-2 mt-auto">
     <button
       type="submit"
       className="bg-button text-button hover:bg-primary-dark transition duration-300 px-4 py-2 rounded-full font-semibold shadow-md w-full"
@@ -525,14 +525,14 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
             {locationCounts.map((loc, index) => (
                 <div
                     key={index}
-                    className="flex-shrink-0 font-playfair items-center px-4 py-2 rounded shadow-md cursor-pointer text-primary bg-white"
+                    className="flex-shrink-0 font-aller font-light items-center px-4 py-2 rounded shadow-md cursor-pointer text-primary bg-white"
                     onClick={() => handleLocationClick(loc.location)}
                     style={{ minWidth: '150px' }}
                 >
-                    <span className="mr-2 font-playfair truncate max-w-[120px]">
+                    <span className="mr-2 font-aller font-light truncate max-w-[120px]">
                         {loc.location.split(' ').slice(0, 2).join(' ')}
                     </span>
-                    <span className="text-primary font-playfair">({loc.count})</span>
+                    <span className="text-primary font-aller font-light">({loc.count})</span>
                 </div>
             ))}
         </div>

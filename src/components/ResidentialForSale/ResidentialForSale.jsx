@@ -71,9 +71,9 @@ export default function ResidentialForSale({ searchParams = {}, listings = [] })
     }, [searchParams, listings]);
 
     return (
-        <section className="py-8 px-4 lg:px-0 bg-primary font-primary text-primary">
-            <div className="container mx-auto font-primary">
-                <h1 className="text-3xl font-bold mb-6 text-primary font-primary flex justify-between items-center relative">
+        <section className="py-8 px-4 lg:px-0 bg-primary font-aller font-light text-primary">
+            <div className="container mx-auto font-aller font-light">
+                <h1 className="text-3xl font-bold mb-6 text-primary font-aller font-light flex justify-between items-center relative">
                     <span>
                         {searchParams.city
                             ? `Properties in ${searchParams.city}`
@@ -105,12 +105,12 @@ export default function ResidentialForSale({ searchParams = {}, listings = [] })
                     </div>
                 ) : (
                     <>
-                        <p className="text-center text-primary font-primary">
+                        <p className="text-center text-primary font-aller font-light">
                             No properties match your search criteria.
                         </p>
                         {relatedResults.length > 0 && (
                             <>
-                                <h2 className="text-2xl font-semibold mt-8 text-primary font-primary">
+                                <h2 className="text-2xl font-aller font-bold mt-8 text-primary font-aller font-light">
                                     Related Properties in {searchParams.city} - {searchParams.propertyType}
                                 </h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

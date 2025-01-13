@@ -98,8 +98,8 @@ function PropertiesPage() {
     };    
 
     return (
-        <div className="container mx-auto p-4 font-primary">
-            <div className="text-center mb-8 font-primary">
+        <div className="container mx-auto p-4 font-aller font-light">
+            <div className="text-center mb-8 font-aller font-light">
                 <h1 className="text-2xl sm:text-3xl font-bold text-primary">Properties in {location || "All Locations"} ({city})</h1>
             </div>
             
@@ -218,7 +218,7 @@ function PropertiesPage() {
 
 
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 font-primary">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 font-aller font-light">
                 {filteredProperties.length > 0 ? (
                     filteredProperties.map(property => (
                         <Card key={property._id} item={property} />

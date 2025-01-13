@@ -32,12 +32,12 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="flex font-primary items-center justify-center min-h-screen bg-primary">
+    <div className="flex font-aller font-light items-center justify-center min-h-screen bg-primary">
       <div className="w-full max-w-md bg-accent-color p-8 rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold mb-6 text-primary text-center">Forgot Password</h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-primary text-sm font-semibold mb-1" htmlFor="email">
+            <label className="block text-primary text-sm font-bold mb-1" htmlFor="email">
               Email
             </label>
             <input

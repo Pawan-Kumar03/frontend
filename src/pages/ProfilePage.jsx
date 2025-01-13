@@ -83,7 +83,7 @@ export default function ProfilePage() {
                 )}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block  text-sm font-medium mb-2 text-primary">Name</label>
+                        <label className="block  text-sm font-bold mb-2 text-primary">Name</label>
                         <input
                             type="text"
                             value={name}
@@ -92,7 +92,7 @@ export default function ProfilePage() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-2 text-primary">Email</label>
+                        <label className="block text-sm font-bold mb-2 text-primary">Email</label>
                         <input
                             type="email"
                             value={email}
@@ -101,7 +101,7 @@ export default function ProfilePage() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-2 text-primary">Password</label>
+                        <label className="block text-sm font-bold mb-2 text-primary">Password</label>
                         <input
                             type={showPassword ? 'text' : 'password'}
                             value={password}
@@ -110,7 +110,7 @@ export default function ProfilePage() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-2 text-primary">Confirm Password</label>
+                        <label className="block text-sm font-bold mb-2 text-primary">Confirm Password</label>
                         <input
                             type={showPassword ? 'text' : 'password'}
                             value={confirmPassword}

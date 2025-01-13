@@ -142,9 +142,9 @@ export default function PropertyDetails() {
   
   
   return (
-<div className="container mt-8 bg-primary backdrop-blur-lg text-primary p-6 rounded-lg font-primary shadow-lg max-w-5xl mx-auto">
+<div className="container mt-8 bg-primary backdrop-blur-lg text-primary p-6 rounded-lg font-aller font-light shadow-lg max-w-5xl mx-auto">
   {isDeleted && (
-    <div className="text-center bg-primary text-primary p-4 rounded mb-4">
+    <div className="text-center bg-primary text-primary font-aller font-light p-4 rounded mb-4">
       Your ad has been deleted successfully!
     </div>
   )}
@@ -220,7 +220,7 @@ export default function PropertyDetails() {
             <AttachMoneyIcon className="mr-2 text-primary" />
             {property.price} AED
           </p>
-          <p className="text-sm mb-2">
+          <p className="text-sm  mb-2">
             <LocationOnIcon className="mr-2 text-primary" />
             {property.building}, {property.developments}, {property.location}, {property.city}, {property.country}
           </p>

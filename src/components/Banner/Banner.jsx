@@ -16,7 +16,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     const [purpose, setPurpose] = useState("");
     const [locationCounts, setLocationCounts] = useState([]);
     const [isMobile, setIsMobile] = useState(false);
-
+    
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth < 640 ) {
@@ -158,7 +158,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     return (
         <section>
  <div
-                className={`container font-primary lg:relative lg:bg-right lg:bg-no-repeat lg:bg-[length:50%] lg:my-2 lg:pt-10 rounded-md ${
+                className={`container font-aller font-light lg:relative lg:bg-right lg:bg-no-repeat lg:bg-[length:50%] lg:my-2 lg:pt-10 rounded-md ${
                     !isMobile ? "bg-banner" : ""
                 }`}
                 style={{
@@ -172,7 +172,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
   <ul className="flex flex-wrap justify-center items-center gap-2 lg:gap-6 text-sm sm:text-base">
     <li>
       <button
-        className="bg-primary text-primary hover:bg-primary-dark transition duration-300 px-4 py-2 sm:px-6 sm:py-2 rounded-full font-aller font-bold shadow-md"
+        className="bg-primary text-primary hover:bg-primary-dark transition duration-300 px-4 py-2 sm:px-6 sm:py-2 rounded-full font-bold shadow-md"
         onClick={handleSaleClick}
       >
         Sale
@@ -180,7 +180,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     </li>
     <li>
       <button
-        className="bg-primary text-primary hover:bg-primary-dark transition duration-300 px-4 py-2 sm:px-6 sm:py-2 rounded-full font-aller font-bold shadow-md"
+        className="bg-primary text-primary hover:bg-primary-dark transition duration-300 px-4 py-2 sm:px-6 sm:py-2 rounded-full font-bold shadow-md"
         onClick={handleRentClick}
       >
         Rent
@@ -188,7 +188,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     </li>
     <li>
       <button
-        className="bg-primary text-primary hover:bg-primary-dark  transition duration-300 px-4 py-2 sm:px-6 sm:py-2 rounded-full font-aller font-bold shadow-md"
+        className="bg-primary text-primary hover:bg-primary-dark  transition duration-300 px-4 py-2 sm:px-6 sm:py-2 rounded-full font-bold shadow-md"
         onClick={handleOffPlanClick}
       >
         Off-Plan
@@ -196,7 +196,7 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     </li>
     <li>
       <Link
-        className="bg-primary text-primary hover:bg-primary-dark transition duration-300 px-4 py-2 sm:px-6 sm:py-2 rounded-full font-aller font-bold shadow-md"
+        className="bg-primary text-primary hover:bg-primary-dark transition duration-300 px-4 py-2 sm:px-6 sm:py-2 rounded-full font-bold shadow-md"
         to="/place-an-ad"
       >
         Create A Listing
@@ -205,334 +205,192 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
   </ul>
 </div>
 
-<h1 className="text-5xl text-left font-primary text-primary mt-28 lg:text-primary lg:mb-8">
+<h1 className="text-5xl text-left font-aller font-light text-primary mt-28 lg:text-primary lg:mb-8">
   Your <span className="animate-blink font-bold">InvestiBayt</span> <br /> Journey Starts Here
 </h1>
-<div>
-  {/* Mobile Screen Form */}
-  <div className="block lg:hidden">
-  <form 
-    className=" sm:flex-row justify-between font-aller font-light w-full space-x-2 px-4 py-4 bg-primary rounded-lg overflow-x-auto" 
-    onSubmit={handleSearch}
->
-    <div className="flex flex-nowrap w-full sm:flex-row sm:flex-wrap space-x-4">
-        <div className="flex flex-col min-w-[200px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary font-aller font-light">City</label>
-            <select 
-                name="city"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-            >
-                <option value="" className="font-aller font-light">Any</option>
-                <option value="Dubai" className="font-aller font-light">Dubai</option>
-                <option value="Abu Dhabi" className="font-aller font-light">Abu Dhabi</option>
-                <option value="Sharjah" className="font-aller font-light">Sharjah</option>
-                <option value="Ajman" className="font-aller font-light">Ajman</option>
-                <option value="Fujairah" className="font-aller font-light">Fujairah</option>
-                <option value="Ras Al Khaimah" className="font-aller font-light">Ras Al Khaimah</option>
-                <option value="Umm Al Quwain" className="font-aller font-light">Umm Al Quwain</option>
-            </select>
-        </div>
 
-        <div className="flex flex-col min-w-[250px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Location</label>
-            <input 
-                type="text"
-                placeholder="Add location and press enter"
-                onChange={(e) => setLocations(e.target.value)}
-                onKeyPress={handleAddLocation}
-                className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-            />
-            {locations.map((loc, index) => (
-                <div key={index} className="flex items-center space-x-1 mb-1 mr-1 bg-primary dark:bg-primary px-2 py-1 rounded-full">
-                    <span className="text-sm text-primary">{loc}</span>
-                    <button type="button" onClick={() => handleRemoveLocation(index)} className="ml-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-            ))}
-        </div>
-
-        <div className="flex flex-col min-w-[200px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Property Type</label>
-            <select 
-                name="propertyType"
-                value={propertyType}
-                onChange={(e) => setPropertyType(e.target.value)}
-                className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-            >
-                <option value="" className="font-aller font-light">Any</option>
-                <option value="Apartment" className="font-aller font-light">Apartment</option>
-                <option value="Villa" className="font-aller font-light">Villa</option>
-                <option value="Townhouse" className="font-aller font-light">Townhouse</option>
-                <option value="Penthouse" className="font-aller font-light">Penthouse</option>
-            </select>
-        </div>
-
-        <div className="flex flex-col min-w-[250px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Price Range</label>
-            <div className="flex flex-row gap-2 w-full">
-                <input
-                    type="text"
-                    placeholder="Min"
-                    value={priceMin}
-                    onChange={(e) => setPriceMin(e.target.value)}
-                    className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-full"
-                />
-                <input
-                    type="text"
-                    placeholder="Max"
-                    value={priceMax}
-                    onChange={(e) => setPriceMax(e.target.value)}
-                    className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-full"
-                />
-            </div>
-        </div>
-
-        <div className="flex flex-col min-w-[150px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Beds</label>
-            <select
-                name="beds"
-                value={beds}
-                onChange={(e) => setBeds(e.target.value)}
-                className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-            >
-                <option value="" className="text-primary font-aller font-light">Any</option>
-                <option value="1" className="text-primary font-aller font-light">1</option>
-                <option value="2" className="text-primary font-aller font-light">2</option>
-                <option value="3" className="text-primary font-aller font-light">3</option>
-                <option value="4" className="text-primary font-aller font-light">4</option>
-                <option value="5" className="text-primary font-aller font-light">5+</option>
-            </select>
-        </div>
-
-        <div className="flex flex-col min-w-[150px] mb-4 sm:mb-0">
-            <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Baths</label>
-            <select
-                name="baths"
-                value={baths}
-                onChange={(e) => setBaths(e.target.value)}
-                className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-            >
-                <option value="" className="text-primary font-aller font-light">Any</option>
-                <option value="1" className="text-primary font-aller font-light">1</option>
-                <option value="2" className="text-primary font-aller font-light">2</option>
-                <option value="3" className="text-primary font-aller font-light">3</option>
-                <option value="4" className="text-primary font-aller font-light">4</option>
-                <option value="5" className="text-primary font-aller font-light">5+</option>
-            </select>
-        </div>
-
-        {/* Search and Clear Filters Buttons */}
-  <div className="flex items-centerfont-aller font-light gap-4 w-full col-span-2 mt-auto">
-    <button
-      type="submit"
-      className="bg-button text-button hover:bg-primary-dark transition duration-300 px-4 py-2 rounded-full font-semibold shadow-md w-full"
-    >
-      Search
-    </button>
-    {isFilterApplied && (
-      <button
-        type="button"
-        onClick={handleClearFilters}
-        className="bg-primary-dark text-primary hover:bg-primary transition duration-300 px-4 py-2 rounded-full font-semibold shadow-md"
-      >
-        Clear
-      </button>
-    )}
-  </div>
-    </div>
-</form>
-  </div>
-
-  {/* Desktop Screen Form */}
-  <div className="hidden lg:block">
-  <form
-  className="grid grid-cols-1 lg:grid-cols-8 gap-4 px-3 py-3 bg-primary rounded-lg"
+<form
+  className="px-3 py-3 bg-primary rounded-lg lg:grid lg:grid-cols-8 lg:gap-4"
   onSubmit={handleSearch}
 >
-  {/* City Filter */}
-  <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary font-aller font-light">City</label>
-    <select
-      name="city"
-      value={city}
-      onChange={(e) => setCity(e.target.value)}
-      className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-    >
-      <option value="">Any</option>
-      <option value="Dubai">Dubai</option>
-      <option value="Abu Dhabi">Abu Dhabi</option>
-      <option value="Sharjah">Sharjah</option>
-      <option value="Ajman">Ajman</option>
-      <option value="Fujairah">Fujairah</option>
-      <option value="Ras Al Khaimah">Ras Al Khaimah</option>
-      <option value="Umm Al Quwain">Umm Al Quwain</option>
-    </select>
-  </div>
-
-  {/* Location Filter */}
-  <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Location</label>
-    <input
-      type="text"
-      placeholder="Add location and press enter"
-      onKeyPress={handleAddLocation}
-      className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-    />
-    {locations.map((loc, index) => (
-      <div
-        key={index}
-        className="flex items-center space-x-1 mb-1 bg-primary px-2 py-1 rounded-full"
+  {/* Filter Fields Container */}
+  <div className="lg:block lg:contents space-y-4 lg:space-y-0">
+    {/* City Filter */}
+    <div className="flex flex-col w-full">
+      <label className="mb-1 text-sm font-medium text-primary">City</label>
+      <select
+        name="city"
+        value={city}
+        onChange={(e) => setCity(e.target.value)}
+        className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
       >
-        <span className="text-sm text-primary">{loc}</span>
+        <option value="">Any</option>
+        <option value="Dubai">Dubai</option>
+        <option value="Abu Dhabi">Abu Dhabi</option>
+        <option value="Sharjah">Sharjah</option>
+        <option value="Ajman">Ajman</option>
+        <option value="Fujairah">Fujairah</option>
+        <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+        <option value="Umm Al Quwain">Umm Al Quwain</option>
+      </select>
+    </div>
+
+    {/* Location Filter */}
+    <div className="flex flex-col w-full">
+      <label className="mb-1 text-sm font-medium text-primary">Location</label>
+      <input
+        type="text"
+        placeholder="Add location and press enter"
+        onKeyPress={handleAddLocation}
+        className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+      />
+      {locations.map((loc, index) => (
+        <div
+          key={index}
+          className="flex items-center space-x-1 mb-1 bg-primary px-2 py-1 rounded-full"
+        >
+          <span className="text-sm text-primary">{loc}</span>
+          <button
+            type="button"
+            onClick={() => handleRemoveLocation(index)}
+            className="ml-1"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4 text-red-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+      ))}
+    </div>
+
+    {/* Property Type Filter */}
+    <div className="flex flex-col w-full">
+      <label className="mb-1 text-sm font-medium text-primary">Property Type</label>
+      <select
+        name="propertyType"
+        value={propertyType}
+        onChange={(e) => setPropertyType(e.target.value)}
+        className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+      >
+        <option value="">Any</option>
+        <option value="Apartment">Apartment</option>
+        <option value="Villa">Villa</option>
+        <option value="Townhouse">Townhouse</option>
+        <option value="Penthouse">Penthouse</option>
+      </select>
+    </div>
+
+    {/* Price Range Filter */}
+    <div className="flex flex-col w-full">
+      <label className="mb-1 text-sm font-medium text-primary">Price Range</label>
+      <div className="flex gap-2">
+        <input
+          type="text"
+          placeholder="min"
+          value={priceMin}
+          onChange={(e) => setPriceMin(e.target.value)}
+          className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-1/2"
+        />
+        <input
+          type="text"
+          placeholder="max"
+          value={priceMax}
+          onChange={(e) => setPriceMax(e.target.value)}
+          className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-1/2"
+        />
+      </div>
+    </div>
+
+    {/* Beds Filter */}
+    <div className="flex flex-col w-full">
+      <label className="mb-1 text-sm font-medium text-primary">Beds</label>
+      <select
+        name="beds"
+        value={beds}
+        onChange={(e) => setBeds(e.target.value)}
+        className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+      >
+        <option value="">Any</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5+</option>
+      </select>
+    </div>
+
+    {/* Baths Filter */}
+    <div className="flex flex-col w-full">
+      <label className="mb-1 text-sm font-medium text-primary">Baths</label>
+      <select
+        name="baths"
+        value={baths}
+        onChange={(e) => setBaths(e.target.value)}
+        className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+      >
+        <option value="">Any</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5+</option>
+      </select>
+    </div>
+
+    {/* Search and Clear Filters Buttons */}
+    <div className="flex items-center gap-4 w-full col-span-2 mt-auto">
+      <button
+        type="submit"
+        className="bg-button text-button hover:bg-primary-dark transition duration-300 px-4 py-2 rounded-full font-bold shadow-md w-full"
+      >
+        Search
+      </button>
+      {isFilterApplied && (
         <button
           type="button"
-          onClick={() => handleRemoveLocation(index)}
-          className="ml-1"
+          onClick={handleClearFilters}
+          className="bg-primary-dark text-primary hover:bg-primary transition duration-300 px-4 py-2 rounded-full font-bold shadow-md"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4 text-red-600"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+          Clear
         </button>
-      </div>
-    ))}
-  </div>
-
-  {/* Property Type Filter */}
-  <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary font-aller font-light">
-      Property Type
-    </label>
-    <select
-      name="propertyType"
-      value={propertyType}
-      onChange={(e) => setPropertyType(e.target.value)}
-      className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-    >
-      <option value="">Any</option>
-      <option value="Apartment">Apartment</option>
-      <option value="Villa">Villa</option>
-      <option value="Townhouse">Townhouse</option>
-      <option value="Penthouse">Penthouse</option>
-    </select>
-  </div>
-
-  {/* Price Range Filter */}
-  <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary font-aller font-light">
-      Price Range
-    </label>
-    <div className="flex gap-2">
-      <input
-        type="text"
-        placeholder="Min"
-        value={priceMin}
-        onChange={(e) => setPriceMin(e.target.value)}
-        className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-1/2"
-      />
-      <input
-        type="text"
-        placeholder="Max"
-        value={priceMax}
-        onChange={(e) => setPriceMax(e.target.value)}
-        className="p-2 h-10 rounded-md text-primary border border-primary focus:ring-2 focus:ring-gray-500 outline-none w-1/2"
-      />
+      )}
     </div>
   </div>
-
-  {/* Beds Filter */}
-  <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Beds</label>
-    <select
-      name="beds"
-      value={beds}
-      onChange={(e) => setBeds(e.target.value)}
-      className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-    >
-      <option value="">Any</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5+</option>
-    </select>
-  </div>
-
-  {/* Baths Filter */}
-  <div className="flex flex-col w-full">
-    <label className="mb-1 text-sm font-medium text-primary font-aller font-light">Baths</label>
-    <select
-      name="baths"
-      value={baths}
-      onChange={(e) => setBaths(e.target.value)}
-      className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-    >
-      <option value="">Any</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5+</option>
-    </select>
-  </div>
-
-  {/* Search and Clear Filters Buttons */}
-  <div className="flex items-center font-aller font-light gap-4 w-full col-span-2 mt-auto">
-    <button
-      type="submit"
-      className="bg-button text-button hover:bg-primary-dark transition duration-300 px-4 py-2 rounded-full font-semibold shadow-md w-full"
-    >
-      Search
-    </button>
-    {isFilterApplied && (
-      <button
-        type="button"
-        onClick={handleClearFilters}
-        className="bg-primary-dark text-primary hover:bg-primary transition duration-300 px-4 py-2 rounded-full font-semibold shadow-md"
-      >
-        Clear
-      </button>
-    )}
-  </div>
 </form>
-  </div>
-</div>
+
+  
 
                 </div>
 
             </div>
             {city && locationCounts.length > 0 && (
     <div className="bg-primary font-aller font-light pl-14">
-        <h2 className="text-xl font-aller font-bold text-primary ">
+        <h2 className="text-xl font-bold text-primary font-aller font-light">
             Properties by Location in {city}. {totalProperties} Ads
         </h2>
         <div className="mt-2 flex overflow-x-auto space-x-2">
             {locationCounts.map((loc, index) => (
                 <div
                     key={index}
-                    className="flex-shrink-0 font-aller font-light items-center px-4 py-2 rounded shadow-md cursor-pointer text-primary bg-white"
+                    className="flex-shrink-0 font-playfair items-center px-4 py-2 rounded shadow-md cursor-pointer text-primary bg-white"
                     onClick={() => handleLocationClick(loc.location)}
                     style={{ minWidth: '150px' }}
                 >
-                    <span className="mr-2 font-aller font-light truncate max-w-[120px]">
+                    <span className="mr-2 font-playfair truncate max-w-[120px]">
                         {loc.location.split(' ').slice(0, 2).join(' ')}
                     </span>
-                    <span className="text-primary font-aller font-light">({loc.count})</span>
+                    <span className="text-primary font-playfair">({loc.count})</span>
                 </div>
             ))}
         </div>
@@ -542,3 +400,4 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
         </section>
     );
 }
+

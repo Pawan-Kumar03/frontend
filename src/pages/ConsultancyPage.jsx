@@ -59,7 +59,7 @@ export default function ConsultancyPage() {
     };
 
     return (
-        <div className="flex font-primary items-center justify-center min-h-screen bg-primary">
+        <div className="flex font-aller font-light items-center justify-center min-h-screen bg-primary">
             <div className="w-full max-w-md bg-accent-color p-8 rounded-lg shadow-lg">
                 <h1 className="text-3xl font-bold mb-6 text-primary text-center">
                     Consultancy Form
@@ -117,7 +117,7 @@ export default function ConsultancyPage() {
                     </div>
                     <div>
                         <label
-                            className="block text-primary text-sm font-semibold mb-1"
+                            className="block text-primary text-sm font-aller font-bold mb-1"
                             htmlFor="propertyType"
                         >
                             Property Type
@@ -154,7 +154,7 @@ export default function ConsultancyPage() {
                     </div>
                     <div>
                         <label
-                            className="block text-primary text-sm font-semibold mb-1"
+                            className="block text-primary text-sm font-aller font-bold mb-1"
                             htmlFor="contactMethod"
                         >
                             Preferred Contact Method

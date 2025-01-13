@@ -27,7 +27,7 @@ export default function Card({ item }) {
 
     return (
         <div
-            className="hover:shadow-xl p-6 rounded-lg bg-primary text-primary cursor-pointer font-primary transition duration-300 ease-in-out h-96 flex flex-col justify-between"
+            className="hover:shadow-xl p-6 rounded-lg bg-primary text-primary cursor-pointer font-aller font-light transition duration-300 ease-in-out h-96 flex flex-col justify-between"
             onClick={handleClick}
             style={{ minWidth: '240px' }} // Ensure minimum width for consistency
         >
@@ -39,16 +39,16 @@ export default function Card({ item }) {
                     style={{ objectFit: "cover" }} // Ensure image fits within the container
                 />
             ) : (
-                <div className="rounded-lg mb-4 font-primary object-cover h-48 w-full bg-lightBlue flex items-center justify-center">
-                    <span className="text-primary font-playfair">No Image Available</span>
+                <div className="rounded-lg mb-4 font-aller font-light object-cover h-48 w-full bg-lightBlue flex items-center justify-center">
+                    <span className="text-primary font-aller font-light">No Image Available</span>
                 </div>
             )}
-            <div className="flex flex-col font-primary justify-between">
-                <h3 className="text-2xl font-semibold text-primary font-playfair">
+            <div className="flex flex-col font-aller font-light justify-between">
+                <h3 className="text-2xl font-semibold text-primary font-aller font-light">
                     {price}
                 </h3>
-                <p className="text-primary font-semibold truncate mb-2 font-playfair">{title}</p>
-                <p className="text-primary text-sm truncate font-playfair">{extension}</p>
+                <p className="text-primary font-semibold truncate mb-2 font-aller font-light">{title}</p>
+                <p className="text-primary text-sm truncate font-aller font-light">{extension}</p>
             </div>
         </div>
     );

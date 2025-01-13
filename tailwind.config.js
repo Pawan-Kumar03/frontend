@@ -40,6 +40,7 @@ export default {
                 josefin: ["'Josefin Sans'", "sans-serif"],
                 openSans: ["'Open Sans'", "sans-serif"],
                 lato: ["'Lato'", "sans-serif"],
+                aller: ['Aller', 'sans-serif'],
             },
             animation: {
                 blink: 'blink 1s linear infinite',

@@ -208,7 +208,7 @@ export default function PropertyDetails() {
           {/* Description */}
           {property.description && (
             <div className="mb-4">
-              <p className="text-sm">{property.description}</p>
+              <p className="text-sm font-aller font-light">{property.description}</p>
             </div>
           )}
         </div>

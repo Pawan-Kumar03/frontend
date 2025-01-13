@@ -1,0 +1,14 @@
+/* fonts.css */
+@font-face {
+    font-family: 'Aller';
+    src: url('/src/assets/fonts/aller/aller.italic.ttf') format('truetype');
+    font-weight: 300; /* Light */
+    /* font-style: normal; */
+}
+
+@font-face {
+    font-family: 'Aller';
+    src: url('/src/assets/fonts/aller/aller.bold.ttf') format('truetype');
+    font-weight: 700; /* Bold */
+    font-style: normal;
+}

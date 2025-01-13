@@ -213,7 +213,7 @@ export default function PropertyDetails() {
           )}
         </div>
         <div className="lg:w-1/2 lg:pl-4">
-          <h3 className="text-lg font-semibold mb-2 text-primary">
+          <h3 className="text-lg font-aller font-bold mb-2 ">
             {property.title}
           </h3>
           <p className="text-sm mb-2">

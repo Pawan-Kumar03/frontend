@@ -38,8 +38,8 @@ export default function Navbar() {
     };
 
     return (
-        <header className="bg-primary font-primary shadow-md sticky top-0 z-50">
-            <nav className="max-w-7xl mx-auto font-primary px-4 sm:px-6 lg:px-8 flex items-center justify-between py-4">
+        <header className="bg-primary font-aller font-light shadow-md sticky top-0 z-50">
+            <nav className="max-w-7xl mx-auto font-aller font-light px-4 sm:px-6 lg:px-8 flex items-center justify-between py-4">
                 {/* Logo */}
                 <div className="flex items-center h-10"> {/* Fixed navbar height */}
     <Link to="/">

@@ -73,7 +73,7 @@ export default function ResidentialForSale({ searchParams = {}, listings = [] })
     return (
         <section className="py-8 px-4 lg:px-0 bg-primary font-aller font-light text-primary">
             <div className="container mx-auto font-aller font-light">
-                <h1 className="text-3xl font-bold mb-6 text-primary font-aller font-light flex justify-between items-center relative">
+                <h1 className="text-3xl font-aller font-bold mb-6 text-primary font-aller font-light flex justify-between items-center relative">
                     <span>
                         {searchParams.city
                             ? `Properties in ${searchParams.city}`

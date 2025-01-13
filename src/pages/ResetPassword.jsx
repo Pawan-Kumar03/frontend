@@ -40,8 +40,8 @@ export default function ResetPassword() {
     };
 
     return (
-        <div className="min-h-screen flex justify-center items-center bg-primary font-primary">
-            <div className="bg-primary p-8 rounded shadow-md w-full max-w-md border-4  font-primary">
+        <div className="min-h-screen flex justify-center items-center bg-primary font-aller font-light">
+            <div className="bg-primary p-8 rounded shadow-md w-full max-w-md border-4  font-aller font-light">
                 <h2 className="text-2xl font-bold mb-6 text-primary text-center">Reset Password</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">

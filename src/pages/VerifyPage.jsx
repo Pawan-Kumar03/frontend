@@ -38,8 +38,8 @@ export default function VerifyPage() {
   }, [token]);
 
   return (
-    <div className="flex justify-center items-center min-h-screen font-primary">
-      <div className="w-full max-w-md bg-primary p-8 rounded shadow-md font-primary">
+    <div className="flex justify-center items-center min-h-screen font-aller font-light">
+      <div className="w-full max-w-md bg-primary p-8 rounded shadow-md font-aller font-light">
         <h2 className="text-2xl font-bold mb-6 text-center text-primary">Email Verification</h2>
         <p className="text-primary">{message}</p>
       </div>

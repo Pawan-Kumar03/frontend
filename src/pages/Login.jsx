@@ -50,14 +50,14 @@ export default function Login() {
     };
 
     return (
-        <div className="flex font-primary items-center justify-center min-h-screen bg-primary">
+        <div className="flex font-aller font-light items-center justify-center min-h-screen bg-primary">
             <div className="w-full max-w-md bg-accent-color p-8 rounded-lg shadow-lg">
                 <h1 className="text-3xl font-bold mb-6 text-primary text-center">
                     Log in to favorite an Ad
                 </h1>
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     <div>
-                        <label className="block text-primary text-sm font-semibold mb-1" htmlFor="email">
+                        <label className="block text-primary text-sm font-bold mb-1" htmlFor="email">
                             Email
                         </label>
                         <input
@@ -70,7 +70,7 @@ export default function Login() {
                         />
                     </div>
                     <div>
-                        <label className="block text-primary text-sm font-semibold mb-1" htmlFor="password">
+                        <label className="block text-primary text-sm font-bold mb-1" htmlFor="password">
                             Password
                         </label>
                         <input

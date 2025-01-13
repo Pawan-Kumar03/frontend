@@ -96,11 +96,11 @@ const handleDisplayAllListings = async () => {
 
     if (submitted) {
         return (
-            <div className="container mx-auto p-4 bg-primary text-primary font-primary">
+            <div className="container mx-auto p-4 bg-primary text-primary font-aller font-light">
                 <div className="text-center bg-primary text-primary p-4 rounded">
                     {deleteMessage}
                 </div>
-                <div className="flex justify-center mt-4 font-primary">
+                <div className="flex justify-center mt-4 font-aller font-light">
                     <button onClick={() => { setSubmitted(false); navigate("/"); }} className="px-6 py-3 bg-green-600 text-white rounded">
                         Go to Home
                     </button>
@@ -158,7 +158,7 @@ const handleDisplayAllListings = async () => {
     });
     
     return (
-        <div className="bg-primary min-h-screen font-primary">
+        <div className="bg-primary min-h-screen font-aller font-light">
             <Banner
                 onSearch={handleSearch}
                 onDisplayAllListings={handleDisplayAllListings}

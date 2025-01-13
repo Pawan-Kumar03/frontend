@@ -7,7 +7,7 @@ export default function ResidentialForSale({ searchParams = {}, listings = [] })
     const [isVertical, setIsVertical] = useState(false); // State to toggle between layouts
 
     useEffect(() => {
-        const isEmptySearch = Object.values(searchParams).every(param => param === "");
+        const isEmptySearch = Object.values(searchParams).every((param) => param === "");
 
         const filtered = Array.isArray(listings)
             ? listings.filter((listing) => {
@@ -18,7 +18,7 @@ export default function ResidentialForSale({ searchParams = {}, listings = [] })
                   return (
                       (searchParams.city ? listing.city === searchParams.city : true) &&
                       (searchParams.location
-                          ? searchParams.location.split(",").some(loc =>
+                          ? searchParams.location.split(",").some((loc) =>
                                 listing.location.toLowerCase().includes(loc.trim().toLowerCase())
                             )
                           : true) &&
@@ -77,14 +77,16 @@ export default function ResidentialForSale({ searchParams = {}, listings = [] })
                             ? `Properties in ${searchParams.city}`
                             : "Popular Developments"}
                     </span>
-                    <span className="absolute right-0 text-primary text-2xl animate-bounce">➡️</span>
+                    {isVertical && (
+                        <span className="absolute right-0 text-primary text-2xl animate-bounce">↓</span>
+                    )}
                 </h1>
 
                 {filteredResults.length > 0 ? (
                     <div
                         className={`${
                             isVertical
-                                ? "flex flex-col gap-4" // Vertical layout
+                                ? "grid grid-cols-1 lg:grid-cols-2 gap-6" // Vertical layout: 2 cards per row on large screens
                                 : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" // Horizontal grid layout
                         }`}
                     >

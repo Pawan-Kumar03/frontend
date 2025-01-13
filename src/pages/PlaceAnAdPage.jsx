@@ -224,11 +224,11 @@ export default function PlaceAnAdPage() {
 
   if (submitted) {
     return (
-      <div className="container mx-auto p-4 font-primary">
-        <div className="text-center bg-green-200 text-green-700 p-4 rounded font-primary">
+      <div className="container mx-auto p-4 font-aller font-light">
+        <div className="text-center bg-green-200 text-green-700 p-4 rounded font-aller font-light">
           Your ad has been published successfully!
         </div>
-        <div className="flex justify-center mt-4 font-primary">
+        <div className="flex justify-center mt-4 font-aller font-light">
           <button onClick={() => navigate("/")} className="px-6 py-3 bg-custom text-white rounded">
             Go to Home
           </button>
@@ -238,7 +238,7 @@ export default function PlaceAnAdPage() {
   }
 
   return (
-    <div className="container mx-auto p-4 font-primary">
+    <div className="container mx-auto p-4 font-aller font-light">
       {isPublishing ? (
         <div className="text-center text-primary bg-custom  p-4 rounded">
           Your Ad is publishing...
@@ -276,8 +276,8 @@ function Step1({ onNext }) {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-4 w-full max-w-md mx-auto font-primary">
-      <h2 className="text-2xl font-semibold text-center text-primary">Enter a short title to describe your listing</h2>
+    <div className="flex flex-col items-center space-y-4 w-full max-w-md mx-auto font-aller font-light">
+      <h2 className="text-2xl font-bold text-center text-primary">Enter a short title to describe your listing</h2>
       <h3 className="text-center text-primary">Make your title informative and attractive.</h3>
       <input
         type="text"
@@ -300,15 +300,15 @@ function StepChooseCategory({ onNext, onBack, title }) {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-4 w-full max-w-md mx-auto font-primary">
-      <h2 className="text-2xl  font-primary font-semibold text-center text-primary">Now choose the right category for your ad: {title}</h2>
-      <div className="space-y-2 w-3/4 font-primary">
+    <div className="flex flex-col items-center space-y-4 w-full max-w-md mx-auto font-aller font-light">
+      <h2 className="text-2xl  font-aller font-light font-bold text-center text-primary">Now choose the right category for your ad: {title}</h2>
+      <div className="space-y-2 w-3/4 font-aller font-light">
         <button onClick={() => handleCategorySelect("Residential")} className={`block w-full px-6 py-3 rounded ${category === "Residential" ? 'bg-custom text-white' : 'bg-gray-200'}`}>Residential</button>
         <button onClick={() => handleCategorySelect("Commercial")} className={`block w-full px-6 py-3 rounded ${category === "Commercial" ? 'bg-custom text-white' : 'bg-gray-200'}`}>Commercial</button>
         <button onClick={() => handleCategorySelect("Land")} className={`block w-full px-6 py-3 rounded ${category === "Land" ? 'bg-custom text-white' : 'bg-gray-200'}`}>Land</button>
         <button onClick={() => handleCategorySelect("Multiple Units")} className={`block w-full px-6 py-3 rounded ${category === "Multiple Units" ? 'bg-custom text-white' : 'bg-gray-200'}`}>Multiple Units</button>
       </div>
-      <button onClick={onBack} className="px-4 py-2 font-primary  bg-button text-button rounded w-full">Back</button>
+      <button onClick={onBack} className="px-4 py-2 font-aller font-light  bg-button text-button rounded w-full">Back</button>
     </div>
   );
 }
@@ -321,9 +321,9 @@ function Step2Residential({ onNext, onBack, category, title }) {
   };
 
   return (
-    <div className="flex font-primary flex-col items-center space-y-4 w-full max-w-md mx-auto">
-      <h2 className="text-2xl font-primary font-semibold text-center text-primary">Now choose the right category for your ad: {title} {">"} {category}</h2>
-      <div className="space-y- font-primary w-3/4">
+    <div className="flex font-aller font-light flex-col items-center space-y-4 w-full max-w-md mx-auto">
+      <h2 className="text-2xl font-aller font-light font-bold text-center text-primary">Now choose the right category for your ad: {title} {">"} {category}</h2>
+      <div className="space-y- font-aller font-light w-3/4">
         <button onClick={() => setSubcategory("Apartment")} className={`block w-full px-6 py-3 rounded ${subcategory === "Apartment" ? 'bg-custom text-white' : 'bg-gray-200'}`}>Apartment</button>
         <button onClick={() => setSubcategory("Villa")} className={`block w-full px-6 py-3 rounded ${subcategory === "Villa" ? 'bg-custom text-white' : 'bg-gray-200'}`}>Villa</button>
         <button onClick={() => setSubcategory("Townhouse")} className={`block w-full px-6 py-3 rounded ${subcategory === "Townhouse" ? 'bg-custom text-white' : 'bg-gray-200'}`}>Townhouse</button>
@@ -346,9 +346,9 @@ function Step2Commercial({ onNext, onBack, category, title }) {
   };
 
   return (
-    <div className="flex font-primary flex-col items-center space-y-4 w-full max-w-md mx-auto">
-      <h2 className="text-2xl font-primary font-semibold text-center text-primary">Now choose the right category for your ad: {title} {">"} {category}</h2>
-      <div className="space-y-2 w-3/4 font-primary">
+    <div className="flex font-aller font-light flex-col items-center space-y-4 w-full max-w-md mx-auto">
+      <h2 className="text-2xl font-aller font-light font-bold text-center text-primary">Now choose the right category for your ad: {title} {">"} {category}</h2>
+      <div className="space-y-2 w-3/4 font-aller font-light">
         <button onClick={() => setSubcategory("Office")} className={`block w-full px-6 py-3 rounded ${subcategory === "Office" ? 'bg-custom text-white' : 'bg-gray-200'}`}>Office</button>
         <button onClick={() => setSubcategory("Retail")} className={`block w-full px-6 py-3 rounded ${subcategory === "Retail" ? 'bg-custom text-white' : 'bg-gray-200'}`}>Retail</button>
         <button onClick={() => setSubcategory("Industrial")} className={`block w-full px-6 py-3 rounded ${subcategory === "Industrial" ? 'bg-custom text-white' : 'bg-gray-200'}`}>Industrial</button>
@@ -483,8 +483,8 @@ const handlePdfChange = (e) => {
     setDetails(prev => ({ ...prev, [name]: newValue }));
   };
   return (
-    <div className="flex flex-col items-center space-y-4 w-full max-w-lg mx-auto font-primary">
-      <h2 className="text-2xl font-semibold text-center text-primary">You’re almost there!</h2>
+    <div className="flex flex-col items-center space-y-4 w-full max-w-lg mx-auto font-aller font-light">
+      <h2 className="text-2xl font-bold text-center text-primary">You’re almost there!</h2>
       <h3 className="text-center text-primary">Include as much details and pictures as possible, and set the right price!</h3>
       <h4 className="text-center text-primary">{formData.title} {">"} {formData.category}</h4>
       <input
@@ -540,7 +540,7 @@ const handlePdfChange = (e) => {
       <div className="text-primary border border-primary-400 p-2 rounded w-full">
   <label
     htmlFor="imageInput"
-    className="block text-primary font-primary cursor-pointer"
+    className="block text-primary font-aller font-light cursor-pointer"
   >
     Choose images
   </label>
@@ -639,7 +639,7 @@ const handlePdfChange = (e) => {
         </div>
       )}
       
-      <h2 className="text-lg font-semibold text-center text-primary">Are you a Landlord or an Agent?</h2>
+      <h2 className="text-lg font-bold text-center text-primary">Are you a Landlord or an Agent?</h2>
       <div className="flex space-x-4">
         <button onClick={() => setDetails({ ...details, landlord: true })} className="px-4 py-2 bg-button text-button rounded">Landlord</button>
         <button onClick={() => setDetails({ ...details, landlord: false })} className="px-4 py-2 bg-button text-button rounded">Agent</button>
@@ -770,28 +770,28 @@ const handlePdfChange = (e) => {
 
 function Step4Review({ onSubmit, onBack, formData }) {
   return (
-    <div className="flex font-primary flex-col items-center space-y-4 w-full max-w-lg mx-auto p-4 bg-primary shadow-lg rounded">
-      <h2 className="text-2xl font-semibold text-center mb-4">Review Your Ad</h2>
+    <div className="flex font-aller font-light flex-col items-center space-y-4 w-full max-w-lg mx-auto p-4 bg-primary shadow-lg rounded">
+      <h2 className="text-2xl font-bold text-center mb-4">Review Your Ad</h2>
 
       <div className="w-full space-y-4">
         <div className="flex flex-col space-y-2">
-          <label className="font-semibold">Title:</label>
+          <label className="font-bold">Title:</label>
           <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.title}</div>
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label className="font-semibold">Category:</label>
+          <label className="font-bold">Category:</label>
           <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.category}</div>
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label className="font-semibold">Subcategory:</label>
+          <label className="font-bold">Subcategory:</label>
           <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.subcategory}</div>
         </div>
 
         {formData.images.length > 0 && (
           <div className="flex flex-col space-y-2">
-            <label className="font-semibold">Images:</label>
+            <label className="font-bold">Images:</label>
             <div className="flex flex-wrap">
               {formData.images.map((image, index) => (
                 <img key={index} src={URL.createObjectURL(image)} alt={`Upload ${index + 1}`} className="w-24 h-24 object-cover m-2 border border-primary-400 rounded" />
@@ -801,102 +801,102 @@ function Step4Review({ onSubmit, onBack, formData }) {
         )}
 
         <div className="flex flex-col space-y-2">
-          <label className="font-semibold">Description:</label>
+          <label className="font-bold">Description:</label>
           <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.description}</div>
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label className="font-semibold">Price:</label>
+          <label className="font-bold">Price:</label>
           <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.price}</div>
         </div>
         <div className="flex flex-col space-y-2">
-          <label className="font-semibold">Country:</label>
+          <label className="font-bold">Country:</label>
           <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.country}</div>
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label className="font-semibold">Development:</label>
+          <label className="font-bold">Development:</label>
           <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.developments}</div>
         </div>
         {formData.bedrooms && (
           <div className="flex flex-col space-y-2">
-            <label className="font-semibold">Bedrooms:</label>
+            <label className="font-bold">Bedrooms:</label>
             <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.bedrooms}</div>
           </div>
         )}
 
         {formData.baths && (
           <div className="flex flex-col space-y-2">
-            <label className="font-semibold">Bathrooms:</label>
+            <label className="font-bold">Bathrooms:</label>
             <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.baths}</div>
           </div>
         )}
 
         {formData.propertyReferenceId && (
           <div className="flex flex-col space-y-2">
-            <label className="font-semibold">Property Reference ID:</label>
+            <label className="font-bold">Property Reference ID:</label>
             <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.propertyReferenceId}</div>
           </div>
         )}
 
         {formData.amenities.length > 0 && (
           <div className="flex flex-col space-y-2">
-            <label className="font-semibold">Amenities:</label>
+            <label className="font-bold">Amenities:</label>
             <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.amenities.join(", ")}</div>
           </div>
         )}
 
         <div className="flex flex-col space-y-2">
-          <label className="font-semibold">Landlord/Agent:</label>
+          <label className="font-bold">Landlord/Agent:</label>
           <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.landlord ? "Landlord" : "Agent"}</div>
         </div>
 
         {formData.landlord ? (
           <>
             <div className="flex flex-col space-y-2">
-              <label className="font-semibold">Landlord Name:</label>
+              <label className="font-bold">Landlord Name:</label>
               <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.landlordName}</div>
             </div>
             <div className="flex flex-col space-y-2">
-              <label className="font-semibold">Property Status:</label>
+              <label className="font-bold">Property Status:</label>
               <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.status ? "Complete" : "Incomplete"}</div>
             </div>
             {formData.status ? (
               <div className="flex flex-col space-y-2">
-                <label className="font-semibold">RERA Title Number:</label>
+                <label className="font-bold">RERA Title Number:</label>
                 <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.reraTitleNumber}</div>
               </div>
             ) : (
               <div className="flex flex-col space-y-2">
-                <label className="font-semibold">RERA Pre Registration Number:</label>
+                <label className="font-bold">RERA Pre Registration Number:</label>
                 <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.reraPreRegistrationNumber}</div>
               </div>
             )}
             <div className="flex flex-col space-y-2">
-              <label className="font-semibold">Building:</label>
+              <label className="font-bold">Building:</label>
               <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.building}</div>
             </div>
             <div className="flex flex-col space-y-2">
-              <label className="font-semibold">Neighborhood:</label>
+              <label className="font-bold">Neighborhood:</label>
               <div className="p-2 border border-primary-400 rounded bg-gray-100">{formData.neighborhood}</div>
             </div>
           </>
         ) : (
           <div className="flex flex-col space-y-2">
             <div className="text-primary border border-primary-400 p-2 rounded w-full">
-              <h3 className="font-semibold">Agent Name</h3>
+              <h3 className="font-bold">Agent Name</h3>
               <p>{formData.agentName}</p>
             </div>
             <div className="text-primary border border-primary-400 p-2 rounded w-full">
-              <h3 className="font-semibold">Agent Call Number</h3>
+              <h3 className="font-bold">Agent Call Number</h3>
               <p>{formData.agentCallNumber}</p>
             </div>
             <div className="text-primary border border-primary-400 p-2 rounded w-full">
-              <h3 className="font-semibold">Agent Email</h3>
+              <h3 className="font-bold">Agent Email</h3>
               <p>{formData.agentEmail}</p>
             </div>
             <div className="text-primary border border-primary-400 p-2 rounded w-full">
-              <h3 className="font-semibold">Agent WhatsApp</h3>
+              <h3 className="font-bold">Agent WhatsApp</h3>
               <p>{formData.agentWhatsapp}</p>
             </div>
           </div>

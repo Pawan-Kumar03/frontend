@@ -42,13 +42,13 @@ const MyAds = () => {
         fetchListings();
     }, []);
 
-    if (loading) return <div className='text-primary text-center font-primary'>Loading...</div>;
-    if (error) return <div className='text-red text-center font-primary'>{error}</div>;
+    if (loading) return <div className='text-primary text-center font-aller font-light'>Loading...</div>;
+    if (error) return <div className='text-red text-center font-aller font-light'>{error}</div>;
 
     return (
-        <div className="container mx-auto p-4 font-primary">
+        <div className="container mx-auto p-4 font-aller font-light">
             <h1 className="text-2xl font-bold mb-4 text-primary text-center">My Ads</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 font-primary">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 font-aller font-light">
                 {listings.length > 0 ? (
                     listings.map((listing) => (
                         <Card key={listing._id} item={listing} />

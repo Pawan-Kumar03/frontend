@@ -40,16 +40,17 @@ export default function Navbar() {
     return (
         <header className="bg-primary font-aller font-light shadow-md sticky top-0 z-50">
             <nav className="max-w-7xl mx-auto font-aller font-light px-4 sm:px-6 lg:px-8 flex items-center justify-between py-4">
-                {/* Logo */}
-                <div className="flex items-center h-10"> {/* Fixed navbar height */}
+            <div className="flex items-center h-10"> {/* Keep navbar height fixed */}
     <Link to="/">
         <img
             src={logo}
             alt="logo"
-            className="h-20 w-auto object-contain" // Adjust logo height independently
+            style={{ height: '150px', width: 'auto', objectFit: 'contain' }}  // Inline styles for logo size and object fit
         />
     </Link>
 </div>
+
+
 
                 {/* Desktop Navigation */}
                 <div className="hidden sm:flex items-center space-x-6">

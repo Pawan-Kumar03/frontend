@@ -205,9 +205,14 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
   </ul>
 </div>
 
-<h1 className="text-5xl text-left font-aller font-light text-primary mt-28 lg:text-primary lg:mb-8">
-  Your <span className="animate-blink font-bold">InvestiBayt</span> <br /> Journey Starts Here
+<h1
+  className="text-1rem text-center font-primary text-primary mt-[-1rem] 
+             lg:text-5xl lg:text-left lg:mt-28 lg:mb-8">
+  Your <span className="animate-blink font-bold">InvestiBayt</span>
+  <span className="lg:block hidden -mt-10 relative"> <br />Journey Starts Here</span>
+  <span className="lg:hidden"> Journey Starts Here</span>
 </h1>
+
 
 <form
   className="px-3 py-3 bg-primary rounded-lg lg:grid lg:grid-cols-8 lg:gap-4"

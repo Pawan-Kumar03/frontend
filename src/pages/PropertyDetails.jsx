@@ -237,8 +237,7 @@ export default function PropertyDetails() {
             <strong className="font-aller font-bold">Landlord:</strong> {property.landlordName}
           </p>
           <p className="text-sm mb-2">
-            <strong className="font-aller font-bold">Purpose:</strong>{" "}
-            {property.purpose === "sell" ? "Sale" : "Buy"}
+            <strong className="font-aller font-bold">Purpose:</strong>{property.purpose}
           </p>
           <p className="text-sm mb-2">
             <strong className="font-aller font-bold">Completion Status:</strong>{" "}

@@ -317,40 +317,43 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
       </div>
     </div>
 
-    {/* Beds Filter */}
-    <div className="flex flex-col w-full">
-      <label className="mb-1 text-sm font-medium text-primary">Beds</label>
-      <select
-        name="beds"
-        value={beds}
-        onChange={(e) => setBeds(e.target.value)}
-        className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-      >
-        <option value="">Any</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5+</option>
-      </select>
-    </div>
+    {/* Beds and Baths Container - Modified for responsive width */}
+    <div className="flex flex-row gap-4 w-full lg:col-span-2">
+      {/* Beds Filter */}
+      <div className="flex flex-col w-1/2">
+        <label className="mb-1 text-sm font-medium text-primary">Beds</label>
+        <select
+          name="beds"
+          value={beds}
+          onChange={(e) => setBeds(e.target.value)}
+          className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+        >
+          <option value="">Any</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5+</option>
+        </select>
+      </div>
 
-    {/* Baths Filter */}
-    <div className="flex flex-col w-full">
-      <label className="mb-1 text-sm font-medium text-primary">Baths</label>
-      <select
-        name="baths"
-        value={baths}
-        onChange={(e) => setBaths(e.target.value)}
-        className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-      >
-        <option value="">Any</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5+</option>
-      </select>
+      {/* Baths Filter */}
+      <div className="flex flex-col w-1/2">
+        <label className="mb-1 text-sm font-medium text-primary">Baths</label>
+        <select
+          name="baths"
+          value={baths}
+          onChange={(e) => setBaths(e.target.value)}
+          className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+        >
+          <option value="">Any</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5+</option>
+        </select>
+      </div>
     </div>
 
     {/* Search and Clear Filters Buttons */}

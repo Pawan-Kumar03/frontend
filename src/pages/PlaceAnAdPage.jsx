@@ -13,7 +13,6 @@ export default function PlaceAnAdPage() {
     location: '',
     propertyType: '',
     beds: 0,
-    extension: '',
     images: [], // Store images as an array,
     broker: '',
     email: '',
@@ -53,9 +52,6 @@ export default function PlaceAnAdPage() {
     const newValue = (name === 'beds' || name === 'baths') ? parseInt(value, 10) || 0 : value;
     setFormData(prev => {
       const updatedData = { ...prev, [name]: newValue };
-      if (name === 'city' || name === 'location') {
-        updatedData.extension = `${updatedData.city}, ${updatedData.location}`;
-      }
       return updatedData;
     });
   };
@@ -452,8 +448,7 @@ const handlePdfChange = (e) => {
 
   const handleNext = () => {
     if (validateForm()) {
-      const extension = `${details.city}, ${details.location}`;
-      onNext({ ...details, extension });
+      onNext({ ...details });
     }
   };
 

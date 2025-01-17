@@ -232,9 +232,9 @@ export default function PropertyDetails() {
           <p className="text-sm mb-2">
             <strong className="font-aller font-bold">Baths:</strong> {property.baths}
           </p>
-          <p className="text-sm mb-2">
+          {/* <p className="text-sm mb-2">
             <strong className="font-aller font-bold">Developer:</strong> {property.landlordName}
-          </p>
+          </p> */}
           <p className="text-sm mb-2">
             <strong className="font-aller font-bold">Purpose:</strong>{property.purpose}
           </p>

@@ -218,7 +218,7 @@ export default function PropertyDetails() {
           </h3>
           <p className="text-sm mb-2">
             <AttachMoneyIcon className="mr-2 text-primary" />
-            {property.price} AED
+            {property.price} 
           </p>
           <p className="text-sm  mb-2">
             <LocationOnIcon className="mr-2 text-primary" />

@@ -8,7 +8,6 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import ListingsContext from "../contexts/ListingsContext";
 import AuthContext from "../contexts/UserContext";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseIcon from "@mui/icons-material/Close"; 
 import { jsPDF } from "jspdf";
@@ -216,10 +215,10 @@ export default function PropertyDetails() {
           <h3 className="text-lg font-aller font-bold mb-2 ">
             {property.title}
           </h3>
-          <p className="text-sm mb-2">
-            <AttachMoneyIcon className="mr-2 text-primary" />
-            {property.price} 
-          </p>
+          <p className="text-sm mb-2 flex items-center">
+          {/* <span className="mr-2 font-medium">AED</span>  */}
+          {property.price}
+        </p>
           <p className="text-sm  mb-2">
             <LocationOnIcon className="mr-2 text-primary" />
             {property.building}, {property.developments}, {property.location}, {property.city}, {property.country}

@@ -119,18 +119,53 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     onSearch(completeSearchParams);
 };
     
-    const handleAddLocation = (e) => {
-        if (e.key === "Enter" && e.target.value.trim() !== "") {
-            setLocations([...locations, e.target.value.trim()]);
-            e.target.value = "";
-        }
-    };
+const handleAddLocation = (e) => {
+  if (e.key === "Enter" && e.target.value.trim() !== "") {
+      const newLocation = e.target.value.trim();
+      if (!locations.includes(newLocation)) {
+          const updatedLocations = [...locations, newLocation];
+          setLocations(updatedLocations);
+          e.target.value = "";
+          
+          // Trigger search immediately when a location is added
+          const searchParams = {
+              city: city || "",
+              location: updatedLocations.join(","),
+              propertyType: propertyType || "",
+              priceMin: priceMin || "",
+              priceMax: priceMax || "",
+              beds: beds || "",
+              baths: baths || "",
+              agentType: agentType || "",
+              status: status || "",
+              purpose: purpose || ""
+          };
+          onSearch(searchParams);
+      }
+  }
+};
 
     const handleRemoveLocation = (index) => {
-        const updatedLocations = [...locations];
-        updatedLocations.splice(index, 1);
-        setLocations(updatedLocations);
-    };
+      const updatedLocations = [...locations];
+      updatedLocations.splice(index, 1);
+      setLocations(updatedLocations);
+      
+      // Trigger search immediately when a location is removed
+      const searchParams = {
+          city: city || "",
+          location: updatedLocations.join(","),
+          propertyType: propertyType || "",
+          priceMin: priceMin || "",
+          priceMax: priceMax || "",
+          beds: beds || "",
+          baths: baths || "",
+          agentType: agentType || "",
+          status: status || "",
+          purpose: purpose || ""
+      };
+      onSearch(searchParams);
+  };
+
 
     const handleClearFilters = () => {
         setCity("");

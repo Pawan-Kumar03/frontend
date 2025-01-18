@@ -71,22 +71,35 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
   const isFilterApplied = city || locations.length > 0 || propertyType || priceMin || priceMax || beds || baths;
 
     const handleSearch = (event) => {
+      if (event) {
         event.preventDefault();
-        const searchParams = {
-            city: city || "",
-            location: locations.join(",") || "",
-            propertyType: propertyType || "",
-            priceMin: priceMin || "",
-            priceMax: priceMax || "",
-            beds: beds || "",
-            baths: baths || "",
-            agentType: agentType || "",
-            status: status !== "" ? status : "", // Ensure status is included in the search
-            purpose: purpose || ""
-        };
-        onSearch(searchParams); // Pass searchParams to onSearch function
-    };
-    
+    }
+    // Normalize beds value to be consistent with data format
+    let normalizedBeds = beds;
+    if (beds === "5+") {
+        normalizedBeds = "5"; // Or however you want to handle "5+" in your data
+    }
+
+    // Normalize baths value
+    let normalizedBaths = baths;
+    if (baths === "5+") {
+        normalizedBaths = "5"; // Or however you want to handle "5+" in your data
+    }
+    const searchParams = {
+      city: city || "",
+      location: locations.join(",") || "",
+      propertyType: propertyType || "",
+      priceMin: priceMin || "",
+      priceMax: priceMax || "",
+      beds: normalizedBeds || "",
+      baths: normalizedBaths || "",
+      agentType: agentType || "",
+      status: status !== "" ? status : "",
+      purpose: purpose || ""
+  };
+  
+  onSearch(searchParams);
+};
     
     const handleAddLocation = (e) => {
         if (e.key === "Enter" && e.target.value.trim() !== "") {
@@ -143,7 +156,25 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
         onSearch(searchParams); // Pass the search params including the status=false for off-plan properties
     };
     
-    
+    // Update the bed options to match your data format
+    const bedOptions = [
+      { value: "", label: "Any" },
+      { value: "1", label: "1" },
+      { value: "2", label: "2" },
+      { value: "3", label: "3" },
+      { value: "4", label: "4" },
+      { value: "5", label: "5+" }
+  ];
+
+  // Update the bath options to match your data format
+  const bathOptions = [
+      { value: "", label: "Any" },
+      { value: "1", label: "1" },
+      { value: "2", label: "2" },
+      { value: "3", label: "3" },
+      { value: "4", label: "4" },
+      { value: "5", label: "5+" }
+  ];
     
     
     
@@ -323,36 +354,34 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
       <div className="flex flex-col w-1/2">
         <label className="mb-1 text-sm font-medium text-primary">Beds</label>
         <select
-          name="beds"
-          value={beds}
-          onChange={(e) => setBeds(e.target.value)}
-          className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-        >
-          <option value="">Any</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5+</option>
-        </select>
+                name="beds"
+                value={beds}
+                onChange={(e) => setBeds(e.target.value)}
+                className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+            >
+                {bedOptions.map(option => (
+                    <option key={option.value} value={option.value}>
+                        {option.label}
+                    </option>
+                ))}
+            </select>
       </div>
 
       {/* Baths Filter */}
       <div className="flex flex-col w-1/2">
         <label className="mb-1 text-sm font-medium text-primary">Baths</label>
         <select
-          name="baths"
-          value={baths}
-          onChange={(e) => setBaths(e.target.value)}
-          className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
-        >
-          <option value="">Any</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5+</option>
-        </select>
+                name="baths"
+                value={baths}
+                onChange={(e) => setBaths(e.target.value)}
+                className="p-2 h-10 rounded-md border border-primary text-sm text-primary w-full"
+            >
+                {bathOptions.map(option => (
+                    <option key={option.value} value={option.value}>
+                        {option.label}
+                    </option>
+                ))}
+            </select>
       </div>
     </div>
 

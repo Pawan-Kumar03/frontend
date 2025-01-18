@@ -84,14 +84,23 @@ function PropertiesPage() {
         }
     
         // Apply beds filter if a specific number of beds is selected
-        if (beds !== "Any") {
-            filtered = filtered.filter(property => property.beds === parseInt(beds));
-        }
-    
-        // Apply baths filter if a specific number of baths is selected
-        if (baths !== "Any") {
-            filtered = filtered.filter(property => property.baths === parseInt(baths));
-        }
+    if (beds !== "Any") {
+        filtered = filtered.filter(property => {
+            // Split the beds string in case it contains multiple values
+            const propertyBeds = property.beds.split(',').map(bed => bed.trim());
+            // Check if the selected number of beds is included in the property's beds
+            return propertyBeds.includes(beds);
+        });
+    }
+
+    // Apply baths filter if a specific number of baths is selected
+    if (baths !== "Any") {
+        filtered = filtered.filter(property => 
+            // Compare as strings since both values are strings
+            property.baths === baths
+        );
+    }
+
     
         setFilteredProperties(filtered);
     };    

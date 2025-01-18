@@ -524,7 +524,7 @@ const handlePdfChange = (e) => {
       
       <input
         name="beds"
-        type="number"
+        type="text"
         value={details.beds || ""}
         onChange={handleDetailsChange}
         placeholder="Beds"
@@ -591,7 +591,7 @@ const handlePdfChange = (e) => {
       
       <input
         name="baths"
-        type="number"
+        type="text"
         value={details.baths || ""}
         onChange={handleDetailsChange}
         placeholder="Baths"

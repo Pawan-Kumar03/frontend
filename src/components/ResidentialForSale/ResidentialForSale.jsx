@@ -4,14 +4,23 @@ import Card from "../Card/Card";
 export default function ResidentialForSale({ searchParams = {}, listings = [] }) {
     const [filteredResults, setFilteredResults] = useState([]);
     const [relatedResults, setRelatedResults] = useState([]);
-    const [isVertical, setIsVertical] = useState(false); // State to toggle between horizontal and vertical layouts
+    const [isVertical, setIsVertical] = useState(false);
+
+    // Helper function to extract numeric price from string
+    const extractPrice = (priceString) => {
+        // Handle price ranges by taking the higher value
+        const prices = priceString.split('-').map(p => 
+            parseInt(p.replace(/[^0-9]/g, ""))
+        );
+        return Math.max(...prices);
+    };
 
     useEffect(() => {
         const isEmptySearch = Object.values(searchParams).every((param) => param === "");
 
         const filtered = Array.isArray(listings)
             ? listings.filter((listing) => {
-                  const listingPrice = parseInt(listing.price.replace(/[^0-9]/g, ""));
+                  const listingPrice = extractPrice(listing.price);
                   const minPrice = searchParams.priceMin ? parseInt(searchParams.priceMin) : 0;
                   const maxPrice = searchParams.priceMax ? parseInt(searchParams.priceMax) : Infinity;
 
@@ -46,7 +55,17 @@ export default function ResidentialForSale({ searchParams = {}, listings = [] })
               })
             : [];
 
-        setFilteredResults(isEmptySearch ? listings : filtered);
+        if (isEmptySearch) {
+            // Sort listings by price (high to low) and take top 10 for Popular Developments
+            const sortedListings = [...listings].sort((a, b) => {
+                const priceA = extractPrice(a.price);
+                const priceB = extractPrice(b.price);
+                return priceB - priceA;
+            }).slice(0, 10);
+            setFilteredResults(sortedListings);
+        } else {
+            setFilteredResults(filtered);
+        }
 
         if (filtered.length === 0 && !isEmptySearch) {
             const related = Array.isArray(listings)
@@ -90,14 +109,14 @@ export default function ResidentialForSale({ searchParams = {}, listings = [] })
                     <div
                         className={`${
                             isVertical
-                                ? "grid grid-cols-1 lg:grid-cols-2 gap-6" // Vertical layout: 2 cards per row on large screens
-                                : "flex overflow-x-scroll space-x-4" // Horizontal layout with scrolling
+                                ? "grid grid-cols-1 lg:grid-cols-2 gap-6"
+                                : "flex overflow-x-scroll space-x-4"
                         }`}
                     >
                         {filteredResults.map((item, index) => (
                             <div
                                 key={index}
-                                className={`${!isVertical ? "min-w-[300px]" : ""}`} // For horizontal layout, set card width
+                                className={`${!isVertical ? "min-w-[300px]" : ""}`}
                             >
                                 <Card item={item} />
                             </div>

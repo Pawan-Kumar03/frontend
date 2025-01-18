@@ -20,37 +20,45 @@ export default function ResidentialForSale({ searchParams = {}, listings = [] })
 
         const filtered = Array.isArray(listings)
             ? listings.filter((listing) => {
-                  const listingPrice = extractPrice(listing.price);
+                  // Parse the listing beds to handle ranges like "1,2,3"
+                  const listingBeds = listing.beds.split(",").map(b => b.trim());
+                  const listingPrice = parseInt(listing.price.replace(/[^0-9]/g, ""));
                   const minPrice = searchParams.priceMin ? parseInt(searchParams.priceMin) : 0;
                   const maxPrice = searchParams.priceMax ? parseInt(searchParams.priceMax) : Infinity;
 
+                  // Helper function to check if beds match
+                  const bedsMatch = () => {
+                      if (!searchParams.beds) return true;
+                      if (searchParams.beds === "5") {
+                          return listingBeds.some(b => parseInt(b) >= 5);
+                      }
+                      return listingBeds.includes(searchParams.beds);
+                  };
+
+                  // Helper function to check if baths match
+                  const bathsMatch = () => {
+                      if (!searchParams.baths) return true;
+                      if (searchParams.baths === "5") {
+                          return listing.baths >= 5;
+                      }
+                      return listing.baths === parseInt(searchParams.baths);
+                  };
+
                   return (
-                      (searchParams.city ? listing.city === searchParams.city : true) &&
-                      (searchParams.location
-                          ? searchParams.location.split(",").some((loc) =>
-                                listing.location.toLowerCase().includes(loc.trim().toLowerCase())
-                            )
-                          : true) &&
-                      (searchParams.propertyType ? listing.propertyType === searchParams.propertyType : true) &&
+                      (!searchParams.city || listing.city === searchParams.city) &&
+                      (!searchParams.location || searchParams.location.split(",").some((loc) =>
+                          listing.location.toLowerCase().includes(loc.trim().toLowerCase())
+                      )) &&
+                      (!searchParams.propertyType || listing.propertyType === searchParams.propertyType) &&
                       listingPrice >= minPrice &&
                       listingPrice <= maxPrice &&
-                      (searchParams.beds
-                          ? searchParams.beds === "5"
-                              ? listing.beds >= 5
-                              : listing.beds === parseInt(searchParams.beds)
-                          : true) &&
-                      (searchParams.baths
-                          ? searchParams.baths === "5"
-                              ? listing.baths >= 5
-                              : listing.baths === parseInt(searchParams.baths)
-                          : true) &&
-                      (searchParams.status === "false" ? listing.status === "false" : "true") &&
-                      (searchParams.purpose ? listing.purpose === searchParams.purpose : true) &&
-                      (searchParams.agentType
-                          ? searchParams.agentType === "Owner"
-                              ? listing.landlordName
-                              : listing.agentName
-                          : true)
+                      bedsMatch() &&
+                      bathsMatch() &&
+                      (!searchParams.status || listing.status.toString() === searchParams.status) &&
+                      (!searchParams.purpose || listing.purpose === searchParams.purpose) &&
+                      (!searchParams.agentType || (
+                          searchParams.agentType === "Owner" ? listing.landlordName : listing.agentName
+                      ))
                   );
               })
             : [];

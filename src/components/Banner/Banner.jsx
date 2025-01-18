@@ -70,35 +70,53 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     // Check if any filters are applied
   const isFilterApplied = city || locations.length > 0 || propertyType || priceMin || priceMax || beds || baths;
 
-    const handleSearch = (event) => {
-      if (event) {
+  const handleSearch = (event) => {
+    if (event) {
         event.preventDefault();
     }
-    // Normalize beds value to be consistent with data format
+
+    // Normalize beds value
     let normalizedBeds = beds;
     if (beds === "5+") {
-        normalizedBeds = "5"; // Or however you want to handle "5+" in your data
+        normalizedBeds = "5";
     }
 
     // Normalize baths value
     let normalizedBaths = baths;
     if (baths === "5+") {
-        normalizedBaths = "5"; // Or however you want to handle "5+" in your data
+        normalizedBaths = "5";
     }
-    const searchParams = {
-      city: city || "",
-      location: locations.join(",") || "",
-      propertyType: propertyType || "",
-      priceMin: priceMin || "",
-      priceMax: priceMax || "",
-      beds: normalizedBeds || "",
-      baths: normalizedBaths || "",
-      agentType: agentType || "",
-      status: status !== "" ? status : "",
-      purpose: purpose || ""
-  };
-  
-  onSearch(searchParams);
+
+    // Only include non-empty filters in the search params
+    const searchParams = {};
+    
+    if (city) searchParams.city = city;
+    if (locations.length > 0) searchParams.location = locations.join(",");
+    if (propertyType) searchParams.propertyType = propertyType;
+    if (priceMin) searchParams.priceMin = priceMin;
+    if (priceMax) searchParams.priceMax = priceMax;
+    if (normalizedBeds) searchParams.beds = normalizedBeds;
+    if (normalizedBaths) searchParams.baths = normalizedBaths;
+    if (agentType) searchParams.agentType = agentType;
+    if (status !== "") searchParams.status = status;
+    if (purpose) searchParams.purpose = purpose;
+
+    // Default values for empty parameters to ensure they don't filter out properties
+    const completeSearchParams = {
+        city: "",
+        location: "",
+        propertyType: "",
+        priceMin: "",
+        priceMax: "",
+        beds: "",
+        baths: "",
+        agentType: "",
+        status: "",
+        purpose: "",
+        ...searchParams // Override defaults with any actually selected filters
+    };
+
+    onSearch(completeSearchParams);
 };
     
     const handleAddLocation = (e) => {
@@ -138,23 +156,31 @@ export default function Banner({ onSearch, onPlaceAnAd }) {
     };
     
     const handleOffPlanClick = () => {
-        const searchParams = {
-            city: city || "",
-            location: locations.join(",") || "",
-            propertyType: propertyType || "",
-            priceMin: priceMin || "",
-            priceMax: priceMax || "",
-            beds: beds || "",
-            baths: baths || "",
-            agentType: agentType || "",
-            status: "false", // This ensures that only off-plan properties are shown
-            purpose: purpose || ""
-        };
-    
-        // console.log("Searching for off-plan properties with parameters:", searchParams); // Add this to inspect search parameters
-    
-        onSearch(searchParams); // Pass the search params including the status=false for off-plan properties
-    };
+      const searchParams = {
+          city: "",
+          location: "",
+          propertyType: "",
+          priceMin: "",
+          priceMax: "",
+          beds: "",
+          baths: "",
+          agentType: "",
+          status: "false",
+          purpose: ""
+      };
+
+      if (city) searchParams.city = city;
+      if (locations.length > 0) searchParams.location = locations.join(",");
+      if (propertyType) searchParams.propertyType = propertyType;
+      if (priceMin) searchParams.priceMin = priceMin;
+      if (priceMax) searchParams.priceMax = priceMax;
+      if (beds) searchParams.beds = beds;
+      if (baths) searchParams.baths = baths;
+      if (agentType) searchParams.agentType = agentType;
+      if (purpose) searchParams.purpose = purpose;
+
+      onSearch(searchParams);
+  };
     
     // Update the bed options to match your data format
     const bedOptions = [

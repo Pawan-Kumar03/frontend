@@ -9,7 +9,7 @@ export default function AboutUsPage() {
 
                 <h2 className="text-3xl text-primary font-aller font-bold my-6 text-center">Who We Are</h2>
                 <p className="text-primary mb-6">
-                At <b> InvestiBayt</b>,, we are a dedicated team of real estate professionals focused on providing exceptional service to individuals and families. We cater to first-time homebuyers, seasoned investors, and everyone in between, ensuring that each client receives personalised support throughout their real estate journey. Our goal is to understand the unique needs of our diverse clientele and create a seamless experience tailored to their specific goals.
+                We are a dedicated team of real estate professionals focused on providing exceptional service to individuals and families. We cater to first-time homebuyers, seasoned investors, and everyone in between, ensuring that each client receives personalised support throughout their real estate journey. Our goal is to understand the unique needs of our diverse clientele and create a seamless experience tailored to their specific goals.
                 </p>
 
                 <h2 className="text-3xl text-primary font-aller font-bold my-6 text-center">Our Team</h2>

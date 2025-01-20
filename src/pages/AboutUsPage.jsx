@@ -4,12 +4,12 @@ export default function AboutUsPage() {
             <div className="w-full max-w-3xl bg-accent-color p-8 rounded-lg shadow-lg">
                 <h1 className="text-4xl font-aller font-bold my-6 text-primary text-center">About Us</h1>
                 <p className="text-primary mb-6">
-                    Welcome to <b >InvestiBayt</b>, your go-to platform for buying, selling, and renting properties. We connect property owners, real estate agents, and potential buyers or renters through a seamless and user-friendly experience.
+                At <b> InvestiBayt</b>, we are dedicated to transforming the real estate experience for our clients. Our agency combines extensive market knowledge with personalized consultancy services to help you navigate the ever-evolving property landscape. Whether you're looking to buy, sell, or invest, our team of experienced professionals is committed to providing tailored solutions that meet your unique needs. We believe in building lasting relationships based on trust, transparency, and exceptional service. With InvestiBayt, your real estate journey is in capable hands, ensuring you make informed decisions every step of the way.
                 </p>
 
                 <h2 className="text-3xl text-primary font-aller font-bold my-6 text-center">Who We Are</h2>
                 <p className="text-primary mb-6">
-                    We are a team of real estate enthusiasts and tech professionals dedicated to making property transactions simple and accessible. Our mission is to empower you with the tools and information needed to make informed decisions in the real estate market.
+                At <b> InvestiBayt</b>,, we are a dedicated team of real estate professionals focused on providing exceptional service to individuals and families. We cater to first-time homebuyers, seasoned investors, and everyone in between, ensuring that each client receives personalised support throughout their real estate journey. Our goal is to understand the unique needs of our diverse clientele and create a seamless experience tailored to their specific goals.
                 </p>
 
                 <h2 className="text-3xl text-primary font-aller font-bold my-6 text-center">Our Team</h2>

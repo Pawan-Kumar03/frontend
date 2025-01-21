@@ -62,7 +62,7 @@ export default function ContactUsPage() {
         <div className="flex font-aller font-light items-center justify-center min-h-screen bg-primary">
             <div className="w-full max-w-md bg-accent-color p-8 rounded-lg shadow-lg">
                 <h1 className="text-3xl font-bold mb-6 text-primary text-center">
-                    Consultancy Form
+                    Contact Us
                 </h1>
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     <div>

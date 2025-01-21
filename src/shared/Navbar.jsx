@@ -60,8 +60,8 @@ export default function Navbar() {
                     <Link to="/about-us" className="px-4 py-2 text-primary rounded-full bg-primary-dark hover:bg-banner">
                         About Us
                     </Link>
-                    <Link to="/ConsultancyPage" className="px-4 py-2 text-primary rounded-full bg-primary-dark hover:bg-banner">
-                    Consultation
+                    <Link to="/contact-us" className="px-4 py-2 text-primary rounded-full bg-primary-dark hover:bg-banner">
+                    Contact Us
                     </Link>
 
                     {user ? (
@@ -156,11 +156,11 @@ export default function Navbar() {
                                 About Us
                             </Link>
                             <Link
-                                to="/ConsultancyPage"
+                                to="/contact-us"
                                 className="block px-4 py-2 text-primary rounded-full hover:bg-primary-dark"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
-                                Consultation
+                                Contact Us
                             </Link>
                             {user ? (
                                 <>

@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import logoDark from "../assets/logo.png";
-import Card from "../components/Card/Card";
-import { Swiper, SwiperSlide } from "swiper/react";
-// import "swiper/swiper-bundle.min.css"; // Import Swiper styles
 
 export default function Footer() {
     const [properties, setProperties] = useState([]);
@@ -72,7 +68,7 @@ export default function Footer() {
             category: "Support",
             items: [
                 { name: "Contact Us", link: "/contact-us" },
-                { name: "Consultant", link: "/ConsultancyPage" },
+                // { name: "Consultant", link: "/ConsultancyPage" },
             ],
         },
     ];

@@ -1,110 +1,196 @@
-import React, { useState } from 'react';
-import emailjs from 'emailjs-com';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import emailjs from "emailjs-com";
 
 export default function ContactUsPage() {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [query, setQuery] = useState('');
-    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        propertyType: "residential",
+        message: "",
+        contactMethod: "email",
+    });
 
-    const sendEmail = (e) => {
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState(false);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         const templateParams = {
-            from_name: name,        // Sender's name
-            reply_to: email,        // Sender's email
-            query_message: query    // The actual query message
+            from_name: formData.name,
+            reply_to: formData.email,
+            phone: formData.phone,
+            property_type: formData.propertyType,
+            preferred_contact_method: formData.contactMethod,
+            query_message: formData.message,
         };
 
-        emailjs.send(
-            'service_v5kh1li',       // Replace with your actual Service ID
-            'template_81xid4a',      // Replace with your actual Template ID
-            templateParams,
-            'P2ZFcnicoD2IhAgfn'      // Replace with your actual Public Key
-        )
-        .then((response) => {
-            console.log('SUCCESS!', response.status, response.text);
-            document.querySelector('#success-message').style.display = 'block';
-            setTimeout(() => navigate("/"), 3000); // Redirect after 3 seconds
-        })
-        .catch((error) => {
-            console.error('FAILED...', error);
-            document.querySelector('#error-message').style.display = 'block';
-            setTimeout(() => navigate("/"), 3000); // Redirect after 3 seconds
-        });
-
-        setName('');
-        setEmail('');
-        setQuery('');
+        emailjs
+            .send(
+                "service_v5kh1li",
+                "template_dry15bi",
+                templateParams,
+                "P2ZFcnicoD2IhAgfn"
+            )
+            .then(() => {
+                setSuccess(true);
+                setError(false);
+                setFormData({
+                    name: "",
+                    email: "",
+                    phone: "",
+                    propertyType: "residential",
+                    message: "",
+                    contactMethod: "email",
+                });
+                setTimeout(() => setSuccess(false), 3000);
+            })
+            .catch(() => {
+                setError(true);
+                setSuccess(false);
+                setTimeout(() => setError(false), 3000);
+            });
     };
 
     return (
-        <div className="flex font-aller font-light items-center justify-center min-h-screen bg-primary ">
-            <div className="w-full max-w-md bg-accent-color p-8 rounded-lg shadow-lg ">
-                <h1 className="text-3xl font-bold mb-6 text-primary text-center">Contact Us</h1>
-                <form className="space-y-4" onSubmit={sendEmail}>
+        <div className="flex font-aller font-light items-center justify-center min-h-screen bg-primary">
+            <div className="w-full max-w-md bg-accent-color p-8 rounded-lg shadow-lg">
+                <h1 className="text-3xl font-bold mb-6 text-primary text-center">
+                    Consultancy Form
+                </h1>
+                <form className="space-y-4" onSubmit={handleSubmit}>
                     <div>
-                        <label className="block text-primary text-sm font-bold mb-1" htmlFor="name">
+                        <label
+                            className="block text-primary text-sm font-semibold mb-1"
+                            htmlFor="name"
+                        >
                             Name
                         </label>
                         <input
                             id="name"
+                            name="name"
                             type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={formData.name}
+                            onChange={handleChange}
                             className="w-full p-2 rounded bg-accent text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                             required
                         />
                     </div>
                     <div>
-                        <label className="block text-primary text-sm font-bold mb-1" htmlFor="email">
+                        <label
+                            className="block text-primary text-sm font-semibold mb-1"
+                            htmlFor="email"
+                        >
                             Email
                         </label>
                         <input
                             id="email"
+                            name="email"
                             type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={formData.email}
+                            onChange={handleChange}
                             className="w-full p-2 rounded bg-accent text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                             required
                         />
                     </div>
                     <div>
-                        <label className="block text-primary text-sm font-bold mb-1" htmlFor="query">
-                            Query
+                        <label
+                            className="block text-primary text-sm font-semibold mb-1"
+                            htmlFor="phone"
+                        >
+                            Phone (Optional)
+                        </label>
+                        <input
+                            id="phone"
+                            name="phone"
+                            type="tel"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            className="w-full p-2 rounded bg-accent text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            className="block text-primary text-sm font-aller font-bold mb-1"
+                            htmlFor="propertyType"
+                        >
+                            Property Type
+                        </label>
+                        <select
+                            id="propertyType"
+                            name="propertyType"
+                            value={formData.propertyType}
+                            onChange={handleChange}
+                            className="w-full p-2 rounded bg-accent text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                            required
+                        >
+                            <option value="residential">Residential</option>
+                            <option value="commercial">Commercial</option>
+                            <option value="rental">Rental</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label
+                            className="block text-primary text-sm font-semibold mb-1"
+                            htmlFor="message"
+                        >
+                            Message
                         </label>
                         <textarea
-                            id="query"
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
+                            id="message"
+                            name="message"
+                            value={formData.message}
+                            onChange={handleChange}
                             className="w-full p-2 rounded bg-accent text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
                             rows="4"
                             required
                         ></textarea>
                     </div>
+                    <div>
+                        <label
+                            className="block text-primary text-sm font-aller font-bold mb-1"
+                            htmlFor="contactMethod"
+                        >
+                            Preferred Contact Method
+                        </label>
+                        <select
+                            id="contactMethod"
+                            name="contactMethod"
+                            value={formData.contactMethod}
+                            onChange={handleChange}
+                            className="w-full p-2 rounded bg-accent text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                            required
+                        >
+                            <option value="email">Email</option>
+                            <option value="phone">Phone</option>
+                            <option value="in-person">In-Person Meeting</option>
+                        </select>
+                    </div>
                     <div className="text-center">
-    <button
-        className="w-full bg-button text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
-        type="submit"
-    >
-        Submit
-    </button>
-</div>
-
+                        <button
+                            className="w-full bg-button text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
+                            type="submit"
+                        >
+                            Submit
+                        </button>
+                    </div>
                 </form>
-                <div
-                    id="success-message"
-                    className="mt-4 hidden text-center bg-accent text-primary p-4 rounded"
-                >
-                    Your query has been sent successfully!
-                </div>
-                <div
-                    id="error-message"
-                    className="mt-4 hidden text-center bg-button-hover text-button p-4 rounded"
-                >
-                    Error in Sending Your Query.
-                </div>
+                {success && (
+                    <div className="mt-4 text-center bg-accent text-primary p-4 rounded">
+                        Your message has been sent successfully!
+                    </div>
+                )}
+                {error && (
+                    <div className="mt-4 text-center bg-button-hover text-button p-4 rounded">
+                        Oops! Something went wrong. Please try again.
+                    </div>
+                )}
             </div>
         </div>
     );

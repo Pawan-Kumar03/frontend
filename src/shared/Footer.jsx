@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logoDark from "../assets/logo.png";
 
 export default function Footer() {
     const [properties, setProperties] = useState([]);
-    const [selectedCity, setSelectedCity] = useState('Dubai'); // Default city
+    const [selectedCity, setSelectedCity] = useState('Dubai');
     const [showProperties, setShowProperties] = useState(false);
-    const [selectedLocation, setSelectedLocation] = useState('all'); // Default location
+    const [selectedLocation, setSelectedLocation] = useState('all');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -37,9 +39,8 @@ export default function Footer() {
     }, [selectedCity, selectedLocation]);
 
     const handleCityClick = (e, city) => {
-        e.preventDefault(); // Prevent default link behavior
-        // Redirect the user to the desired URL with the selected city and location as query parameters
-        window.location.href = `/properties?city=${encodeURIComponent(city)}`;
+        e.preventDefault();
+        navigate(`/properties?city=${encodeURIComponent(city)}`);
     };
 
     const data = [
@@ -86,13 +87,22 @@ export default function Footer() {
                             <ul className="space-y-1">
                                 {footerItem.items.map((item, itemIndex) => (
                                     <li key={itemIndex}>
-                                        <a
-                                            className="text-sm text-primary hover:underline"
-                                            href={item.link}
-                                            onClick={item.onClick}
-                                        >
-                                            {item.name}
-                                        </a>
+                                        {item.onClick ? (
+                                            <a
+                                                className="text-sm text-primary hover:underline"
+                                                href={item.link}
+                                                onClick={item.onClick}
+                                            >
+                                                {item.name}
+                                            </a>
+                                        ) : (
+                                            <Link
+                                                to={item.link}
+                                                className="text-sm text-primary hover:underline"
+                                            >
+                                                {item.name}
+                                            </Link>
+                                        )}
                                     </li>
                                 ))}
                             </ul>
@@ -110,13 +120,22 @@ export default function Footer() {
                             <ul className="space-y-1">
                                 {footerItem.items.map((item, itemIndex) => (
                                     <li key={itemIndex}>
-                                        <a
-                                            className="text-sm text-primary hover:underline"
-                                            href={item.link}
-                                            onClick={item.onClick}
-                                        >
-                                            {item.name}
-                                        </a>
+                                        {item.onClick ? (
+                                            <a
+                                                className="text-sm text-primary hover:underline"
+                                                href={item.link}
+                                                onClick={item.onClick}
+                                            >
+                                                {item.name}
+                                            </a>
+                                        ) : (
+                                            <Link
+                                                to={item.link}
+                                                className="text-sm text-primary hover:underline"
+                                            >
+                                                {item.name}
+                                            </Link>
+                                        )}
                                     </li>
                                 ))}
                             </ul>

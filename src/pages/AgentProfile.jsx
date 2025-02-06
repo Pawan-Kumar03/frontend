@@ -1,37 +1,43 @@
 import React, { useState } from 'react';
 
-export default function AgentProfile({ onNext, onBack, formData, setFormData }) {
-  const [agentName, setAgentName] = useState(formData.agentName || '');
-  const [agentEmail, setAgentEmail] = useState(formData.agentEmail || '');
-  const [contactNumber, setContactNumber] = useState(formData.contactNumber || '');
-  const [contactWhatsApp, setContactWhatsApp] = useState(formData.contactWhatsApp || '');
-  const [profilePhoto, setProfilePhoto] = useState(formData.profilePhoto || null);
-  const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+export default function AgentProfile({ onNext, onBack }) {
+  const [formData, setFormData] = useState({
+    agentName: '',
+    agentEmail: '',
+    contactNumber: '',
+    contactWhatsApp: '',
+    profilePhoto: null
+  });
+
   const [isPublishing, setIsPublishing] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData(prev => ({ ...prev, profilePhoto: file }));
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsPublishing(true); // Disable button during submission
-    setError('');
-    setSuccessMessage('');
-
-    if (!agentName || !agentEmail || !contactNumber || !contactWhatsApp || !profilePhoto) {
-      setError('All fields are required.');
-      setIsPublishing(false);
-      return;
-    }
+    setIsPublishing(true);
+    setError(false);
+    setSuccess(false);
 
     const formDataToSubmit = new FormData();
-    formDataToSubmit.append('agentName', agentName);
-    formDataToSubmit.append('agentEmail', agentEmail);
-    formDataToSubmit.append('contactNumber', contactNumber);
-    formDataToSubmit.append('contactWhatsApp', contactWhatsApp);
-    formDataToSubmit.append('profilePhoto', profilePhoto);
+    Object.keys(formData).forEach(key => {
+      formDataToSubmit.append(key, formData[key]);
+    });
 
     try {
-      const token = localStorage.getItem('token'); // Retrieve token from local storage
-
+      const token = localStorage.getItem('token');
       const response = await fetch('https://backend-git-main-pawan-togas-projects.vercel.app/api/agent-profile', {
         method: 'POST',
         headers: {
@@ -41,129 +47,155 @@ export default function AgentProfile({ onNext, onBack, formData, setFormData }) 
       });
 
       if (response.status === 201) {
-        const data = await response.json();
-        console.log('Agent Profile saved:', data);
-        setSuccessMessage('Agent profile created successfully!');
+        setSuccess(true);
+        setFormData({
+          agentName: '',
+          agentEmail: '',
+          contactNumber: '',
+          contactWhatsApp: '',
+          profilePhoto: null
+        });
+        setTimeout(() => setSuccess(false), 3000);
       } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to save agent profile');
+        throw new Error('Failed to save agent profile');
       }
     } catch (error) {
-      setError(error.message);
-      console.error(error);
+      setError(true);
+      setTimeout(() => setError(false), 3000);
     } finally {
-      setIsPublishing(false); // Enable button after submission
-    }
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setProfilePhoto(file);
+      setIsPublishing(false);
     }
   };
 
   return (
-    <div className="flex font-primary items-center justify-center min-h-screen bg-gray-800">
-      <div className="w-full font-primary max-w-md bg-grey-darker p-8 rounded shadow-md border-4 border-custom">
-        <h1 className="text-3xl font-bold mb-6 text-custom text-center">Agent Profile</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-custom text-sm font-bold mb-2" htmlFor="agentName">
+    <div className="flex font-primary items-center justify-center min-h-screen bg-primary">
+      <div className="w-full max-w-md bg-accent-color p-8 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold mb-6 text-primary text-center">
+          Agent Profile
+        </h1>
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          <div>
+            <label
+              className="block text-primary text-sm font-semibold mb-1"
+              htmlFor="agentName"
+            >
               Agent Name
             </label>
             <input
               id="agentName"
+              name="agentName"
               type="text"
-              value={agentName}
-              onChange={(e) => setAgentName(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={formData.agentName}
+              onChange={handleChange}
+              className="w-full p-2 rounded bg-accent text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-custom text-sm font-bold mb-2" htmlFor="agentEmail">
+
+          <div>
+            <label
+              className="block text-primary text-sm font-semibold mb-1"
+              htmlFor="agentEmail"
+            >
               Agent Email
             </label>
             <input
               id="agentEmail"
+              name="agentEmail"
               type="email"
-              value={agentEmail}
-              onChange={(e) => setAgentEmail(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={formData.agentEmail}
+              onChange={handleChange}
+              className="w-full p-2 rounded bg-accent text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-custom text-sm font-bold mb-2" htmlFor="contactNumber">
+
+          <div>
+            <label
+              className="block text-primary text-sm font-semibold mb-1"
+              htmlFor="contactNumber"
+            >
               Contact Number
             </label>
             <input
               id="contactNumber"
-              type="text"
-              value={contactNumber}
-              onChange={(e) => setContactNumber(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              name="contactNumber"
+              type="tel"
+              value={formData.contactNumber}
+              onChange={handleChange}
+              className="w-full p-2 rounded bg-accent text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-custom text-sm font-bold mb-2" htmlFor="contactWhatsApp">
+
+          <div>
+            <label
+              className="block text-primary text-sm font-semibold mb-1"
+              htmlFor="contactWhatsApp"
+            >
               WhatsApp Contact
             </label>
             <input
               id="contactWhatsApp"
-              type="text"
-              value={contactWhatsApp}
-              onChange={(e) => setContactWhatsApp(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              name="contactWhatsApp"
+              type="tel"
+              value={formData.contactWhatsApp}
+              onChange={handleChange}
+              className="w-full p-2 rounded bg-accent text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              required
             />
           </div>
-          <div className="mb-6">
-            <label className="block text-custom text-sm font-bold mb-2" htmlFor="profilePhoto">
+
+          <div>
+            <label
+              className="block text-primary text-sm font-semibold mb-1"
+              htmlFor="profilePhoto"
+            >
               Agent Profile Photo
             </label>
             <input
               id="profilePhoto"
+              name="profilePhoto"
               type="file"
               onChange={handleFileChange}
-              className="w-full text-gray-700 focus:outline-none focus:shadow-outline"
+              className="w-full p-2 rounded bg-accent text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              required
             />
-            {profilePhoto && (
-              <p className="text-sm text-green-500 mt-2">
-                Selected file: {profilePhoto.name}
+            {formData.profilePhoto && (
+              <p className="text-sm text-primary mt-2">
+                Selected file: {formData.profilePhoto.name}
               </p>
             )}
           </div>
 
-          {error && (
-            <div className="text-red-500 text-sm mb-4">
-              {error}
-            </div>
-          )}
-
-          {successMessage && (
-            <div className="text-green-500 text-sm mb-4">
-              {successMessage}
-            </div>
-          )}
-
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between space-x-4">
             <button
               type="button"
               onClick={onBack}
-              className="bg-gray-400 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="w-1/2 bg-accent text-primary font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
             >
               Back
             </button>
             <button
               type="submit"
               disabled={isPublishing}
-              className={`bg-custom text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
-                isPublishing ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
+              className="w-1/2 bg-button text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isPublishing ? 'Submitting...' : 'Submit'}
             </button>
           </div>
         </form>
+
+        {success && (
+          <div className="mt-4 text-center bg-accent text-primary p-4 rounded">
+            Agent profile created successfully!
+          </div>
+        )}
+        {error && (
+          <div className="mt-4 text-center bg-button-hover text-button p-4 rounded">
+            Oops! Something went wrong. Please try again.
+          </div>
+        )}
       </div>
     </div>
   );

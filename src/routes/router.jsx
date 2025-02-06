@@ -18,6 +18,8 @@ import ForgotPassword from '../pages/ForgotPassword'
 import ResetPassword from "../pages/ResetPassword";
 import ConsultancyPage from '../pages/ConsultancyPage'
 import Broker from '../pages/Broker'
+import AgentProfile from '../pages/AgentProfile'
+
 
 const router = createBrowserRouter([
     {
@@ -72,7 +74,13 @@ const router = createBrowserRouter([
             {
                 path: "/Broker",
                 element: <Broker />, 
+            }
+            ,
+            {
+                path: "/AgentProfile",
+                element: <AgentProfile />, 
             },
+            
             {
                 path: "/contact-us",
                 element: <ContactUsPage />, 

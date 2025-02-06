@@ -5,18 +5,18 @@ export default function Broker({ onNext, onBack, formData = {}, setFormData }) {
   const [companyLicenseNumber, setCompanyLicenseNumber] = useState(formData.companyLicenseNumber || '');
   const [companyTelephoneNumber, setCompanyTelephoneNumber] = useState(formData.companyTelephoneNumber || '');
   const [reraIDCard, setReraIDCard] = useState(formData.reraIDCard || null);
-  const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
   const [isPublishing, setIsPublishing] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsPublishing(true);
-    setError('');
-    setSuccessMessage('');
+    setError(false);
+    setSuccess(false);
 
     if (!reraBrokerID || !companyLicenseNumber || !companyTelephoneNumber || !reraIDCard) {
-      setError('All fields are required.');
+      setError(true);
       setIsPublishing(false);
       return;
     }
@@ -40,15 +40,14 @@ export default function Broker({ onNext, onBack, formData = {}, setFormData }) {
       if (response.status === 201) {
         const data = await response.json();
         console.log('Broker profile created:', data);
-        setSuccessMessage('Broker profile created successfully!');
-        // setFormData({}); // Clear the form data if necessary
-        // if (onNext) onNext();
+        setSuccess(true);
+        setTimeout(() => setSuccess(false), 3000);
       } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to save Broker profile');
+        throw new Error('Failed to save Broker profile');
       }
     } catch (error) {
-      setError(error.message);
+      setError(true);
+      setTimeout(() => setError(false), 3000);
       console.error(error);
     } finally {
       setIsPublishing(false);
@@ -63,12 +62,17 @@ export default function Broker({ onNext, onBack, formData = {}, setFormData }) {
   };
 
   return (
-    <div className="flex font-primary items-center justify-center min-h-screen bg-gray-800">
-      <div className="w-full font-primary max-w-md bg-grey-darker p-8 rounded shadow-md border-4 border-custom">
-        <h1 className="text-3xl font-bold mb-6 text-custom text-center">Broker Profile</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-custom text-sm font-bold mb-2" htmlFor="reraBrokerID">
+    <div className="flex font-primary items-center justify-center min-h-screen bg-primary">
+      <div className="w-full max-w-md bg-accent-color p-8 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold mb-6 text-primary text-center">
+          Broker Profile
+        </h1>
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          <div>
+            <label
+              className="block text-primary text-sm font-semibold mb-1"
+              htmlFor="reraBrokerID"
+            >
               RERA Broker ID
             </label>
             <input
@@ -76,11 +80,16 @@ export default function Broker({ onNext, onBack, formData = {}, setFormData }) {
               type="text"
               value={reraBrokerID}
               onChange={(e) => setReraBrokerID(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full p-2 rounded bg-accent text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-custom text-sm font-bold mb-2" htmlFor="companyLicenseNumber">
+
+          <div>
+            <label
+              className="block text-primary text-sm font-semibold mb-1"
+              htmlFor="companyLicenseNumber"
+            >
               Company License Number
             </label>
             <input
@@ -88,30 +97,41 @@ export default function Broker({ onNext, onBack, formData = {}, setFormData }) {
               type="text"
               value={companyLicenseNumber}
               onChange={(e) => setCompanyLicenseNumber(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full p-2 rounded bg-accent text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-custom text-sm font-bold mb-2" htmlFor="companyTelephoneNumber">
+
+          <div>
+            <label
+              className="block text-primary text-sm font-semibold mb-1"
+              htmlFor="companyTelephoneNumber"
+            >
               Company Telephone Number
             </label>
             <input
               id="companyTelephoneNumber"
-              type="text"
+              type="tel"
               value={companyTelephoneNumber}
               onChange={(e) => setCompanyTelephoneNumber(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full p-2 rounded bg-accent text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              required
             />
           </div>
-          <div className="mb-6">
-            <label className="block text-custom text-sm font-bold mb-2" htmlFor="reraIDCard">
+
+          <div>
+            <label
+              className="block text-primary text-sm font-semibold mb-1"
+              htmlFor="reraIDCard"
+            >
               RERA ID Card
             </label>
             <input
               id="reraIDCard"
               type="file"
               onChange={handleFileChange}
-              className="w-full text-gray-700 focus:outline-none focus:shadow-outline"
+              className="w-full p-2 rounded bg-accent text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+              required
             />
             {reraIDCard && (
               <p className="text-sm text-green-500 mt-2">
@@ -120,35 +140,36 @@ export default function Broker({ onNext, onBack, formData = {}, setFormData }) {
             )}
           </div>
 
-          {error && (
-            <div className="text-red-500 text-sm mb-4">
-              {error}
-            </div>
-          )}
-
-          {successMessage && (
-            <div className="text-green-500 text-sm mb-4">
-              {successMessage}
-            </div>
-          )}
-
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between space-x-4">
             <button
               type="button"
               onClick={onBack}
-              className="bg-gray-400 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="w-1/2 bg-accent text-primary font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
             >
               Back
             </button>
             <button
               type="submit"
               disabled={isPublishing}
-              className="bg-custom text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className={`w-1/2 bg-button text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent ${
+                isPublishing ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
             >
               {isPublishing ? 'Submitting...' : 'Submit'}
             </button>
           </div>
         </form>
+
+        {success && (
+          <div className="mt-4 text-center bg-accent text-primary p-4 rounded">
+            Broker profile created successfully!
+          </div>
+        )}
+        {error && (
+          <div className="mt-4 text-center bg-button-hover text-button p-4 rounded">
+            Oops! Something went wrong. Please try again.
+          </div>
+        )}
       </div>
     </div>
   );

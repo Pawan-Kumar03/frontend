@@ -6,7 +6,7 @@ const AgentCard = ({ agent }) => {
       <img
         src={agent.profilePhoto}
         alt={agent.agentName}
-        className="w-20 h-20 rounded-full object-cover mb-2"
+        className="w-20 h-20 primary-text rounded-full object-cover mb-2"
       />
       <h2 className="text-lg font-semibold">{agent.agentName}</h2>
       <a href="#" className="text-blue-500 text-sm mb-2">View All Properties</a>

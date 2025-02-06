@@ -20,28 +20,8 @@ export default function PropertyDetails() {
   const [isDeleted, setIsDeleted] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [fullscreenImage, setFullscreenImage] = useState(null); 
-  const [agent, setAgent] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (property?.agentEmail) {
-      const fetchAgent = async () => {
-        try {
-          const response = await fetch(
-            `https://backend-git-main-pawan-togas-projects.vercel.app/api/agents/${property.agentEmail}`
-          );
-          if (!response.ok) throw new Error("Failed to fetch agent");
-          const data = await response.json();
-          setAgent(data);
-        } catch (error) {
-          console.error("Error fetching agent:", error);
-        }
-      };
-  
-      fetchAgent();
-    }
-  }, [property?.agentEmail]); // Re-fetch agent when property changes
-  
   useEffect(() => {
     const selectedProperty = listings.find((listing) => listing._id === id);
     if (selectedProperty) {
@@ -161,7 +141,7 @@ export default function PropertyDetails() {
   
   
   return (
-<div className="container mt-8 bg-primary backdrop-blur-lg text-primary p-6 rounded-lg font-aller font-light shadow-lg max-w-7xl mx-auto relative">
+<div className="container mt-8 bg-primary backdrop-blur-lg text-primary p-6 rounded-lg font-aller font-light shadow-lg max-w-5xl mx-auto">
   {isDeleted && (
     <div className="text-center bg-primary text-primary font-aller font-light p-4 rounded mb-4">
       Your ad has been deleted successfully!
@@ -191,10 +171,6 @@ export default function PropertyDetails() {
 
 
           </div>
-          {agent && (
-  <AgentCard agent={agent} onContactClick={handleContactBroker} />
-)}
-
 
       <div className="flex flex-col lg:flex-row">
         <div className="lg:w-1/2 lg:pr-4">
@@ -365,7 +341,6 @@ export default function PropertyDetails() {
             </div>
           </div>
         </div>
-        
       )}
     </>
   )}

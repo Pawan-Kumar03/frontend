@@ -24,21 +24,24 @@ export default function PropertyDetails() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchAgent = async () => {
-      try {
-        const response = await fetch(
-          'https://backend-git-main-pawan-togas-projects.vercel.app/api/agent-profile'
-        );
-        if (!response.ok) throw new Error('Failed to fetch agent');
-        const data = await response.json();
-        setAgent(data);
-      } catch (error) {
-        console.error('Error fetching agent:', error);
-      }
-    };
-
-    fetchAgent();
-  }, []);
+    if (property?.agentEmail) {
+      const fetchAgent = async () => {
+        try {
+          const response = await fetch(
+            `https://backend-git-main-pawan-togas-projects.vercel.app/api/agents/${property.agentEmail}`
+          );
+          if (!response.ok) throw new Error("Failed to fetch agent");
+          const data = await response.json();
+          setAgent(data);
+        } catch (error) {
+          console.error("Error fetching agent:", error);
+        }
+      };
+  
+      fetchAgent();
+    }
+  }, [property?.agentEmail]); // Re-fetch agent when property changes
+  
   useEffect(() => {
     const selectedProperty = listings.find((listing) => listing._id === id);
     if (selectedProperty) {
@@ -188,6 +191,10 @@ export default function PropertyDetails() {
 
 
           </div>
+          {agent && (
+  <AgentCard agent={agent} onContactClick={handleContactBroker} />
+)}
+
 
       <div className="flex flex-col lg:flex-row">
         <div className="lg:w-1/2 lg:pr-4">

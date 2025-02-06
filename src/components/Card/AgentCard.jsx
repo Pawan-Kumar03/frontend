@@ -8,7 +8,7 @@ const AgentCard = ({ agent }) => {
         alt={agent.agentName}
         className="w-20 h-20  rounded-full object-cover mb-2"
       />
-      <h2 className="text-lg font-semibold primary-text">{agent.agentName}</h2>
+      <h2 className="text-lg font-semibold text-primary-text">{agent.agentName}</h2>
       <a href="#" className="text-blue-500 text-sm mb-2">View All Properties</a>
       <p className="text-gray-500 text-sm text-center">Investibayt Realty</p>
       

@@ -54,7 +54,7 @@ export default function PropertyDetails() {
 
     try {
       const response = await fetch(
-        `https://backend-git-main-pawan-togas-projects.vercel.app/api/agents/${agentEmail}`
+        `https://backend-git-main-pawan-togas-projects.vercel.app/api/agents/pawan.kumar@investibayt.com`
       );
       if (!response.ok) throw new Error("Agent not found");
 
@@ -171,6 +171,9 @@ export default function PropertyDetails() {
     </div>
   );
   
+
+}
+
 //   return (
 // <div className="container mt-8 bg-primary backdrop-blur-lg text-primary p-6 rounded-lg font-aller font-light shadow-lg max-w-5xl mx-auto">
 //   {isDeleted && (
@@ -379,4 +382,3 @@ export default function PropertyDetails() {
 
 //   );
   
-}

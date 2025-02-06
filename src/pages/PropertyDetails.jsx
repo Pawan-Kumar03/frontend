@@ -11,7 +11,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseIcon from "@mui/icons-material/Close"; 
 import { jsPDF } from "jspdf";
-import AgentCard from "../Card/Card/AgentCard.jsx";
+import AgentCard from "../Card/AgentCard.jsx";
 
 export default function PropertyDetails() {
   const { id } = useParams();

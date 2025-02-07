@@ -2,7 +2,7 @@ import React from "react";
 
 const AgentCard = ({ agent }) => {
   return (
-    <div className="bg-primary-dark border rounded-2xl shadow-lg p-4 max-w-sm bg-white flex flex-col items-center">
+    <div className="bg-primary-dark border rounded-2xl shadow-lg p-4 max-w-sm flex flex-col items-center">
       <img
         src={agent.profilePhoto}
         alt={agent.agentName}

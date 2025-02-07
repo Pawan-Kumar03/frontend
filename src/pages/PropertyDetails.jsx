@@ -2,21 +2,19 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import EmailIcon from "@mui/icons-material/Email";
-import PhoneIcon from "@mui/icons-material/Phone";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import ListingsContext from "../contexts/ListingsContext";
-import AuthContext from "../contexts/UserContext";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { jsPDF } from "jspdf";
 import AgentCard from "../components/Card/AgentCard";
+import ListingsContext from "../contexts/ListingsContext";
+import AuthContext from "../contexts/UserContext";
 
 export default function PropertyDetails() {
   const { id } = useParams();
   const { listings } = useContext(ListingsContext);
   const { user } = useContext(AuthContext);
   const [property, setProperty] = useState(null);
+  const [isDeleted, setIsDeleted] = useState(false);
   const [agent, setAgent] = useState(null);
   const navigate = useNavigate();
 
@@ -36,7 +34,6 @@ export default function PropertyDetails() {
         `https://backend-git-main-pawan-togas-projects.vercel.app/api/listings/${id}`
       );
       if (!response.ok) throw new Error("Property not found");
-
       const data = await response.json();
       setProperty(data);
       fetchAgent(data.agentEmail);
@@ -47,13 +44,11 @@ export default function PropertyDetails() {
 
   const fetchAgent = async (agentEmail) => {
     if (!agentEmail) return;
-
     try {
       const response = await fetch(
         `https://backend-git-main-pawan-togas-projects.vercel.app/api/agents/${agentEmail}`
       );
       if (!response.ok) throw new Error("Agent not found");
-
       const agentData = await response.json();
       setAgent(agentData);
     } catch (error) {
@@ -72,112 +67,96 @@ export default function PropertyDetails() {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      {/* Back Button */}
-      <div className="mb-4">
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center bg-gray-100 px-4 py-2 rounded-full shadow-md hover:bg-gray-200 transition"
-        >
-          <ArrowBackIcon className="mr-2" />
-          Back
-        </button>
-      </div>
+    <div className="container mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg max-w-6xl">
+      {isDeleted && (
+        <div className="text-center bg-red-100 text-red-600 p-4 rounded mb-4">
+          Your ad has been deleted successfully!
+        </div>
+      )}
+      {!isDeleted && property && (
+        <>
+          {/* Back Button */}
+          <div className="mb-4">
+            <button
+              onClick={() => navigate(-1)}
+              className="flex items-center text-blue-600 hover:underline"
+            >
+              <ArrowBackIcon className="mr-1" />
+              Back
+            </button>
+          </div>
 
-      {property && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Agent Card */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-4">
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Left: Sticky Agent Card */}
+            <div className="lg:w-1/4 hidden lg:block sticky top-20 self-start">
               {agent && <AgentCard agent={agent} />}
             </div>
-          </div>
 
-          {/* Right Column - Property Details */}
-          <div className="lg:col-span-2">
-            {/* Full-width Image Carousel */}
-            {property.images && processImages(property.images).length > 1 ? (
-              <Carousel showThumbs={false} infiniteLoop autoPlay>
-                {processImages(property.images).map((image, index) => (
-                  <div key={index}>
-                    <img className="w-full h-[400px] object-cover" src={image} alt={property.title} />
-                  </div>
-                ))}
-              </Carousel>
-            ) : (
-              <img
-                className="w-full h-[400px] object-cover rounded-lg"
-                src={property.image}
-                alt={property.title}
-              />
-            )}
-
-            {/* Property Details */}
-            <div className="mt-6">
-              <h1 className="text-2xl font-bold">{property.title}</h1>
-              <p className="text-lg text-gray-600 font-semibold mt-2">AED {property.price}</p>
-
-              <p className="text-gray-600 mt-2 flex items-center">
-                <LocationOnIcon className="mr-2 text-red-500" />
-                {property.building}, {property.developments}, {property.location}, {property.city}, {property.country}
-              </p>
-
-              <div className="mt-4 space-y-2">
-                <p><strong>Property Type:</strong> {property.propertyType}</p>
-                <p><strong>Beds:</strong> {property.beds}</p>
-                <p><strong>Baths:</strong> {property.baths}</p>
-                <p><strong>Agent:</strong> {property.agentName}</p>
-              </div>
-
-              {/* Description */}
-              {property.description && (
-                <div className="mt-4">
-                  <h2 className="text-lg font-semibold">Description</h2>
-                  <p className="text-gray-700 mt-2">{property.description}</p>
-                </div>
+            {/* Right: Property Details */}
+            <div className="lg:w-3/4">
+              {/* Image Carousel - Full Width */}
+              {property.images && processImages(property.images).length > 0 ? (
+                <Carousel
+                  showThumbs={false}
+                  infiniteLoop
+                  useKeyboardArrows
+                  autoPlay
+                  className="w-full h-auto rounded-lg overflow-hidden"
+                >
+                  {processImages(property.images).map((image, index) => (
+                    <div key={index} className="w-full">
+                      <img
+                        className="w-full h-[450px] object-cover"
+                        src={image}
+                        alt={property.title}
+                      />
+                    </div>
+                  ))}
+                </Carousel>
+              ) : (
+                <img
+                  className="w-full h-[450px] object-cover rounded-lg"
+                  src={property.image}
+                  alt={property.title}
+                />
               )}
 
-              {/* Contact Buttons */}
-              <div className="mt-6 flex space-x-4">
-                <a
-                  href={`mailto:${property.agentEmail}`}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md flex items-center"
-                >
-                  <EmailIcon className="mr-2" />
-                  Email
-                </a>
-                <a
-                  href={`tel:${property.agentCallNumber}`}
-                  className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center"
-                >
-                  <PhoneIcon className="mr-2" />
-                  Call
-                </a>
-                <a
-                  href={`https://wa.me/${property.agentWhatsapp}`}
-                  className="bg-gray-700 text-white px-4 py-2 rounded-md flex items-center"
-                >
-                  <WhatsAppIcon className="mr-2" />
-                  WhatsApp
-                </a>
+              {/* Description and Details */}
+              <div className="mt-6">
+                <h3 className="text-2xl font-bold mb-2">{property.title}</h3>
+                <p className="text-lg font-semibold text-gray-700 mb-2">
+                  AED {property.price}
+                </p>
+                <p className="text-sm flex items-center text-gray-600 mb-2">
+                  <LocationOnIcon className="mr-1 text-red-500" />
+                  {property.building}, {property.developments}, {property.location}, {property.city}, {property.country}
+                </p>
+                <p className="text-gray-700 mb-4">{property.description}</p>
+
+                {/* Property Info */}
+                <div className="grid grid-cols-2 gap-4 text-gray-700">
+                  <p>
+                    <strong>Property Type:</strong> {property.propertyType}
+                  </p>
+                  <p>
+                    <strong>Beds:</strong> {property.beds}
+                  </p>
+                  <p>
+                    <strong>Baths:</strong> {property.baths}
+                  </p>
+                  <p>
+                    <strong>Agent:</strong> {property.agentName}
+                  </p>
+                </div>
               </div>
 
-              {/* View Brochure Button */}
-              {property.pdf && (
-                <div className="mt-4">
-                  <a
-                    href={property.pdf}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-gray-800 text-white px-4 py-2 rounded-md inline-block"
-                  >
-                    View Brochure
-                  </a>
-                </div>
-              )}
+              {/* Mobile Agent Card */}
+              <div className="mt-6 lg:hidden">
+                {agent && <AgentCard agent={agent} />}
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
